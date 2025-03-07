@@ -1,0 +1,17 @@
+name = "RMA"
+uuid = "cb83a08b-85c6-4e94-91aa-4e946c7d4f0c"
+authors = ["DynamicsUFPR"]
+version = "0.0.1"
+
+[deps]
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+
+[compat]
+julia = "1.8"
+Distances = "0.10.11"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
