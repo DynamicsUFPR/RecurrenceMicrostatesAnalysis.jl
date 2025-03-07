@@ -1,5 +1,5 @@
 """
-    microstate(data_x::AbstractArray, data_y::AbstractArray, parameters, [structure]; kwargs...)
+    distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, [structure]; kwargs...)
 
 Compute the distribution of recurrence microstates probabilities from the datasets `data_x` and `data_y`.
 The input `parameters` consists of the constant values used to calculate the recurrence between two points, 
@@ -101,8 +101,8 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
     use_dict = hv > 28 ? true : use_dict
     use_dict = run_mode == :vect ? false : use_dict
     #
-    #       Verify again the settings...
-    if (!use_dict && hv >= 64)
+    #       Verify if hypervolume is compatible with Julia.
+    if (hv >= 64)
         throw(ArgumentError("Due to memory limitations imposed by Julia, the hyper-volume of a microstate cannot exceed 64."))
     end
 
@@ -120,23 +120,43 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
     #       Call the process...
     if (shape == :square)
         if (sampling_mode == :full)
+            #       --- Shape: square; Sampling mode: full.
             histogram = use_dict ? (
-                throw("Dictionaries not implemented yet")) : (
-                use_threads ? (
+                use_threads ? (         #   -- Run Mode: dictionary
+                    throw("Threads is not yet implemented to :full sampling mode.")) : (
+                    dict_square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)
+                    )) : (
+                use_threads ? (         #   -- Run Mode: vector
                     throw("Threads is not yet implemented to :full sampling mode.")) : (
                     square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)))
             #
             #   Compute the distribution from the histogram.
-            return histogram ./ sum(histogram)
+            return histogram isa Dict{Int, Int} ? (
+                total = sum(values(histogram));
+                dist = Dict(k => v / total for (k, v) in histogram);
+                return dist
+            ) : histogram ./ sum(histogram)
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
         elseif (sampling_mode == :random)
+            #       --- Shape: square; Sampling mode: random.
             histogram = use_dict ? (
-                throw("Dictionaries not implemented yet")) : (
-                use_threads ? (
+                use_threads ? (         #   -- Run Mode: dictionary
+                    dict_square_random_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : (
+                    dict_square_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)
+                    )) : (
+                use_threads ? (         #   -- Run Mode: vector
                     square_random_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : (
                     square_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)))
             #
             #   Compute the distribution from the histogram.
-            return histogram ./ sum(histogram)
+            return histogram isa Dict{Int, Int} ? (
+                total = sum(values(histogram));
+                dist = Dict(k => v / total for (k, v) in histogram);
+                return dist
+            ) : histogram ./ sum(histogram)
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
         elseif (sampling_mode == :columnwise)
             throw("Sampling mode not implemented yet.")
         end

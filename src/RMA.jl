@@ -28,6 +28,9 @@
     include("rma/histograms/vect/square_full.jl")
     include("rma/histograms/vect/square_random.jl")
     include("rma/histograms/vect/square_random_async.jl")
+    include("rma/histograms/dict/square_full.jl")
+    include("rma/histograms/dict/square_random.jl")
+    include("rma/histograms/dict/square_random_async.jl")
     #   - Utils
     include("rma/recurrence.jl")
 
