@@ -2,7 +2,7 @@
 #           
 #
 
-function square_random_async(data_x::AbstractArray, data_y::AbstractArray, threshold, structure::AbstractVector{Int}, space_size::AbstractVector{Int}, num_samples::Int, func::F, dim::AbstractVector{Int}, hypervolume::Int, metric::Metric) where {F}
+function square_random_async(data_x::AbstractArray, data_y::AbstractArray, parameters, structure::AbstractVector{Int}, space_size::AbstractVector{Int}, num_samples::Int, func::F, dim::AbstractVector{Int}, hypervolume::Int, metric::Metric) where {F}
     #
     #       Compute the Power Vector
     p_vect = zeros(Int, hypervolume)
@@ -22,7 +22,7 @@ function square_random_async(data_x::AbstractArray, data_y::AbstractArray, thres
                 idx[s] = rand(1:space_size[s])
             end
 
-            @fastmath hg[compute_square_index(data_x, data_y, threshold, structure, func, dim, idx, recursive_index, p_vect, metric)] += 1
+            @fastmath hg[compute_square_index(data_x, data_y, parameters, structure, func, dim, idx, recursive_index, p_vect, metric)] += 1
         end
 
         return hg
