@@ -1,7 +1,6 @@
 # RMA.jl
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/DynamicsUFPR/RMA.jl)
-![GitHub contributors](https://img.shields.io/github/contributors/DynamicsUFPR/RMA.jl)
 ![GitHub license](https://img.shields.io/github/license/DynamicsUFPR/RMA.jl)
 [![Julia](https://img.shields.io/badge/Julia-1.8%2B-blue?logo=julia)](https://julialang.org/)
 
