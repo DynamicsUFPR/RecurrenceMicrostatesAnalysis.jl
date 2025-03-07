@@ -51,7 +51,7 @@ function dict_square_random_async(data_x::AbstractArray, data_y::AbstractArray, 
 
     results = fetch.(tasks)
 
-    res = zeros(Int, 2^hypervolume)
+    res = Dict{Int, Int}()
     for r in results
         for (k, v) in r
             res[k] = get(res, k, 0) + v
