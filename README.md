@@ -5,6 +5,8 @@
 ![GitHub license](https://img.shields.io/github/license/DynamicsUFPR/RMA.jl)
 [![Julia](https://img.shields.io/badge/Julia-1.8%2B-blue?logo=julia)](https://julialang.org/)
 
+![Library logo](doc/logo.png)
+
 A simple and faster library for recurrence microstates analysis.
 
 ### 📦 Dependencies
