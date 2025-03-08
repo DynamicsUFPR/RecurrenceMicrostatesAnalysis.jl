@@ -22,8 +22,8 @@ the setting of `run_mode` or `sampling_mode`.
 - `sampling_mode::Symbol`: can be `:full`, `:random`, or `:columnwise`. The sampling mode `:full` retrieves all 
 available microstates in the recurrence space sequentially; it is not yet available for multi-threading. The `:random`
 mode retrieves a number of samples based on the value of `num_samples` and creates a distribution for the entire 
-recurrence space. Finally, `:columnwise` creates a distribution for each column of the recurrence space and is only 
-available for `:vect` run mode.
+recurrence space. Finally, `:columnwise` creates a distribution for each column of the recurrence space. It is only 
+available for `:vect` run mode because it returns an array where each column is a probability distribution of motifs.
 
 - `num_samples::Union{Int, Float64}`: the number of samples used to create the probability distribution. CIt can be a 
 percentage of the total possible motifs or the desired number of samples.
@@ -86,7 +86,11 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
         if (num_samples <= 0 || num_samples > 1)
             throw(ArgumentError("num_samples must be in the range (0, 1]."))
         end
-        num_samples = Int(round(num_samples * total_microstates))
+        if (sampling_mode == :columnwise)
+            num_samples = Int(round(num_samples * space_size[2] * structure[1]))
+        else
+            num_samples = Int(round(num_samples * total_microstates))
+        end
     else
         if (num_samples <= 0 || num_samples > total_microstates)
             throw(ArgumentError(string("num_samples must be in the range (1, ", total_microstates,"] for the given data.")))
@@ -115,6 +119,9 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
     end
     if (sampling_mode != :columnwise && sampling_mode != :full && sampling_mode != :random)
         throw(ArgumentError("Invalid sampling mode. Use :full, :random or :columnwise"))
+    end
+    if (sampling_mode == :columnwise && use_dict)
+        throw(ArgumentError("The sampling mode :columnwise is only available when the run mode is set to :vector."))
     end
 
     #       Call the process...
@@ -158,7 +165,14 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             #
             # --------------------------------------------------------------------------------------------------------------------------------------
         elseif (sampling_mode == :columnwise)
-            throw("Sampling mode not implemented yet.")
+            #       --- Shape: square; Sampling mode: columnwise.
+            histogram = use_threads ? (
+                    square_columnwise_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : (
+                    square_columnwise(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric))
+            
+            return histogram ./ num_samples
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
         end
     elseif (shape == :triangle)
         throw("Shape mode not implemented yet.")

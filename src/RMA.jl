@@ -25,11 +25,17 @@
     #   - Probabilities (RMA)
     include("rma/distribution.jl")
     include("rma/index/square_index.jl")
+    #       - Vectors
     include("rma/histograms/vect/square_full.jl")
     include("rma/histograms/vect/square_random.jl")
+    include("rma/histograms/vect/square_columnwise.jl")
+    #       - Vectors async.
     include("rma/histograms/vect/square_random_async.jl")
+    include("rma/histograms/vect/square_columnwise_async.jl")
+    #       - Dict
     include("rma/histograms/dict/square_full.jl")
     include("rma/histograms/dict/square_random.jl")
+    #       - Dict async.
     include("rma/histograms/dict/square_random_async.jl")
     #   - Utils
     include("rma/recurrence.jl")
