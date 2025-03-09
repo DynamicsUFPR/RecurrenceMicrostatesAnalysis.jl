@@ -12,7 +12,7 @@
 #       GitHub - Julia Version: https://github.com/DynamicsUFPR/RMA.jl
 #
 #       ----- BEGIN CODE
-#module RMA
+module RMA
     #
     #       Libraries needed for the code to work.
     using Distances
@@ -28,9 +28,11 @@
     #       - Vectors
     include("rma/histograms/vect/square_full.jl")
     include("rma/histograms/vect/square_random.jl")
+    include("rma/histograms/vect/square_triangleup.jl")
     include("rma/histograms/vect/square_columnwise.jl")
     #       - Vectors async.
     include("rma/histograms/vect/square_random_async.jl")
+    include("rma/histograms/vect/square_triangleup_async.jl")
     include("rma/histograms/vect/square_columnwise_async.jl")
     #       - Dict
     include("rma/histograms/dict/square_full.jl")
@@ -44,5 +46,5 @@
     #       Export some functions.
     #   - Probabilities (RMA)
     export distribution
-#end
+end
 #       ----- END CODE

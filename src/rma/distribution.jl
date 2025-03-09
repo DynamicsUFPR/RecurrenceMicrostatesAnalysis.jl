@@ -70,13 +70,13 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
     total_microstates = 1
     space_size::Vector{Int} = []
     for d in 1:d_x
-        len = size(data_x, d + 1) - structure[d]
+        len = size(data_x, d + 1) - (sampling_mode == :triangleup ? 0 : (structure[d] - 1))
 
         total_microstates *= len
         push!(space_size, len)
     end
     for d in 1:d_y
-        len = size(data_y, d + 1) - structure[d_x + d]
+        len = size(data_y, d + 1) -  (sampling_mode == :triangleup ? 0 : (structure[d_x + d] - 1))
 
         total_microstates *= len
         push!(space_size, len)
@@ -117,8 +117,8 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
     if (sampling_mode == :columnwise && length(structure) > 2)
         throw(ArgumentError("The sampling mode `:columnwise` is only available for a recurrence space with two dimensions."))
     end
-    if (sampling_mode != :columnwise && sampling_mode != :full && sampling_mode != :random)
-        throw(ArgumentError("Invalid sampling mode. Use :full, :random or :columnwise"))
+    if (sampling_mode != :columnwise && sampling_mode != :full && sampling_mode != :random && sampling_mode != :triangleup)
+        throw(ArgumentError("Invalid sampling mode. Use :full, :random, :triangleup or :columnwise"))
     end
     if (sampling_mode == :columnwise && use_dict)
         throw(ArgumentError("The sampling mode :columnwise is only available when the run mode is set to :vector."))
@@ -130,11 +130,11 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             #       --- Shape: square; Sampling mode: full.
             histogram = use_dict ? (
                 use_threads ? (         #   -- Run Mode: dictionary
-                    throw("Threads is not yet implemented to :full sampling mode.")) : (
+                    throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
                     dict_square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)
                     )) : (
                 use_threads ? (         #   -- Run Mode: vector
-                    throw("Threads is not yet implemented to :full sampling mode.")) : (
+                    throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
                     square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)))
             #
             #   Compute the distribution from the histogram.
@@ -171,6 +171,26 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
                     square_columnwise(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric))
             
             return histogram ./ num_samples
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
+        elseif (sampling_mode == :triangleup)
+            #       --- Shape: square; Sampling mode: random.
+            histogram = use_dict ? (
+                use_threads ? (         #   -- Run Mode: dictionary
+                    throw("Not implemented yet. ERR-TUP1")) : ( # TODO
+                    throw("Not implemented yet. ERR-TUP2") # TODO
+                    )) : (
+                use_threads ? (         #   -- Run Mode: vector
+                    square_triangleup_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : ( # TODO
+                    square_triangleup(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)))
+
+            #
+            #   Compute the distribution from the histogram.
+            return histogram isa Dict{Int, Int} ? (
+                total = sum(values(histogram));
+                dist = Dict(k => v / total for (k, v) in histogram);
+                return dist
+            ) : histogram ./ sum(histogram)
             #
             # --------------------------------------------------------------------------------------------------------------------------------------
         end
