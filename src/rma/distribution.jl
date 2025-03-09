@@ -200,3 +200,38 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
         throw(ArgumentError("Invalid shape. Use :square or :triangle"))
     end
 end
+#
+#
+"""
+"""
+function distribution(data::AbstractArray, parameters, n::Int;
+    shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random, 
+    num_samples::Union{Int, Float64} = 1.0, use_threads::Bool = Threads.nthreads() > 1, 
+    metric::Metric = euclidean_metric, func = (x, y, p, ix, dim, metric) -> recurrence(x, y, p, ix, dim, metric))
+    
+    #       Get data dimension and the structure.
+    dim = ndims(data) - 1
+    structure = ones(Int, 2 * dim) .* n
+
+    #       Return the distribution.
+    return distribution(data, data, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, func = func, use_threads = use_threads, metric = metric)
+end
+#
+#
+"""
+"""
+function distribution(solution, parameters, n::Int, vicinity::Union{Int, Float64};
+    shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random, 
+    num_samples::Union{Int, Float64} = 1.0, use_threads::Bool = Threads.nthreads() > 1, 
+    metric::Metric = euclidean_metric, func = (x, y, p, ix, dim, metric) -> recurrence(x, y, p, ix, dim, metric),
+    transient::Int = 0, max_length::Int = 0)
+
+    #       Prepare the data.
+    data = prepare(solution, vicinity; transient = transient, max_length = max_length)
+
+    #       Get data dimension and the structure.
+    dim = ndims(data) - 1
+    structure = ones(Int, 2 * dim) .* n
+
+    return distribution(data, data, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, func = func, use_threads = use_threads, metric = metric)
+end

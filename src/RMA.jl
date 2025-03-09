@@ -41,6 +41,7 @@ module RMA
     include("rma/histograms/dict/square_random_async.jl")
     #   - Utils
     include("rma/recurrence.jl")
+    include("utils/prepare.jl")
 
     #
     #       Export some functions.
