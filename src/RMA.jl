@@ -37,15 +37,22 @@ module RMA
     #       - Dict
     include("rma/histograms/dict/square_full.jl")
     include("rma/histograms/dict/square_random.jl")
+    include("rma/histograms/dict/square_triangleup.jl")
     #       - Dict async.
     include("rma/histograms/dict/square_random_async.jl")
+    include("rma/histograms/dict/square_triangleup_async.jl")
     #   - Utils
     include("rma/recurrence.jl")
     include("utils/prepare.jl")
+
+    #   - RQA
+    include("rqa/recurrence_entropy.jl")
 
     #
     #       Export some functions.
     #   - Probabilities (RMA)
     export distribution
+    #   - Quantifiers (RQA)
+    export recurrence_entropy
 end
 #       ----- END CODE

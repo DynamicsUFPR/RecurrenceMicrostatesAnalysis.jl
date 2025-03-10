@@ -177,13 +177,12 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             #       --- Shape: square; Sampling mode: random.
             histogram = use_dict ? (
                 use_threads ? (         #   -- Run Mode: dictionary
-                    throw("Not implemented yet. ERR-TUP1")) : ( # TODO
-                    throw("Not implemented yet. ERR-TUP2") # TODO
+                    dict_square_triangleup_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : (
+                    dict_square_triangleup(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)
                     )) : (
                 use_threads ? (         #   -- Run Mode: vector
                     square_triangleup_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)) : ( # TODO
                     square_triangleup(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], hv, metric)))
-
             #
             #   Compute the distribution from the histogram.
             return histogram isa Dict{Int, Int} ? (
