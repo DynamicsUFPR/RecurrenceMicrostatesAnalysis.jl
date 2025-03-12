@@ -25,22 +25,29 @@ module RMA
     #   - Probabilities (RMA)
     include("rma/distribution.jl")
     include("rma/index/square_index.jl")
+    include("rma/index/triangle_index.jl")
     #       - Vectors
     include("rma/histograms/vect/square_full.jl")
     include("rma/histograms/vect/square_random.jl")
     include("rma/histograms/vect/square_triangleup.jl")
     include("rma/histograms/vect/square_columnwise.jl")
+    include("rma/histograms/vect/triangle_full.jl")
+    include("rma/histograms/vect/triangle_random.jl")
     #       - Vectors async.
     include("rma/histograms/vect/square_random_async.jl")
     include("rma/histograms/vect/square_triangleup_async.jl")
     include("rma/histograms/vect/square_columnwise_async.jl")
+    include("rma/histograms/vect/triangle_random_async.jl")
     #       - Dict
     include("rma/histograms/dict/square_full.jl")
     include("rma/histograms/dict/square_random.jl")
     include("rma/histograms/dict/square_triangleup.jl")
+    include("rma/histograms/dict/triangle_full.jl")
+    include("rma/histograms/dict/triangle_random.jl")
     #       - Dict async.
     include("rma/histograms/dict/square_random_async.jl")
     include("rma/histograms/dict/square_triangleup_async.jl")
+    include("rma/histograms/dict/triangle_random_async.jl")
     #   - Utils
     include("rma/recurrence.jl")
     include("utils/prepare.jl")

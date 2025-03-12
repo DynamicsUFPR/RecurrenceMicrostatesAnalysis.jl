@@ -131,11 +131,11 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             histogram = use_dict ? (
                 use_threads ? (         #   -- Run Mode: dictionary
                     throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
-                    dict_square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)
+                    throw("Invalid: :dict version of :full smapling mode not implemented yet.") # TODO
                     )) : (
                 use_threads ? (         #   -- Run Mode: vector
                     throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
-                    square_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], hv, total_microstates, metric)))
+                    triangle_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], total_microstates, metric)))
             #
             #   Compute the distribution from the histogram.
             return histogram isa Dict{Int, Int} ? (
@@ -194,7 +194,45 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             # --------------------------------------------------------------------------------------------------------------------------------------
         end
     elseif (shape == :triangle)
-        throw("Shape mode not implemented yet.")
+        if (sampling_mode == :full)
+            #       --- Shape: square; Sampling mode: full.
+            histogram = use_dict ? (
+                use_threads ? (         #   -- Run Mode: dictionary
+                    throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
+                    dict_triangle_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], total_microstates, metric)
+                    )) : (
+                use_threads ? (         #   -- Run Mode: vector
+                    throw("Threads is not yet implemented to :full sampling mode.")) : (            # TODO
+                    triangle_full(data_x, data_y, parameters, structure, space_size, func, [d_x, d_y], total_microstates, metric)))
+            #
+            #   Compute the distribution from the histogram.
+            return histogram isa Dict{Int, Int} ? (
+                total = sum(values(histogram));
+                dist = Dict(k => v / total for (k, v) in histogram);
+                return dist
+            ) : histogram ./ sum(histogram)
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
+        elseif (sampling_mode == :random)
+            #       --- Shape: square; Sampling mode: random.
+            histogram = use_dict ? (
+                use_threads ? (         #   -- Run Mode: dictionary
+                    throw("Not implemented yet: TO DO 1")) : ( # TODO
+                    dict_triangle_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric) # TODO
+                    )) : (
+                use_threads ? (         #   -- Run Mode: vector
+                    triangle_random_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric)) : (
+                    triangle_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric)))
+            #
+            #   Compute the distribution from the histogram.
+            return histogram isa Dict{Int, Int} ? (
+                total = sum(values(histogram));
+                dist = Dict(k => v / total for (k, v) in histogram);
+                return dist
+            ) : histogram ./ sum(histogram)
+            #
+            # --------------------------------------------------------------------------------------------------------------------------------------
+        end
     else
         throw(ArgumentError("Invalid shape. Use :square or :triangle"))
     end
