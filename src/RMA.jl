@@ -54,6 +54,8 @@ module RMA
 
     #   - RQA
     include("rqa/recurrence_entropy.jl")
+    include("rqa/recurrence_rate.jl")
+    include("rqa/determinism.jl")
 
     #
     #       Export some functions.

@@ -217,8 +217,8 @@ function distribution(data_x::AbstractArray, data_y::AbstractArray, parameters, 
             #       --- Shape: square; Sampling mode: random.
             histogram = use_dict ? (
                 use_threads ? (         #   -- Run Mode: dictionary
-                    throw("Not implemented yet: TO DO 1")) : ( # TODO
-                    dict_triangle_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric) # TODO
+                    dict_triangle_random_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric)) : (
+                    dict_triangle_random(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric)
                     )) : (
                 use_threads ? (         #   -- Run Mode: vector
                     triangle_random_async(data_x, data_y, parameters, structure, space_size, num_samples, func, [d_x, d_y], metric)) : (
