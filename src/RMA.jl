@@ -1,5 +1,5 @@
 #
-#           RecurrenceMicrostates.jl
+#           RMA.jl
 #       DynamicsUFPR - https://github.com/DynamicsUFPR
 #       
 #
@@ -22,46 +22,58 @@ module RMA
 
     #
     #       Import the code source.
-    #   - Probabilities (RMA)
-    include("rma/distribution.jl")
-    include("rma/index/square_index.jl")
-    include("rma/index/triangle_index.jl")
-    #       - Vectors
-    include("rma/histograms/vect/square_full.jl")
-    include("rma/histograms/vect/square_random.jl")
-    include("rma/histograms/vect/square_triangleup.jl")
-    include("rma/histograms/vect/square_columnwise.jl")
-    include("rma/histograms/vect/triangle_full.jl")
-    include("rma/histograms/vect/triangle_random.jl")
-    #       - Vectors async.
-    include("rma/histograms/vect/square_random_async.jl")
-    include("rma/histograms/vect/square_triangleup_async.jl")
-    include("rma/histograms/vect/square_columnwise_async.jl")
-    include("rma/histograms/vect/triangle_random_async.jl")
-    #       - Dict
-    include("rma/histograms/dict/square_full.jl")
-    include("rma/histograms/dict/square_random.jl")
-    include("rma/histograms/dict/square_triangleup.jl")
-    include("rma/histograms/dict/triangle_full.jl")
-    include("rma/histograms/dict/triangle_random.jl")
-    #       - Dict async.
-    include("rma/histograms/dict/square_random_async.jl")
-    include("rma/histograms/dict/square_triangleup_async.jl")
-    include("rma/histograms/dict/triangle_random_async.jl")
-    #   - Utils
+    # ======================================================================================================= #
+    #           * RMA Core
+    #   i. Import the recurrence functions.
     include("rma/recurrence.jl")
+    #   ii. Import the functions that convert a motif to an index.
+    include("rma/index.jl")
+    #   iii. Import the distribution function.
+    include("rma/distribution.jl")
+    #   iv. Import histogram functions
+    # ------------------------------------------------------------------------------------------------------- #
+    #       - Shape: square
+    include("rma/histograms/square/square_full.jl")
+    include("rma/histograms/square/square_random.jl")
+    include("rma/histograms/square/square_triangleup.jl")
+    include("rma/histograms/square/square_columnwise.jl")
+    # ------------------------------------------------------------------------------------------------------- #
+    #       - Shape: triangle
+    include("rma/histograms/triangle/triangle_full.jl")
+    include("rma/histograms/triangle/triangle_random.jl")
+    # ------------------------------------------------------------------------------------------------------- #
+    #       - Shape: time pair
+    include("rma/histograms/timepair/timepair_random.jl")
+    include("rma/histograms/timepair/timepair_columnwise.jl")
+    # ------------------------------------------------------------------------------------------------------- #
+    #       - Shape: diagonal
+    include("rma/histograms/diagonal/diagonal_random.jl")
+    # ------------------------------------------------------------------------------------------------------- #
+    #       - Shape: column
+    include("rma/histograms/column/column_random.jl")
+    # ======================================================================================================= #
+    #           * RMA Analysis
+    #       - Recurrence Rate (RR)
+    include("rqa/rr.jl")
+    #       - Determinism (DET)
+    include("rqa/det.jl")
+    #       - Laminarity (LAM)
+    include("rqa/lam.jl")
+    #       - Recurrence Entropy (RETR)
+    include("rqa/entropy.jl")
+    # ======================================================================================================= #
+    #           * RMA Utils
     include("utils/prepare.jl")
-
-    #   - RQA
-    include("rqa/recurrence_entropy.jl")
-    include("rqa/recurrence_rate.jl")
-    include("rqa/determinism.jl")
-
+    # ======================================================================================================= #
     #
-    #       Export some functions.
-    #   - Probabilities (RMA)
+    #       Export some functions to the main scope.
+    # ======================================================================================================= #
+    export rrate
+    export prepare
+    export rentropy
+    export laminarity
+    export determinism
     export distribution
-    #   - Quantifiers (RQA)
-    export recurrence_entropy
+    # ======================================================================================================= #
 end
 #       ----- END CODE

@@ -1,7 +1,14 @@
 #
+#       RMA Utils
 #
-#
-function prepare(solution, vicinity::Float64; transient::Int = 0, max_length::Int = 0)
+"""
+    prepare([solution], vicinity::Union{Float64, Int}; transient::Int, max_length::Int)
+
+Prepare a problem solved by the library DifferencialEquations.jl to be used in RMA.jl.
+It can apply the vicinity parameter to discretize the "continuous" time serie, like proposed
+by [Thiago2023](@cite).
+"""
+function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, max_length::Int = 0)
     time = solution.t
 
     if (transient >= length(time))

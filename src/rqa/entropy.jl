@@ -1,7 +1,13 @@
 #
+#           RMA Analysis
 #
-#
-function recurrence_entropy(probs::Vector{Float64}; ignore_motifs::AbstractVector = [])
+"""
+    rentropy([probs]; {ignore_motifs})
+
+Compute the recurrence entropy, proposed by [Corso2018](@cite). `ignore_motifs::Vector{Int}` defines a set of
+motif's indeces to be ignored while the function compute the entropy.
+"""
+function rentropy(probs::Vector{Float64}; ignore_motifs::Vector{Int} = [-1])
     s::Float64 = 0.0
 
     for i in eachindex(probs)
@@ -16,10 +22,8 @@ function recurrence_entropy(probs::Vector{Float64}; ignore_motifs::AbstractVecto
 
     return s
 end
-#
-#
-#
-function recurrence_entropy(probs::Dict{Int, Float64}; ignore_motifs::AbstractVector = [])
+
+function rentropy(probs::Dict{Int, Float64}; ignore_motifs::Vector{Int} = [-1])
     s::Float64 = 0.0
 
     for i in collect(keys(probs))
