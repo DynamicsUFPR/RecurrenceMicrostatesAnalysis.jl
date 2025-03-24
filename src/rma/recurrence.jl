@@ -44,7 +44,7 @@ end
     return @inbounds evaluate(metric, view(x, :, view(idx, 1:dim[1])), view(y, :, view(idx, dim[1]+1:dim[1] + dim[2]))) <= threshold
 end
 
-@inline function recurrence(x::AbstractArray, y::AbstractArray, threshold::Float64, idx::AbstractVector{Int}, metric::Metric, dim::AbstractVector{Int})
+@inline function recurrence(x::AbstractArray, y::AbstractArray, thresholds::Float64, idx::AbstractVector{Int}, metric::Metric, dim::AbstractVector{Int})
     distance = @inbounds evaluate(metric, view(x, :, view(idx, 1:dim[1])), view(y, :, view(idx, dim[1]+1:dim[1] + dim[2])))
     return (distance > thresholds[1] && distance <= thresholds[2])
 end
