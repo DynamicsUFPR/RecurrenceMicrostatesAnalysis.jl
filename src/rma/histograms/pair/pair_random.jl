@@ -2,11 +2,11 @@
 #       RMA Core
 #
 """
-    vect_timepair_random([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
+    vect_pair_random([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
-function vect_timepair_random(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
+function vect_pair_random(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -33,7 +33,7 @@ function vect_timepair_random(x::AbstractArray, y::AbstractArray, parameters, st
 
         ##
         ##      Compute the index and register the motif.
-        p = @fastmath compute_index_timepair(x, y, parameters, structure, func, dim, idx, itr, metric)
+        p = @fastmath compute_index_pair(x, y, parameters, structure, func, dim, idx, itr, metric)
         hg[p] += 1
     end
 
@@ -43,11 +43,11 @@ function vect_timepair_random(x::AbstractArray, y::AbstractArray, parameters, st
 end
 
 """
-    vect_timepair_random_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
+    vect_pair_random_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 """
-function vect_timepair_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
+function vect_pair_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -75,7 +75,7 @@ function vect_timepair_random_async(x::AbstractArray, y::AbstractArray, paramete
 
             ##
             ##      Compute the index and register the motif.
-            p = @fastmath compute_index_timepair(x, y, parameters, structure, func, dim, idx, itr, metric)
+            p = @fastmath compute_index_pair(x, y, parameters, structure, func, dim, idx, itr, metric)
             hg[p] += 1
         end
 
