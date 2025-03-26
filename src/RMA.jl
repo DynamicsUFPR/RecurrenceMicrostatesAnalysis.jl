@@ -16,6 +16,7 @@ module RMA
     #
     #       Libraries needed for the code to work.
     using Distances
+    using Statistics
 
     #       Metrics
     const euclidean_metric = Euclidean()
@@ -64,6 +65,7 @@ module RMA
     # ======================================================================================================= #
     #           * RMA Utils
     include("utils/prepare.jl")
+    include("utils/find_parameters.jl")     ## Test only
     # ======================================================================================================= #
     #
     #       Export some functions to the main scope.
