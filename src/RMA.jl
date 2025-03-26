@@ -43,8 +43,8 @@ module RMA
     include("rma/histograms/triangle/triangle_random.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: time pair
-    include("rma/histograms/timepair/timepair_random.jl")
-    include("rma/histograms/timepair/timepair_columnwise.jl")
+    include("rma/histograms/pair/pair_random.jl")
+    include("rma/histograms/pair/pair_columnwise.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: diagonal
     include("rma/histograms/diagonal/diagonal_random.jl")
