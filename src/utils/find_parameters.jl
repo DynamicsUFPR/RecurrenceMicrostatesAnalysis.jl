@@ -99,5 +99,5 @@ function find_parameters(solution, n::Int, transient::Int, len::Int; threshold_m
         end
     end
 
-    return threshold, s_max
+    return threshold, vicinity_range[v_indeces[2]], s_max
 end
