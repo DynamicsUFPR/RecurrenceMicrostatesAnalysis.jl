@@ -19,7 +19,7 @@ function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0,
             t_indeces[1] = t_indeces[2]
             t_indeces[2] = i
             s_max = s
-        elseif (s < s_max[2])
+        elseif (s < s_max)
             t_indeces[3] = i
             break
         end
