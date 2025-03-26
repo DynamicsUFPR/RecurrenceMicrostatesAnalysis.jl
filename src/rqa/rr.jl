@@ -13,7 +13,7 @@ function rrate(probs::Vector{Float64})
     ##
     ##       Compute the recurrence rate.
     for i in eachindex(probs)
-        rr = sum(digits(i, base = 2)) / hv
+        rr = sum(digits(i - 1, base = 2)) / hv
         result += rr * probs[i]
     end
 
