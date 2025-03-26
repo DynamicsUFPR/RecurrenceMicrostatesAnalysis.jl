@@ -8,7 +8,7 @@ These functions compute and convert a motif to a decimal value that will be used
 for store the motif in the system memory.
 
 It have three types:
-* Type-A: Using a generic structure, applied to square (or rectangle) motifs and time pair.
+* Type-A: Using a generic structure, applied to square (or rectangle) motifs and time.
 * Type-B: For a 2D space, such as the triangle motif, proposed by [Hirata2021](@cite). It must not be applied to
 spatial data using the recurrence plot generalization, proposed by [Marwan2006](@cite).
 * Type-C: Using fixed structures, like diagonal, and column shapes.
@@ -48,7 +48,7 @@ function compute_index_square(x::AbstractArray, y::AbstractArray, parameters, st
     return index + 1
 end
 
-function compute_index_timepair(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F,
+function compute_index_pair(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F,
     dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, metric::Metric) where {F}
     
     ##  Let a variable to store the index.

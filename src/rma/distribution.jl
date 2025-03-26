@@ -3,10 +3,10 @@
 #
 """
 ## Keywords arguments
-- `shape::Symbol`: can be `:square`, `:triangle`, `:timepair`, `:diagonal` and `:column`. The value `:square` refers to 
+- `shape::Symbol`: can be `:square`, `:triangle`, `:pair`, `:diagonal` and `:column`. The value `:square` refers to 
 default square format of motifs, based on the work of [Corso2018](@cite) with a generalization for spatial data based 
 on the work of [Marwan2006](@cite). On  the other hand, the value `:triangle` is only available for 2-dimensional 
-recurrence spaces (i.e., time series) and is based on the work of [Hirata2021](@cite). `:timepair`, `:diagonal` and 
+recurrence spaces (i.e., time series) and is based on the work of [Hirata2021](@cite). `:pair`, `:diagonal` and 
 `:column` are experimental shapes and there are not an work about them yet.
 
 - `run_mode::Symbol`: can be `:default`, `:dict`, or `:vect`. `:dict` and `:vect` set the return format to vector and
@@ -347,20 +347,20 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':triangle'.'"))
         end
         ## =================================================================================================================
-        ##      * Shape: timepair
-    elseif (shape == :timepair)
+        ##      * Shape: pair
+    elseif (shape == :pair)
         ##
         ##  ii. Sampling mode
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: full
         if (sampling_mode == :full)
-            throw(ArgumentError("The sampling mode ':full' is not implemented to shape ':timepair'.'"))
+            throw(ArgumentError("The sampling mode ':full' is not implemented to shape ':pair'.'"))
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: random
         elseif (sampling_mode == :random)
             histogram = threads ? (     #   --- Run Mode: vector
-                vect_timepair_random_async(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric)) : (
-                vect_timepair_random(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric))
+                vect_pair_random_async(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric)) : (
+                vect_pair_random(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric))
 
             ##      iii. Return the distribution
             return histogram ./ sum(histogram)
@@ -368,15 +368,15 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ##          * Mode: columnwise
         elseif (sampling_mode == :columnwise)
             histogram = threads ? (     #   --- Run Mode: vector
-                    vect_timepair_columnwise_async(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric)) : (
-                    vect_timepair_columnwise(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric))
+                    vect_pair_columnwise_async(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric)) : (
+                    vect_pair_columnwise(x, y, parameters, structure, space_size, func, [d_x, d_y], num_samples, metric))
 
             ##      iii. Return the distribution
             return histogram ./ num_samples
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
-            throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':timepair'.'"))
+            throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':pair'.'"))
         end
         ## =================================================================================================================
         ##      * Shape: diagonal
@@ -434,6 +434,6 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         end
         ## =================================================================================================================
     else
-        throw(ArgumentError(string("The shape mode '", string(shape), "' is not valid. Please, use ':square', ':triangle', ':timepair', ':diagonal', or ':column'.")))
+        throw(ArgumentError(string("The shape mode '", string(shape), "' is not valid. Please, use ':square', ':triangle', ':pair', ':diagonal', or ':column'.")))
     end
 end

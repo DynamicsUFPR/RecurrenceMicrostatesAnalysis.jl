@@ -2,12 +2,12 @@
 #       RMA Core
 #
 """
-    vect_timepair_columnwise([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
+    vect_pair_columnwise([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on each column of a recurrence space. The result is a vector with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function vect_timepair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
+function vect_pair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -30,7 +30,7 @@ function vect_timepair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parame
 
         for _ in 1:samples
             idx[2] = rand(1:space_size[2])
-            p = @fastmath compute_index_timepair(x, y, parameters, structure, func, dim, idx, itr, metric)
+            p = @fastmath compute_index_pair(x, y, parameters, structure, func, dim, idx, itr, metric)
             hg[p, i] += 1
         end
     end
@@ -41,12 +41,12 @@ function vect_timepair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parame
 end
 
 """
-    vect_timepair_columnwise_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
+    vect_pair_columnwise_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on each column of a recurrence space. The result is a vector with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function vect_timepair_columnwise_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
+function vect_pair_columnwise_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -73,7 +73,7 @@ function vect_timepair_columnwise_async(x::AbstractArray, y::AbstractArray, para
 
                 ##
                 ##      Compute the index and register the motif.
-                p = @fastmath compute_index_timepair(x, y, parameters, structure, func, dim, idx, itr, metric)
+                p = @fastmath compute_index_pair(x, y, parameters, structure, func, dim, idx, itr, metric)
                 hg[p, i] += 1
             end
         end
