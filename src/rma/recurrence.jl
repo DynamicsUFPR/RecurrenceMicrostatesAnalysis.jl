@@ -31,7 +31,7 @@ just used for high-dimensional problems, such as images.
 These functions return `true` when we have a recurrence, and `false` otherwise.
 """
 @inline function recurrence(x::Matrix{Float64}, y::Matrix{Float64}, threshold::Float64, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
-    return @inbounds evaluate(metric, x[idx[:, 1]], y[idx[:, 2]]) <= threshold
+    return @inbounds evaluate(metric, x[:, idx[1]], y[:, idx[2]]) <= threshold
 end
 
 @inline function recurrence(x::Matrix{Float64}, y::Matrix{Float64}, thresholds::Tuple{Float64, Float64}, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
