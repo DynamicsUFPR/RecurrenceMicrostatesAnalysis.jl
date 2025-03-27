@@ -6,7 +6,7 @@
 
 Get a histogram of a random set of microstates available on a recurrence space. The result is a dict with a probability distribution.
 """
-function dict_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
+function dict_triangle_random(x::AbstractVector, y::AbstractVector, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -52,7 +52,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function dict_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
+function dict_triangle_random_async(x::AbstractVector, y::AbstractVector, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -138,7 +138,7 @@ end
 
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
-function vect_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
+function vect_triangle_random(x::AbstractVector, y::AbstractVector, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##
@@ -184,7 +184,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function vect_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
+function vect_triangle_random_async(x::AbstractVector, y::AbstractVector, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
 
     ##

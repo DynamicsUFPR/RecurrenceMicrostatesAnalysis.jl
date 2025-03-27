@@ -15,7 +15,7 @@ function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, ma
         throw(ArgumentError("Transient value is greater than solution size."))
     end
     
-    pos = transient+1:length(time)
+    pos = (transient+1):length(time)
     new_pos = [1]
 
     time = time[pos]
@@ -29,12 +29,12 @@ function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, ma
         end
     end
 
-    pos = new_pos .+ transient
-    data = (solution[:, :])[:, pos]
+    pos =  transient .+ new_pos
+    data = solution.u[pos]
 
-    if (max_length == 0 || size(data, 2) < max_length)
+    if (max_length == 0 || length(data) < max_length)
         return data
     end
 
-    return (solution[:, :])[:, pos[1:max_length]]
+    return solution.u[pos[1:max_length]]
 end

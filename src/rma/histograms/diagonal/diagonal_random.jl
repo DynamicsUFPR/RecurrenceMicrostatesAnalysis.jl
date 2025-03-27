@@ -6,7 +6,7 @@
 
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
-function vect_diagonal_random(x::AbstractArray, y::AbstractArray, parameters,
+function vect_diagonal_random(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
 
     ##
@@ -47,7 +47,7 @@ end
 
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 """
-function vect_diagonal_random_async(x::AbstractArray, y::AbstractArray, parameters,
+function vect_diagonal_random_async(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
     ##
     ##      Compute the power vector.
