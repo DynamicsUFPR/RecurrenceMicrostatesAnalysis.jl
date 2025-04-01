@@ -30,12 +30,12 @@ just used for high-dimensional problems, such as images.
 
 These functions return `true` when we have a recurrence, and `false` otherwise.
 """
-@inline function recurrence(x::AbstractVector, y::AbstractVector, threshold::Float64, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
-    return @inbounds evaluate(metric, x[idx[1]], y[idx[2]]) <= threshold
+@inline function recurrence(x::Matrix{Float64}, y::Matrix{Float64}, threshold::Float64, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
+    return @inbounds evaluate(metric, view(x, :, idx[1]), view(y, :, idx[2])) <= threshold
 end
 
-@inline function recurrence(x::AbstractVector, y::AbstractVector, thresholds::Tuple{Float64, Float64}, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
-    distance = @inbounds evaluate(metric, x[idx[1]], y[idx[2]])
+@inline function recurrence(x::Matrix{Float64}, y::Matrix{Float64}, thresholds::Tuple{Float64, Float64}, idx::AbstractVector{Int}, metric::Metric, _::AbstractVector{Int})
+    distance = @inbounds evaluate(metric, view(x, :, idx[1]), view(y, :, idx[2]))
     return (distance > thresholds[1] && distance <= thresholds[2])
 end
     

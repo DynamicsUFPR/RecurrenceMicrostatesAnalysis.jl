@@ -16,7 +16,7 @@ spatial data using the recurrence plot generalization, proposed by [Marwan2006](
 Each type have a specific method to get the fixed indeces.
 """
 # -----------------------------------------------------------  TYPE A:  GENERIC STRUCTURE ------------------------
-function compute_index_square(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int}, func::F, 
+function compute_index_square(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F, 
     dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
 
     ##      Let a variable to store the index.
@@ -48,7 +48,7 @@ function compute_index_square(x::Union{AbstractVector, AbstractArray}, y::Union{
     return index + 1
 end
 
-function compute_index_pair(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int}, func::F,
+function compute_index_pair(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F,
     dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, metric::Metric) where {F}
     
     ##  Let a variable to store the index.
@@ -73,7 +73,7 @@ function compute_index_pair(x::Union{AbstractVector, AbstractArray}, y::Union{Ab
 end
 
 # -----------------------------------------------------------  TYPE B:   FOR 2D SPACE     -----------------------
-function compute_index_triangle(x::AbstractVector, y::AbstractVector, parameters, len::Int, func::F, dim::AbstractVector{Int},
+function compute_index_triangle(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int, func::F, dim::AbstractVector{Int},
     fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
 
     ##      Let a variable to store the result, and another to store the index to access the power vector.
@@ -103,7 +103,7 @@ function compute_index_triangle(x::AbstractVector, y::AbstractVector, parameters
 end
 
 # -----------------------------------------------------------  TYPE C:   FOR FIXED STRUCTURE   --------------------
-function compute_index_diagonal(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, func::F, dim::AbstractVector{Int},
+function compute_index_diagonal(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
     fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
     
     ##      Let a variable to store the index.
@@ -127,7 +127,7 @@ function compute_index_diagonal(x::Union{AbstractVector, AbstractArray}, y::Unio
     return index + 1
 end
 
-function compute_index_column(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, func::F, dim::AbstractVector{Int},
+function compute_index_column(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
     fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
     
     ##      Let a variable to store the index.

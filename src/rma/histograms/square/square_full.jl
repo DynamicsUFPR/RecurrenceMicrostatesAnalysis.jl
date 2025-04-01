@@ -135,7 +135,7 @@ end
 
 Get a histogram of all microstates available on a recurrence space. The result is a vect with a probability distribution.
 """
-function vect_square_full(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int},
+function vect_square_full(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric::Metric) where {F}
 
     ##
@@ -184,7 +184,7 @@ end
 Get a histogram of all microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function vect_square_full_async(x::AbstractVector, y::AbstractVector, parameters, structure::AbstractVector{Int},
+function vect_square_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric) where {F}
 
     ##

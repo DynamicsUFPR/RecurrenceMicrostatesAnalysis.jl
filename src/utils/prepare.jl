@@ -30,11 +30,11 @@ function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, ma
     end
 
     pos =  transient .+ new_pos
-    data = solution.u[pos]
+    data = (solution[:, :])[:, pos]
 
-    if (max_length == 0 || length(data) < max_length)
+    if (max_length == 0 || size(data, 2) < max_length)
         return data
     end
 
-    return solution.u[pos[1:max_length]]
+    return (solution[:, :])[:, pos[1:max_length]]
 end

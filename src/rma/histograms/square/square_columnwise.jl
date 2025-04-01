@@ -7,7 +7,7 @@
 Get a histogram of a random set of microstates available on each column of a recurrence space. The result is a vector with a probability distribution.
 It is only available for 2D recurrence plot !!
 """
-function vect_square_columnwise(x::AbstractVector, y::AbstractVector, parameters, structure::AbstractVector{Int},
+function vect_square_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, samples::Int, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric) where {F}
     
     ##

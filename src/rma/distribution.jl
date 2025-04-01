@@ -53,12 +53,16 @@ represents the length of motifs side.
 This function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
-function distribution(x::Union{AbstractVector, AbstractArray}, parameters, n::Int;
+function distribution(x::AbstractArray, parameters, n::Int;
     shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random,
     num_samples::Union{Int, Float64} = 0.05, threads::Bool = Threads.nthreads() > 1, 
     metric::Metric = euclidean_metric, func = (x, y, p, ix, metric, dim) -> recurrence(x, y, p, ix, metric, dim))
     
-    dim = ndims(x) - (x isa AbstractVector ? 0 : 1)
+    if (ndims(x) == 1)
+        x = Matrix(x')
+    end
+    
+    dim = ndims(x) - 1
     structure = ones(Int, 2 * dim) .* n
 
     return distribution(x, x, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
@@ -76,13 +80,20 @@ represents the length of motifs side.
 This function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
-function distribution(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, n::Int;
+function distribution(x::AbstractArray, y::AbstractArray, parameters, n::Int;
     shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random,
     num_samples::Union{Int, Float64} = 0.05, threads::Bool = Threads.nthreads() > 1, 
     metric::Metric = euclidean_metric, func = (x, y, p, ix, metric, dim) -> recurrence(x, y, p, ix, metric, dim))
 
-    dim_x = ndims(x) - (x isa AbstractVector ? 0 : 1)
-    dim_y = ndims(y) - (y isa AbstractVector ? 0 : 1)
+    if (ndims(x) == 1)
+        x = Matrix(x')
+    end
+    if (ndims(y) == 1)
+        y = Matrix(y')
+    end
+
+    dim_x = ndims(x) - 1
+    dim_y = ndims(y) - 1
     structure = ones(Int, dim_x + dim_y) .* n
 
     return distribution(x, y, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
@@ -134,15 +145,22 @@ is a vector where each element represents a side of the motif.
 This function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
-function distribution(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int};
+function distribution(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int};
     shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random,
     num_samples::Union{Int, Float64} = 0.05, threads::Bool = Threads.nthreads() > 1, 
     metric::Metric = euclidean_metric, func = (x, y, p, ix, metric, dim) -> recurrence(x, y, p, ix, metric, dim))
 
+    if (ndims(x) == 1)
+        x = Matrix(x')
+    end
+    if (ndims(y) == 1)
+        y = Matrix(y')
+    end
+
     ##
     ##      Get the number of dimenions.
-    d_x = ndims(x) - (x isa AbstractVector ? 0 : 1)
-    d_y = ndims(y) - (y isa AbstractVector ? 0 : 1)
+    d_x = ndims(x) - 1
+    d_y = ndims(y) - 1
 
     ##
     ##      ** It is need that d_x + d_y = length(structure) !!
@@ -157,13 +175,13 @@ function distribution(x::Union{AbstractVector, AbstractArray}, y::Union{Abstract
 
     ##  From [x]
     for d in 1:d_x
-        len = size(x, d + (x isa AbstractVector ? 0 : 1)) - (sampling_mode == :triangleup ? 0 : (structure[d] - (shape == :pair ? 0 : 1)))
+        len = size(x, d + 1) - (sampling_mode == :triangleup ? 0 : (structure[d] - 1))
         total_microstates *= len
         push!(space_size, len)
     end
     ##  From [y]
     for d in 1:d_y
-        len = size(y, d + (y isa AbstractVector ? 0 : 1)) - (sampling_mode == :triangleup ? 0 : (structure[d_x + d] - (shape == :pair ? 0 : 1)))
+        len = size(y, d + 1) - (sampling_mode == :triangleup ? 0 : (structure[d_x + d] - 1))
         total_microstates *= len
         push!(space_size, len)
     end
