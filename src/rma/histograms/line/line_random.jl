@@ -2,11 +2,11 @@
 #       RMA Core
 #
 """
-    vect_column_random([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
+    vect_line_random([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
-function vect_column_random(x::AbstractArray, y::AbstractArray, parameters,
+function vect_line_random(x::AbstractArray, y::AbstractArray, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
 
     ##
@@ -33,7 +33,7 @@ function vect_column_random(x::AbstractArray, y::AbstractArray, parameters,
 
         ##
         ##      Compute the index and register the motif.
-        p = @fastmath compute_index_column(x, y, parameters, func, dim, idx, itr, p_vect, metric)
+        p = @fastmath compute_index_line(x, y, parameters, func, dim, idx, itr, p_vect, metric)
         hg[p] += 1
     end
 
@@ -43,11 +43,11 @@ function vect_column_random(x::AbstractArray, y::AbstractArray, parameters,
 end
 
 """
-    vect_column_random_async([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
+    vect_line_random_async([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
 
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 """
-function vect_column_random_async(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters,
+function vect_line_random_async(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
     ##
     ##      Compute the power vector.
@@ -70,7 +70,7 @@ function vect_column_random_async(x::Union{AbstractVector, AbstractArray}, y::Un
                 idx[s] = rand(1:space_size[s])
             end
 
-            p = @fastmath compute_index_column(x, y, parameters, func, dim, idx, itr, p_vect, metric)
+            p = @fastmath compute_index_line(x, y, parameters, func, dim, idx, itr, p_vect, metric)
             hg[p] += 1
         end
 

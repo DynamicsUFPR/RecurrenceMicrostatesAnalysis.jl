@@ -11,7 +11,7 @@ It have three types:
 * Type-A: Using a generic structure, applied to square (or rectangle) motifs and time.
 * Type-B: For a 2D space, such as the triangle motif, proposed by [Hirata2021](@cite). It must not be applied to
 spatial data using the recurrence plot generalization, proposed by [Marwan2006](@cite).
-* Type-C: Using fixed structures, like diagonal, and column shapes.
+* Type-C: Using fixed structures, like diagonal, and line shapes.
 
 Each type have a specific method to get the fixed indeces.
 """
@@ -127,7 +127,7 @@ function compute_index_diagonal(x::AbstractArray, y::AbstractArray, parameters, 
     return index + 1
 end
 
-function compute_index_column(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
+function compute_index_line(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
     fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
     
     ##      Let a variable to store the index.
@@ -143,7 +143,7 @@ function compute_index_column(x::AbstractArray, y::AbstractArray, parameters, fu
             index += power_vector[m]
         end
 
-        itr[1] += 1
+        itr[2] += 1
     end
 
     ##      Return the computed index adapted to Julia's indexing.

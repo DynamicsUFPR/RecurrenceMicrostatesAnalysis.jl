@@ -3,11 +3,11 @@
 #
 """
 ## Keywords arguments
-- `shape::Symbol`: can be `:square`, `:triangle`, `:pair`, `:diagonal` and `:column`. The value `:square` refers to 
+- `shape::Symbol`: can be `:square`, `:triangle`, `:pair`, `:diagonal` and `:line`. The value `:square` refers to 
 default square format of motifs, based on the work of [Corso2018](@cite) with a generalization for spatial data based 
 on the work of [Marwan2006](@cite). On  the other hand, the value `:triangle` is only available for 2-dimensional 
 recurrence spaces (i.e., time series) and is based on the work of [Hirata2021](@cite). `:pair`, `:diagonal` and 
-`:column` are experimental shapes and there are not an work about them yet.
+`:line` are experimental shapes and there are not an work about them yet.
 
 - `run_mode::Symbol`: can be `:default`, `:dict`, or `:vect`. `:dict` and `:vect` set the return format to vector and
 dictionary respectively. The mode `:default` uses a vector for motifs with an hypervolume lesser than 28 and 
@@ -206,7 +206,7 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
     ##
     ##      Compute the hypervolume (it is not applied to triangle shape)
     ##      It represents the number of elements inside a motif.
-    hv = (shape == :column || shape == :diagonal) ? structure[1] : reduce(*, structure)
+    hv = (shape == :line || shape == :diagonal) ? structure[1] : reduce(*, structure)
     ##      Verify if need to use dictionary or not.
     use_dict = run_mode == :dict
     use_dict = hv > 28 ? true : use_dict
@@ -400,34 +400,34 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':diagonal'.'"))
         end
         ## =================================================================================================================
-        ##      * Shape: column
-    elseif (shape == :column)
+        ##      * Shape: line
+    elseif (shape == :line)
         ##
         ##  ii. Sampling mode
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: full
         if (sampling_mode == :full)
-            throw(ArgumentError("The sampling mode ':full' is not implemented to shape ':column'.'"))
+            throw(ArgumentError("The sampling mode ':full' is not implemented to shape ':line'.'"))
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: random
         elseif (sampling_mode == :random)
             histogram = threads ? (     #   --- Run Mode: vector
-                vect_column_random_async(x, y, parameters, space_size, func, [d_x, d_y], hv, num_samples, metric)) : (
-                vect_column_random(x, y, parameters, space_size, func, [d_x, d_y], hv, num_samples, metric))
+                vect_line_random_async(x, y, parameters, space_size, func, [d_x, d_y], hv, num_samples, metric)) : (
+                vect_line_random(x, y, parameters, space_size, func, [d_x, d_y], hv, num_samples, metric))
 
             ##      iii. Return the distribution
             return histogram ./ sum(histogram)
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: columnwise
         elseif (sampling_mode == :columnwise)
-            throw(ArgumentError("The sampling mode ':columnwise' is not implemented to shape ':column'.'"))
+            throw(ArgumentError("The sampling mode ':columnwise' is not implemented to shape ':line'.'"))
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
-            throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':column'.'"))
+            throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':line'.'"))
         end
         ## =================================================================================================================
     else
-        throw(ArgumentError(string("The shape mode '", string(shape), "' is not valid. Please, use ':square', ':triangle', ':pair', ':diagonal', or ':column'.")))
+        throw(ArgumentError(string("The shape mode '", string(shape), "' is not valid. Please, use ':square', ':triangle', ':pair', ':diagonal', or ':line'.")))
     end
 end

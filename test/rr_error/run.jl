@@ -1,4 +1,5 @@
-using RMA
+include("../../src/RMA.jl")
+using .RMA
 using CairoMakie
 using Statistics
 using Distributions
@@ -43,25 +44,25 @@ function compute()
         rr_square = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :square)
         rr_triangle = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :triangle)
         rr_diagonal = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :diagonal)
-        rr_column = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :column)
+        rr_line = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :pair)
 
         det_square = RMA.determinism(uniform, thres; mode = :square)
         det_diagonal = RMA.determinism(uniform, thres; mode = :diagonal)
 
         lam_square = RMA.laminarity(uniform, thres; mode = :square)
-        lam_column = RMA.laminarity(uniform, thres; mode = :column)
+        lam_line = RMA.laminarity(uniform, thres; mode = :line)
 
         result[1, 1, i] = (abs(rr_square - rr) / rr)
         result[2, 1, i] = (abs(rr_triangle - rr) / rr)
         result[3, 1, i] = (abs(rr_diagonal - rr) / rr)
-        result[4, 1, i] = (abs(rr_column - rr) / rr)
+        result[4, 1, i] = (abs(rr_line - rr) / rr)
         result[5, 1, i] = (abs(rr_pair - rr) / rr)
 
         determs[1, 1, i] = (abs(det_square - det) / det)
         determs[2, 1, i] = (abs(det_diagonal - det) / det)
         lamis[1, 1, i] = (abs(lam_square - lam) / lam)
-        lamis[2, 1, i] = (abs(lam_column - lam) / lam)
+        lamis[2, 1, i] = (abs(lam_line - lam) / lam)
 
         # println(string(rr, ", s: ", result[1, 1, i], ", t: ", result[2, 1, i], ", d: ", result[3, 1, i], ", c: ", result[4, 1, i], ", p: ", result[5, 1, i]))
     end
@@ -96,25 +97,25 @@ function compute()
         rr_square = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :square)
         rr_triangle = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :triangle)
         rr_diagonal = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :diagonal)
-        rr_column = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :column)
+        rr_line = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(lorenz, thres, 3; num_samples = samples_percent, shape = :pair)
 
         det_square = RMA.determinism(lorenz, thres; mode = :square)
         det_diagonal = RMA.determinism(lorenz, thres; mode = :diagonal)
 
         lam_square = RMA.laminarity(lorenz, thres; mode = :square)
-        lam_column = RMA.laminarity(lorenz, thres; mode = :column)
+        lam_line = RMA.laminarity(lorenz, thres; mode = :line)
 
         result[1, 2, i] = (abs(rr_square - rr) / rr)
         result[2, 2, i] = (abs(rr_triangle - rr) / rr)
         result[3, 2, i] = (abs(rr_diagonal - rr) / rr)
-        result[4, 2, i] = (abs(rr_column - rr) / rr)
+        result[4, 2, i] = (abs(rr_line - rr) / rr)
         result[5, 2, i] = (abs(rr_pair - rr) / rr)
 
         determs[1, 2, i] = (abs(det_square - det) / det)
         determs[2, 2, i] = (abs(det_diagonal - det) / det)
         lamis[1, 2, i] = (abs(lam_square - lam) / lam)
-        lamis[2, 2, i] = (abs(lam_column - lam) / lam)
+        lamis[2, 2, i] = (abs(lam_line - lam) / lam)
 
         # println(string("thres = ", thres, " | ", rr, ", s: ", result[1, 2, i], ", t: ", result[2, 2, i], ", d: ", result[3, 2, i], ", c: ", result[4, 2, i], ", p: ", result[5, 2, i]))
     end
@@ -136,25 +137,25 @@ function compute()
         rr_square = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :square)
         rr_triangle = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :triangle)
         rr_diagonal = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :diagonal)
-        rr_column = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :column)
+        rr_line = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(logistic, thres, 3; num_samples = samples_percent, shape = :pair)
 
         det_square = RMA.determinism(logistic, thres; mode = :square)
         det_diagonal = RMA.determinism(logistic, thres; mode = :diagonal)
 
         lam_square = RMA.laminarity(logistic, thres; mode = :square)
-        lam_column = RMA.laminarity(logistic, thres; mode = :column)
+        lam_line = RMA.laminarity(logistic, thres; mode = :line)
 
         result[1, 3, i] = (abs(rr_square - rr) / rr)
         result[2, 3, i] = (abs(rr_triangle - rr) / rr)
         result[3, 3, i] = (abs(rr_diagonal - rr) / rr)
-        result[4, 3, i] = (abs(rr_column - rr) / rr)
+        result[4, 3, i] = (abs(rr_line - rr) / rr)
         result[5, 3, i] = (abs(rr_pair - rr) / rr)
 
         determs[1, 3, i] = (abs(det_square - det) / det)
         determs[2, 3, i] = (abs(det_diagonal - det) / det)
         lamis[1, 3, i] = (abs(lam_square - lam) / lam)
-        lamis[2, 3, i] = (abs(lam_column - lam) / lam)
+        lamis[2, 3, i] = (abs(lam_line - lam) / lam)
 
         # println(string("thres = ", thres, " | ", rr, ", s: ", result[1, 3, i], ", t: ", result[2, 3, i], ", d: ", result[3, 3, i], ", c: ", result[4, 3, i], ", p: ", result[5, 3, i]))
     end
@@ -187,25 +188,25 @@ function compute()
         rr_square = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :square)
         rr_triangle = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :triangle)
         rr_diagonal = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :diagonal)
-        rr_column = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :column)
+        rr_line = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(rossler, thres, 3; num_samples = samples_percent, shape = :pair)
 
         det_square = RMA.determinism(rossler, thres; mode = :square)
         det_diagonal = RMA.determinism(rossler, thres; mode = :diagonal)
 
         lam_square = RMA.laminarity(rossler, thres; mode = :square)
-        lam_column = RMA.laminarity(rossler, thres; mode = :column)
+        lam_line = RMA.laminarity(rossler, thres; mode = :line)
 
         result[1, 4, i] = (abs(rr_square - rr) / rr)
         result[2, 4, i] = (abs(rr_triangle - rr) / rr)
         result[3, 4, i] = (abs(rr_diagonal - rr) / rr)
-        result[4, 4, i] = (abs(rr_column - rr) / rr)
+        result[4, 4, i] = (abs(rr_line - rr) / rr)
         result[5, 4, i] = (abs(rr_pair - rr) / rr)
 
         determs[1, 4, i] = (abs(det_square - det) / det)
         determs[2, 4, i] = (abs(det_diagonal - det) / det)
         lamis[1, 4, i] = (abs(lam_square - lam) / lam)
-        lamis[2, 4, i] = (abs(lam_column - lam) / lam)
+        lamis[2, 4, i] = (abs(lam_line - lam) / lam)
 
         # println(string("thres = ", thres, " | ", rr, ", s: ", result[1, 4, i], ", t: ", result[2, 4, i], ", d: ", result[3, 4, i], ", c: ", result[4, 4, i], ", p: ", result[5, 4, i]))
     end
@@ -227,25 +228,25 @@ function compute()
         rr_square = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :square)
         rr_triangle = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :triangle)
         rr_diagonal = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :diagonal)
-        rr_column = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :column)
+        rr_line = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(bsg, thres, 3; num_samples = samples_percent, shape = :pair)
 
         det_square = RMA.determinism(bsg, thres; mode = :square)
         det_diagonal = RMA.determinism(bsg, thres; mode = :diagonal)
 
         lam_square = RMA.laminarity(bsg, thres; mode = :square)
-        lam_column = RMA.laminarity(bsg, thres; mode = :column)
+        lam_line = RMA.laminarity(bsg, thres; mode = :line)
 
         result[1, 5, i] = (abs(rr_square - rr) / rr)
         result[2, 5, i] = (abs(rr_triangle - rr) / rr)
         result[3, 5, i] = (abs(rr_diagonal - rr) / rr)
-        result[4, 5, i] = (abs(rr_column - rr) / rr)
+        result[4, 5, i] = (abs(rr_line - rr) / rr)
         result[5, 5, i] = (abs(rr_pair - rr) / rr)
 
         determs[1, 5, i] = (abs(det_square - det) / det)
         determs[2, 5, i] = (abs(det_diagonal - det) / det)
         lamis[1, 5, i] = (abs(lam_square - lam) / lam)
-        lamis[2, 5, i] = (abs(lam_column - lam) / lam)
+        lamis[2, 5, i] = (abs(lam_line - lam) / lam)
 
         # println(string("thres = ", thres, " | ", rr, ", s: ", result[1, 3, i], ", t: ", result[2, 3, i], ", d: ", result[3, 3, i], ", c: ", result[4, 3, i], ", p: ", result[5, 3, i]))
     end
@@ -275,7 +276,7 @@ function graph()
     end
 
     ax_u = Axis(fig[1, 1],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "a) Uniform Distribution",
@@ -292,7 +293,7 @@ function graph()
     end
 
     ax_lz = Axis(fig[1, 2],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "b) Lorenz System",
@@ -309,7 +310,7 @@ function graph()
     end
 
     ax_lm = Axis(fig[2, 1],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "c) Logistic Map",
@@ -326,7 +327,7 @@ function graph()
     end
 
     ax_r = Axis(fig[2, 2],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "d) Rössler System",
@@ -343,7 +344,7 @@ function graph()
     end
 
     ax_b = Axis(fig[3, 1],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "e) Bernoulli Shifted Generalized",
@@ -364,7 +365,7 @@ function graph()
     cat = reshape(cat, size(cat, 1) * size(cat, 2))
 
     ax_o = Axis(fig[3, 2],
-        xticks = (1:5, [":square", ":triangle", ":diagonal", ":column", ":pair"]),
+        xticks = (1:5, [":square", ":triangle", ":diagonal", ":line", ":pair"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "f) Overview",
@@ -389,7 +390,7 @@ function graph()
     ##
     ##      Uniform distribution
     ax_u_2 = Axis(fig_2[1, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "a) Uniform Distribution",
@@ -409,7 +410,7 @@ function graph()
     ##
     ##      Lorenz System
     ax_lz_2 = Axis(fig_2[1, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "b) Lorenz System",
@@ -429,7 +430,7 @@ function graph()
     ##
     ##      Logistic map
     ax_lm_2 = Axis(fig_2[2, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "c) Logistic map",
@@ -449,7 +450,7 @@ function graph()
     ##
     ##      Rössler system
     ax_r_2 = Axis(fig_2[2, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "d) Rössler System",
@@ -469,7 +470,7 @@ function graph()
     ##
     ##      BSG
     ax_b_2 = Axis(fig_2[3, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "e) Bernoulli Shifted Generalized",
@@ -498,7 +499,7 @@ function graph()
 
 
     ax_o_2 = Axis(fig_2[3, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":column"]),
+        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
         xgridvisible = false,
         ygridvisible = false,
         title = "f) Overview",

@@ -50,8 +50,8 @@ module RMA
     #       - Shape: diagonal
     include("rma/histograms/diagonal/diagonal_random.jl")
     # ------------------------------------------------------------------------------------------------------- #
-    #       - Shape: column
-    include("rma/histograms/column/column_random.jl")
+    #       - Shape: line
+    include("rma/histograms/line/line_random.jl")
     # ======================================================================================================= #
     #           * RMA Analysis
     #       - Recurrence Rate (RR)
