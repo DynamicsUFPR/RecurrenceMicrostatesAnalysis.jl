@@ -1,5 +1,5 @@
-include("../../src/RMA.jl")
-using .RMA
+using RMA
+using Colors
 using CairoMakie
 using Statistics
 using Distributions
@@ -47,9 +47,12 @@ function compute()
         rr_line = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :line)
         rr_pair = rrate(uniform, thres, 3; num_samples = samples_percent, shape = :pair)
 
+        #dist_square = distribution(uniform, thres, 3; shape = :square, sampling_mode = :full)
+        #det_square = RMA.determinism(rr_square, dist_square; mode = :square)
         det_square = RMA.determinism(uniform, thres; mode = :square)
         det_diagonal = RMA.determinism(uniform, thres; mode = :diagonal)
 
+        #lam_square = RMA.laminarity(rr_square, dist_square; mode = :square)
         lam_square = RMA.laminarity(uniform, thres; mode = :square)
         lam_line = RMA.laminarity(uniform, thres; mode = :line)
 
@@ -377,148 +380,99 @@ function graph()
     ##
     save("test/rr_error/fig.png", fig)
 
-    ### Error of determinism and laminarity.
-    fig_2 = Figure(size = (1024, 920))
+    ## =============================================================================================
+    ##      Determinism
+    fig_2 = Figure(size = (1024, 420))
 
     ##
     ##      Categories for boxplot.
-    cat = ones(Int, size(dataset, 3), 4)
+    cat = ones(Int, size(dataset, 3), 6)
     cat[:, 2] .*= 2
     cat[:, 3] .*= 3
     cat[:, 4] .*= 4
+    cat[:, 5] .*= 5
+    cat[:, 6] .*= 6
 
-    ##
-    ##      Uniform distribution
-    ax_u_2 = Axis(fig_2[1, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
+    ax_1 = Axis(fig_2[1, 1],
+        xticks = (1:6, ["(i)", "(ii)", "(iii)", "(iv)", "(v)", "Overview"]),
         xgridvisible = false,
         ygridvisible = false,
-        title = "a) Uniform Distribution",
+        title = "a) Square Motifs",
         ylabel = "ΔError (%)")
 
-    ax_u_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_u_2, cat[:, 1], det[1, 1, :] .* 100, color = :blue)
-    boxplot!(ax_u_2, cat[:, 2], det[2, 1, :] .* 100, color = :blue)
-    boxplot!(ax_u_2, cat[:, 3], lam[1, 1, :] .* 100, color = :green)
-    boxplot!(ax_u_2, cat[:, 4], lam[2, 1, :] .* 100, color = :green)
+    ax_1.ytickformat = y -> string.(round.(y, digits=2), "%")
+    boxplot!(ax_1, cat[:, 1], det[1, 1, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_1, cat[:, 2], det[1, 2, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_1, cat[:, 3], det[1, 3, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_1, cat[:, 4], det[1, 4, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_1, cat[:, 5], det[1, 5, :] .* 100, colormap = :Set2_6)
 
-    scatter!(ax_u_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_u_2, [NaN], [NaN], color=:green, label="Laminarity")
+    overview_1 = reshape(det[1, :, :], size(det, 2) * size(det, 3))
 
-    axislegend(ax_u_2)
+    boxplot!(ax_1, cat[:, 6], overview_1 .* 100, colormap = :Set2_6)
 
-    ##
-    ##      Lorenz System
-    ax_lz_2 = Axis(fig_2[1, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
+    ax_2 = Axis(fig_2[1, 2],
+        xticks = (1:6, ["(i)", "(ii)", "(iii)", "(iv)", "(v)", "Overview"]),
         xgridvisible = false,
         ygridvisible = false,
-        title = "b) Lorenz System",
+        title = "b) Diagonal Motifs",
         ylabel = "ΔError (%)")
 
-    ax_lz_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_lz_2, cat[:, 1], det[1, 2, :] .* 100, color = :blue)
-    boxplot!(ax_lz_2, cat[:, 2], det[2, 2, :] .* 100, color = :blue)
-    boxplot!(ax_lz_2, cat[:, 3], lam[1, 2, :] .* 100, color = :green)
-    boxplot!(ax_lz_2, cat[:, 4], lam[2, 2, :] .* 100, color = :green)
+    ax_2.ytickformat = y -> string.(round.(y, digits=2), "%")
+    boxplot!(ax_2, cat[:, 1], det[2, 1, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_2, cat[:, 2], det[2, 2, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_2, cat[:, 3], det[2, 3, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_2, cat[:, 4], det[2, 4, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_2, cat[:, 5], det[2, 5, :] .* 100, colormap = :Set2_6)
 
-    scatter!(ax_lz_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_lz_2, [NaN], [NaN], color=:green, label="Laminarity")
+    overview_2 = reshape(det[2, :, :], size(det, 2) * size(det, 3))
 
-    # axislegend(ax_lz_2)
-
-    ##
-    ##      Logistic map
-    ax_lm_2 = Axis(fig_2[2, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
-        xgridvisible = false,
-        ygridvisible = false,
-        title = "c) Logistic map",
-        ylabel = "ΔError (%)")
-
-    ax_lm_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_lm_2, cat[:, 1], det[1, 3, :] .* 100, color = :blue)
-    boxplot!(ax_lm_2, cat[:, 2], det[2, 3, :] .* 100, color = :blue)
-    boxplot!(ax_lm_2, cat[:, 3], lam[1, 3, :] .* 100, color = :green)
-    boxplot!(ax_lm_2, cat[:, 4], lam[2, 3, :] .* 100, color = :green)
-
-    scatter!(ax_lm_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_lm_2, [NaN], [NaN], color=:green, label="Laminarity")
-
-    # axislegend(ax_lm_2)
-
-    ##
-    ##      Rössler system
-    ax_r_2 = Axis(fig_2[2, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
-        xgridvisible = false,
-        ygridvisible = false,
-        title = "d) Rössler System",
-        ylabel = "ΔError (%)")
-
-    ax_r_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_r_2, cat[:, 1], det[1, 4, :] .* 100, color = :blue)
-    boxplot!(ax_r_2, cat[:, 2], det[2, 4, :] .* 100, color = :blue)
-    boxplot!(ax_r_2, cat[:, 3], lam[1, 4, :] .* 100, color = :green)
-    boxplot!(ax_r_2, cat[:, 4], lam[2, 4, :] .* 100, color = :green)
-
-    scatter!(ax_r_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_r_2, [NaN], [NaN], color=:green, label="Laminarity")
-
-    # axislegend(ax_r_2)
-
-    ##
-    ##      BSG
-    ax_b_2 = Axis(fig_2[3, 1],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
-        xgridvisible = false,
-        ygridvisible = false,
-        title = "e) Bernoulli Shifted Generalized",
-        ylabel = "ΔError (%)")
-
-    ax_b_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_b_2, cat[:, 1], det[1, 4, :] .* 100, color = :blue)
-    boxplot!(ax_b_2, cat[:, 2], det[2, 4, :] .* 100, color = :blue)
-    boxplot!(ax_b_2, cat[:, 3], lam[1, 4, :] .* 100, color = :green)
-    boxplot!(ax_b_2, cat[:, 4], lam[2, 4, :] .* 100, color = :green)  
-
-    scatter!(ax_b_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_b_2, [NaN], [NaN], color=:green, label="Laminarity")
-
-    # axislegend(ax_b_2)
-
-    ##
-    ##      Overview
-    ov_det = reshape(det, 2, 5 * size(det, 3))
-    ov_lam = reshape(lam, 2, 5 * size(lam, 3))
-
-    cat = ones(Int, size(ov_det, 2), 4)
-    cat[:, 2] .*= 2
-    cat[:, 3] .*= 3
-    cat[:, 4] .*= 4
-
-
-    ax_o_2 = Axis(fig_2[3, 2],
-        xticks = (1:4, [":square", ":diagonal", ":square", ":line"]),
-        xgridvisible = false,
-        ygridvisible = false,
-        title = "f) Overview",
-        ylabel = "ΔError (%)")
-
-    ax_o_2.ytickformat = y -> string.(round.(y, digits=2), "%")
-    boxplot!(ax_o_2, cat[:, 1], ov_det[1, :] .* 100, color = :blue)
-    boxplot!(ax_o_2, cat[:, 2], ov_det[2, :] .* 100, color = :blue)
-    boxplot!(ax_o_2, cat[:, 3], ov_lam[1, :] .* 100, color = :green)
-    boxplot!(ax_o_2, cat[:, 4], ov_lam[2, :] .* 100, color = :green)  
-
-    scatter!(ax_o_2, [NaN], [NaN], color=:blue, label="Determinism")
-    scatter!(ax_o_2, [NaN], [NaN], color=:green, label="Laminarity")
-
-    # axislegend(ax_o_2)
+    boxplot!(ax_2, cat[:, 6], overview_2 .* 100, colormap = :Set2_6)
 
     save("test/rr_error/fig2.png", fig_2)
 
-    fig_2
+
+    ## =============================================================================================
+    ##      Laminarity
+    fig_3 = Figure(size = (1024, 420))
+
+    ax_3 = Axis(fig_3[1, 1],
+        xticks = (1:6, ["(i)", "(ii)", "(iii)", "(iv)", "(v)", "Overview"]),
+        xgridvisible = false,
+        ygridvisible = false,
+        title = "a) Square Motifs",
+        ylabel = "ΔError (%)")
+
+    ax_3.ytickformat = y -> string.(round.(y, digits=2), "%")
+    boxplot!(ax_3, cat[:, 1], lam[1, 1, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_3, cat[:, 2], lam[1, 2, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_3, cat[:, 3], lam[1, 3, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_3, cat[:, 4], lam[1, 4, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_3, cat[:, 5], lam[1, 5, :] .* 100, colormap = :Set2_6)
+
+    overview_3 = reshape(lam[1, :, :], size(lam, 2) * size(lam, 3))
+
+    boxplot!(ax_3, cat[:, 6], overview_3 .* 100, colormap = :Set2_6)
+
+    ax_4 = Axis(fig_3[1, 2],
+        xticks = (1:6, ["(i)", "(ii)", "(iii)", "(iv)", "(v)", "Overview"]),
+        xgridvisible = false,
+        ygridvisible = false,
+        title = "b) Line Motifs",
+        ylabel = "ΔError (%)")
+
+    ax_4.ytickformat = y -> string.(round.(y, digits=2), "%")
+    boxplot!(ax_4, cat[:, 1], lam[2, 1, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_4, cat[:, 2], lam[2, 2, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_4, cat[:, 3], lam[2, 3, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_4, cat[:, 4], lam[2, 4, :] .* 100, colormap = :Set2_6)
+    boxplot!(ax_4, cat[:, 5], lam[2, 5, :] .* 100, colormap = :Set2_6)
+
+    overview_4 = reshape(lam[2, :, :], size(lam, 2) * size(lam, 3))
+
+    boxplot!(ax_4, cat[:, 6], overview_4 .* 100, colormap = :Set2_6)
+
+    save("test/rr_error/fig3.png", fig_3)
 end
 
 graph()
