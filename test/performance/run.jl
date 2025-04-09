@@ -87,7 +87,7 @@ function graph()
 
     Legend(fig_cpu[1, 1], 
         [cpu_rma_ca, cpu_rma_sn_1, cpu_rma_sn_2, cpu_rma_sn_3, cpu_rma_sn_4, cpu_rma_sn_5], 
-        ["Classical approach", 
+        ["Standard approach", 
         string("RMA, sn = ", round(samp_range[1] * 100; digits = 1), "%"),
         string("RMA, sn = ", round(samp_range[2] * 100; digits = 1), "%"),
         string("RMA, sn = ", round(samp_range[3] * 100; digits = 1), "%"),
@@ -115,7 +115,7 @@ function graph()
 
     Legend(fig_ram[1, 1], 
         [ram_rma_ca, ram_rma_sn_1, ram_rma_sn_2, ram_rma_sn_3, ram_rma_sn_4, ram_rma_sn_5], 
-        ["Classical approach", 
+        ["Standard approach", 
         string("RMA, sn = ", round(samp_range[1] * 100; digits = 1), "%"),
         string("RMA, sn = ", round(samp_range[2] * 100; digits = 1), "%"),
         string("RMA, sn = ", round(samp_range[3] * 100; digits = 1), "%"),
