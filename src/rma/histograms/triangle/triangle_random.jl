@@ -53,7 +53,7 @@ Get a histogram of a random set of microstates available on a recurrence space, 
 It is only available for 2D recurrence plot !!
 """
 function dict_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.
@@ -139,7 +139,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
 function vect_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.
@@ -185,7 +185,7 @@ Get a histogram of a random set of microstates available on a recurrence space, 
 It is only available for 2D recurrence plot !!
 """
 function vect_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.

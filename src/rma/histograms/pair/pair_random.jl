@@ -48,7 +48,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 """
 function vect_pair_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.

@@ -48,7 +48,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
 """
 function dict_square_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
     ##
     ##      Compute the power vector.
     p_vect = zeros(Int, hv)
@@ -123,7 +123,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
 function vect_square_random(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
 
     ##
     ##      Alloc memory for the histogram and the indeces list.
@@ -164,7 +164,7 @@ end
 Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
 """
 function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
     ##
     ##      Compute the power vector.
     p_vect = zeros(Int, hv)

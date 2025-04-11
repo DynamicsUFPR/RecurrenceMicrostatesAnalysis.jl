@@ -56,7 +56,7 @@ Get a histogram of all microstates available on a recurrence space, using an asy
 It is only available for 2D recurrence plot !!
 """
 function dict_square_full_async(x::AbstractVector, y::AbstractVector, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.
@@ -136,7 +136,7 @@ end
 Get a histogram of all microstates available on a recurrence space. The result is a vect with a probability distribution.
 """
 function vect_square_full(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric) where {F}
 
     ##
     ##      Alloc memory for the histogram and the indeces list.
@@ -185,7 +185,7 @@ Get a histogram of all microstates available on a recurrence space, using an asy
 It is only available for 2D recurrence plot !!
 """
 function vect_square_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric) where {F}
 
     ##
     ##      Compute the power vector.
