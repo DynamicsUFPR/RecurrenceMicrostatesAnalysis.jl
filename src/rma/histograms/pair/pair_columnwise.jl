@@ -8,7 +8,7 @@ Get a histogram of a random set of microstates available on each column of a rec
 It is only available for 2D recurrence plot !!
 """
 function vect_pair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Alloc memory for the histogram and the indeces list.

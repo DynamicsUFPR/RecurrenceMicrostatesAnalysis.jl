@@ -7,7 +7,7 @@
 Get a histogram of a random set of microstates available on a recurrence space. The result is a dict with a probability distribution.
 """
 function dict_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
     ##
     ##      Alloc memory for the histogram and the indeces list.

@@ -76,6 +76,7 @@ module RMA
     export laminarity
     export determinism
     export distribution
+    export find_parameters
     # ======================================================================================================= #
 end
 #       ----- END CODE

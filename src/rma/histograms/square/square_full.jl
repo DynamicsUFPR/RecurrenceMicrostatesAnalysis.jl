@@ -7,7 +7,7 @@
 Get a histogram of all microstates available on a recurrence space. The result is a dict with a probability distribution.
 """
 function dict_square_full(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int},
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric) where {F}
     
     ##
     ##      Alloc memory for the histogram and the indeces list.

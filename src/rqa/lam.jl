@@ -8,12 +8,11 @@
 Compute the laminarity of a problem, using a estimation proposed by [Felipe2025](@cite). We have two
 ways to do it, using a square motif (mode :square) or using a diagonal motif that contains (the default mode :line)
 """
-function laminarity(rr::Float64, probs::Vector{Float64}; mode::Symbol = :line)
+function laminarity(rr::Float64, probs::Vector{Float64})
     if (length(probs) != 512 && length(probs) != 8)
         throw(ArgumentError(string("Determinism must be computed using square motifs with n = 3. Actual value results in ", length(probs))))
     end
 
-    ##  TODO : Maybe it can be removed.
     function __default_mode()
         ##
         ##      Compute the indeces...
@@ -46,7 +45,7 @@ function laminarity(rr::Float64, probs::Vector{Float64}; mode::Symbol = :line)
 
     ##
     ##      Compute the determinism.
-    return mode == :line ? __line_mode() : __default_mode()
+    return length(probs) != 512 ? __line_mode() : __default_mode()
 end
 """
     laminarity([x], threshold::Float64; {mode}, {num_samples})
@@ -63,5 +62,5 @@ function laminarity(x::AbstractArray, threshold::Float64;  mode::Symbol = :line,
     rr = rrate(probs)
     ##
     ##      Return the determinism.
-    return laminarity(rr, probs; mode = mode)
+    return laminarity(rr, probs)
 end

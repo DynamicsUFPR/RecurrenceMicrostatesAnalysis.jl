@@ -8,7 +8,7 @@
 Compute the determinism of a problem, using a estimation proposed by [Felipe2025](@cite). We have two
 ways to do it, using a square motif (mode :square) or using a diagonal motif that contains (the default mode :diagonal)
 """
-function determinism(rr::Float64, probs::Vector{Float64}; mode::Symbol = :diagonal)
+function determinism(rr::Float64, probs::Vector{Float64})
     if (length(probs) != 512 && length(probs) != 8)
         throw(ArgumentError(string("Determinism must be computed using square motifs with n = 3. Actual value results in ", length(probs))))
     end
@@ -46,7 +46,7 @@ function determinism(rr::Float64, probs::Vector{Float64}; mode::Symbol = :diagon
 
     ##
     ##      Compute the determinism.
-    return mode == :diagonal ? __diagonal_mode() : __default_mode()
+    return length(probs) != 512 ? __diagonal_mode() : __default_mode()
 end
 """
     determinism([x], threshold::Float64; {mode}, {num_samples})
@@ -63,5 +63,5 @@ function determinism(x::AbstractArray, threshold::Float64;  mode::Symbol = :diag
     rr = rrate(probs)
     ##
     ##      Return the determinism.
-    return determinism(rr, probs; mode = mode)
+    return determinism(rr, probs)
 end

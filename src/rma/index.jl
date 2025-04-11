@@ -17,7 +17,7 @@ Each type have a specific method to get the fixed indeces.
 """
 # -----------------------------------------------------------  TYPE A:  GENERIC STRUCTURE ------------------------
 function compute_index_square(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F, 
-    dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
+    dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric) where {F}
 
     ##      Let a variable to store the index.
     index = 0
@@ -49,7 +49,7 @@ function compute_index_square(x::AbstractArray, y::AbstractArray, parameters, st
 end
 
 function compute_index_pair(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F,
-    dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, metric::Metric) where {F}
+    dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, metric) where {F}
     
     ##  Let a variable to store the index.
     index = 0
@@ -74,7 +74,7 @@ end
 
 # -----------------------------------------------------------  TYPE B:   FOR 2D SPACE     -----------------------
 function compute_index_triangle(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int, func::F, dim::AbstractVector{Int},
-    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
+    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric) where {F}
 
     ##      Let a variable to store the result, and another to store the index to access the power vector.
     index = 0
@@ -104,7 +104,7 @@ end
 
 # -----------------------------------------------------------  TYPE C:   FOR FIXED STRUCTURE   --------------------
 function compute_index_diagonal(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
-    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
+    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric) where {F}
     
     ##      Let a variable to store the index.
     index = 0
@@ -128,7 +128,7 @@ function compute_index_diagonal(x::AbstractArray, y::AbstractArray, parameters, 
 end
 
 function compute_index_line(x::AbstractArray, y::AbstractArray, parameters, func::F, dim::AbstractVector{Int},
-    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric::Metric) where {F}
+    fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric) where {F}
     
     ##      Let a variable to store the index.
     index = 0

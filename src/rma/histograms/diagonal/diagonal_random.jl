@@ -7,7 +7,7 @@
 Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
 """
 function vect_diagonal_random(x::AbstractArray, y::AbstractArray, parameters,
-    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric) where {F}
+    space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
 
     ##
     ##      Alloc memory for the histogram and the indeces list.
