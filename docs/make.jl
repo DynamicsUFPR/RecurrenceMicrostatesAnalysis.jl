@@ -7,7 +7,7 @@ using Documenter, RMA
 makedocs(
     sitename = "RMA.jl",
     format = Documenter.HTML(
-        prettyurls = false
+        prettyurls = true
     ),
     pages = [
         "Welcome" => "index.md",
