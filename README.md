@@ -34,8 +34,7 @@ add https://github.com/DynamicsUFPR/RMA.jl
 
 ## Library usage guide
 
-**Documentation is still in progress**
-
+Acess the library documentation [here](https://dynamicsufpr.github.io/RMA.jl/).
 
 
 ## Academic Information
