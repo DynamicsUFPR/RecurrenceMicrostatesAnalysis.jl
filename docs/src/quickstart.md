@@ -20,7 +20,7 @@ th, s = find_parameters(data, n)
 dist = distribution(data, th, n)
 ```
 
-The output will be a set of 512 probabilities. The `distribution` function samples $5\%$ of all motifs available in the recurrence space, regardless of overlap or repetition. Each value represents the probability of encountering a motif with index $I$ within the recurrence space.
+The output will be a set of 512 probabilities. The `distribution` function samples $5\%$ of all motifs available in the recurrence space, regardless of overlap or repetition. Each value represents the probability of encountering a motif with a decimal representation $I$ within the recurrence space.
 
 It is not necessary to compute a Recurrence Plot (RP), as the library calculates the recurrences internally without needing to construct one explicitly.
 

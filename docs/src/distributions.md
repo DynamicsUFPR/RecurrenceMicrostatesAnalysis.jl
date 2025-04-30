@@ -1,8 +1,8 @@
 #   Recurrence Motifs Probability Distributions
-`RMA.jl` aims to be a user-friendly library with powerful capabilities. It can be used through simple function calls or more advanced configurations that offer greater control. We'll begin with the simpler usage, explaining its arguments and settings, and gradually move toward more complex configurations throughout this discussion.
+`RMA.jl` aims to be a user-friendly library with powerful capabilities. It can be used through simple function calls or more advanced configurations that offer greater control. We will begin with the simpler usage, explaining its arguments and settings, and gradually move toward more complex configurations throughout this discussion.
 
 ##  One-dimensional data
-This section presents a run similar to the one shown on the [quick start](quickstart.md) page, but with a more detailed explanation. For one-dimensional problems, such as the logistic map or the Bernoulli shift, you can use a vector of positions along the trajectory as input. To illustrate this, let's consider a uniform distribution:
+This section presents a run similar to the one shown on the [quick start](quickstart.md) page, but with a more detailed explanation. For one-dimensional problems, such as the logistic map or the Bernoulli shift (Beta-X), you can use a vector of positions along the trajectory as input. To illustrate this, let's consider a uniform distribution:
 ```@repl dist_one
 using Distributions
 data = rand(Uniform(0, 1), 3000)
@@ -16,7 +16,7 @@ dist = distribution(data, th, 3)
 ```
 
 !!! warning
-    We do not recommend using `find_parameters` inside a loop, as it needs to compute several distributions to find the `threshold` value that maximizes recurrence entropy, which can significantly reduce the library's performance. For this reason, we have not created an overload of the `distribution` function that automatically calculates the `threshold`. Instead, we suggest using an average `threshold` value computed from a few representative snippets of your dataset using the `find_parameters` function.
+    We do not recommend the use of `find_parameters` inside a loop, as it needs to compute several distributions to find the `threshold` value that maximizes recurrence entropy, which can significantly reduce the library's performance. For this reason, we have not created an overload of the `distribution` function that automatically calculates the `threshold`. Instead, we suggest using an average `threshold` value computed from a few representative snippets of your dataset using the `find_parameters` function.
 
 The `distribution` function includes several keyword arguments for configuration. Before moving on to the next section, we will discuss these arguments, as they apply to every call of the distribution function.
 
@@ -33,6 +33,13 @@ dist = distribution(data, th, 3; shape = :triangle)
     ```@repl dist_one
     dist = distribution(data, th, 6; shape = :pair)
     ```
+
+    When workign with shape `:pair`, we recommend you to use the full structure of `distribution` function.
+    ```@repl dist_one
+    structure = [3, 9]
+    dist = distribution(data, data, th, structure; shape = :pair)
+    ```
+    Here, `structure` defines the position of the second element based on the random position of the first element.
 
 ### Motifs sampling
 The sampling mode defines how `RMA.jl` selects motifs from a recurrence space. Currently, the library supports four sampling modes: full, random, columnwise and triangle up. You can learn more about them on the [motifs](motifs.md) page, where we discuss how each mode works. The sampling mode can be configured using the keyword argument `sampling_mode`, which can be set to `:full`, `:random`, `:columnwise`, or `:triangleup`. By default, the library uses `:random` as the default sampling mode.
@@ -79,7 +86,7 @@ dist = distribution(data, th, 3; num_samples = 50000)
 ```
 
 ### Threads
-`RMA.jl` is highly compatible with CPU asyncronous jobs, that can increase significantly the computational performance of the library. The **kword** `threads` defines if the library will use threads or not, being `true` by default. The number of threads used is equal to the number of threads available to Julia, being it configured by the environment variable `JULIA_NUM_THREADS`, or by the running argument `--threads T` in Julia initiation: For example, using `julia --threads 8`.
+`RMA.jl` is highly compatible with CPU asynchronous jobs, that can increase significantly the computational performance of the library. The **kword** `threads` defines if the library will use threads or not, being `true` by default. The number of threads used is equal to the number of threads available to Julia, being it configured by the environment variable `JULIA_NUM_THREADS`, or by the running argument `--threads T` in Julia initiation: For example, using `julia --threads 8`.
 ```@repl dist_one
 using BenchmarkTools
 @benchmark distribution(data, th, 4; sampling_mode = :full, threads = false)
@@ -101,16 +108,18 @@ dist = distribution(data, th, 2; metric = my_metric)
     The default recurrence functions were configured to metrics with two arguments, like `euclidean(x, y)`, so if you need to use another type of metric, it is needed to define a new recurrence function, see [Recurrence functions](recurrence.md) page to know more about it.
 
 ### Recurrence functions
-A recurrence function defines if two points of a trajectory recurr or not, and we describe more about on the [Recurrence functions](recurrence.md) page. Actually the library have two recurrence functions available
+A recurrence function defines if two points of a trajectory recurr or not. Actually the library have two recurrence functions available
 1. Standard recurrence: $R(\mathbf{x}, \mathbf{y})=\Theta(\varepsilon - \|\mathbf{x}-\mathbf{y}\|)$
 2. Recurrence with corridor threshold: $R(\mathbf{x}, \mathbf{y})=\Theta(\|\mathbf{x}-\mathbf{y}\| - \varepsilon_{min}) \cdot \Theta(\varepsilon_{max} - \|\mathbf{x}-\mathbf{y}\|)$
 
 `RMA.jl` automatically change between them with the type of parameters, so if you use as parameter a `Float64`, the library will apply the standard recurrence, or, if you use a `Tuple`, the library will apply the recurrence with corridor threshold.
 
 ```@repl dist_one
-dist = distribution(data, th, 2);
-dist = distribution(data, (0.0, th), 2);
+dist = (distribution(data, th, 2))'
+dist = (distribution(data, (0.0, th), 2))'
 ```
+
+It is possible to write your own recurrece function, we talk more about it in the [Recurrence functions](recurrence.md) page.
 
 ##  High-dimensionality data
 If you are working with a dynamical system or a data time serie with two or more dimensions, it is important to note that `RMA.jl` effectively not works with vectors, but matrices. In this situation, each row of the matrix will represent a coordinate, and each column a set of coordinates along a trajectory. For example, if we want a uniform distribution with three dimension and 3,000 points, we will have something like:
@@ -119,7 +128,7 @@ using Distributions
 data = rand(Uniform(0, 1), 3, 3000)
 ```
 
-This format of data is effectvely what the library uses. In the case of previuous section when we are working with vectors `RMA.jl` converts it to a matrix $1\times 3,000$, but when we are working which data with a dimensionality different than one, it is necessary to use the proper format.
+This format of data is effectvely what the library uses. In the case of previous section, when we are working with vectors, `RMA.jl` converts it to a matrix $1\times 3,000$ but when we are working which data with a dimensionality different than one, it is necessary to use the proper format.
 ```@repl dist_high
 using RMA
 th, s = find_parameters(data, 3)
@@ -127,7 +136,7 @@ dist = distribution(data, th, 3)
 ```
 
 ##  Continuous problems
-Work with continuous problems means numeric integrate some differential equations problem and take the numerical values as input to `RMA.jl`. Thinking in it, we make the library compatible with a powerful tool to solve these problems in Julia: the library [DifferentialEquations.jl](https://docs.sciml.ai/DiffEqDocs/stable/). The way to apply this kind of data in the library is similar with the other two cases discussed before, as we will demonstrate in this section. 
+Continuous problems means numerically integrate a differential equation problem and take the values as input to `RMA.jl`. Thinking in it, we make the library compatible with a powerful tool to solve these problems in Julia: the library [DifferentialEquations.jl](https://docs.sciml.ai/DiffEqDocs/stable/). The way to apply this kind of data in the library is similar with the other two cases discussed before, as we will demonstrate in this section. 
 
 !!! info
     The code of Lorenz system used in these examples was get from Example 2 of [DifferentialEquations.jl documentation](https://docs.sciml.ai/DiffEqDocs/stable/getting_started/)
@@ -161,20 +170,20 @@ dist = distribution(data, th, 3)
 !!! warning
     Although it is possible to compute the distribution as demonstrated above, we strongly advise against doing so in this way.
 
-We recommend you to apply a transient into your data and take a correct time resolution while do the process of discretization, it need to be done to maximize the information available to analysis. `RMA.jl` has a utilitary function to help with this process.
+We recommend you to apply a transient into your data and take a correct time resolution while doing the process of discretization, it is needed to maximize the information available. `RMA.jl` has a utilitary function to help with this process.
 ```@repl continuous
 prepared_data = prepare(sol, 0.2; transient = 10000, max_length = 1000)
 th, s = find_parameters(prepared_data, 3; threshold_max = 30.0)
-dist = distribution(data, th, 3)
+dist = distribution(prepared_data, th, 3)
 ```
 
 ##  Spatial data
-`RMA.jl` is compatible with the generalised recurrence plot analysis for spatial data proposed by Marwan, Kurths and Saparin at 2006. It allow the library to calculate a probability distribution of motifs in a tensorial recurrence space, for example, to images the recurrence space have four dimensions.
+`RMA.jl` is compatible with generalised recurrence plot analysis for spatial data proposed by Marwan, Kurths and Saparin at 2006. It allow the library to calculate a probability distribution of motifs in a tensorial recurrence space, for example, to images the recurrence space have four dimensions.
 
 !!! todo
-    This is a open research field, so we just will explain how to use the library to estimate it, but we don't recommend you to apply it, intead you are a researcher working with it 😉.
+    This is a open research field, so we just will explain how to use the library to estimate it, but we don't recommend you to apply it for production 😉.
 
-The application of `RMA.jl` to spatial data is very similar to the others presented before, but the input format is more complex. Instead to matrices we need to use abstract arrays with dimension $D$, where the first dimension will be interpreted as a coordinate dimension (such as for high-dimensionaly data), and rest of the dimensions will be the spatial data dimensionality. To illustrate it, let an image with RGB. It can be represented as an abstract array with 3 dimensions, where the first dimension will have a length 3, being each element a color value (red, blue and green), and the others two dimensions are relative to each pixel that compose the image. We will demonstrate it using a uniform distribution, where each position can be interpreted as a pixel with three colors for a image 100x100.
+The application of `RMA.jl` to spatial data is very similar to the others presented before, but the input format is more complex. Instead to matrices we need to use abstract arrays with dimension $D$, where the first dimension will be interpreted as a coordinate dimension (such as for high-dimensionaly data), and rest of the dimensions will be the spatial data dimensionality. To illustrate it, let an image with RGB. It can be represented as an abstract array with 3 dimensions, where the first dimension will have a length 3, being each element a color value (red, blue and green), and the others two dimensions are relative to each pixel that compose the image. We will demonstrate it using a uniform distribution, where each position can be interpreted as a RGB pixel for an image 100x100.
 ```@repl spatial
 using Distributions
 data = rand(Uniform(0, 1), 3, 100, 100)
@@ -185,6 +194,8 @@ When we work with spatial data is necessarity to use the complete structure of `
 using RMA
 dist = distribution(data, data, 0.5, [2, 2, 2, 2])
 ```
+
+Since the recurrence space has four dimensions, in this examples, it is necessary for `structure` has the same number of elements, where each element will represent the motif' side lenght for each dimension.
 
 !!! warning
     The `find_parameters` function is not compatible with spatial data.

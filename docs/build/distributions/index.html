@@ -1,242 +1,250 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Distributions · RMA.jl</title><meta name="title" content="Distributions · RMA.jl"/><meta property="og:title" content="Distributions · RMA.jl"/><meta property="twitter:title" content="Distributions · RMA.jl"/><meta name="description" content="Documentation for RMA.jl."/><meta property="og:description" content="Documentation for RMA.jl."/><meta property="twitter:description" content="Documentation for RMA.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">RMA.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Welcome</a></li><li><span class="tocitem">Guide</span><ul><li><a class="tocitem" href="../quickstart/">Quick start</a></li><li><a class="tocitem" href="../theory/">Theoretical Overview</a></li><li class="is-active"><a class="tocitem" href>Distributions</a><ul class="internal"><li><a class="tocitem" href="#One-dimensional-data"><span>One-dimensional data</span></a></li><li><a class="tocitem" href="#High-dimensionality-data"><span>High-dimensionality data</span></a></li><li><a class="tocitem" href="#Continuous-problems"><span>Continuous problems</span></a></li><li><a class="tocitem" href="#Spatial-data"><span>Spatial data</span></a></li></ul></li><li><a class="tocitem" href="../rqa/">RQA</a></li><li><a class="tocitem" href="../utils/">Utils</a></li><li><a class="tocitem" href="../performance/">Performance Tips</a></li></ul></li><li><span class="tocitem">Reference</span><ul><li><a class="tocitem" href="../api/">Public API</a></li><li><a class="tocitem" href="../motifs/">Motifs: shapes and sampling</a></li><li><a class="tocitem" href="../recurrence/">Recurrence functions</a></li></ul></li><li><a class="tocitem" href="../examples/">Examples</a></li><li><a class="tocitem" href="../bib/">Bibliography</a></li><li><a class="tocitem" href="../dev/">Developers and Researchers</a></li><li><a class="tocitem" href="../release_notes/">Release notes</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Guide</a></li><li class="is-active"><a href>Distributions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Distributions</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/DynamicsUFPR/RMA.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/DynamicsUFPR/RMA.jl/blob/main/docs/src/distributions.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Recurrence-Motifs-Probability-Distributions"><a class="docs-heading-anchor" href="#Recurrence-Motifs-Probability-Distributions">Recurrence Motifs Probability Distributions</a><a id="Recurrence-Motifs-Probability-Distributions-1"></a><a class="docs-heading-anchor-permalink" href="#Recurrence-Motifs-Probability-Distributions" title="Permalink"></a></h1><p><code>RMA.jl</code> aims to be a user-friendly library with powerful capabilities. It can be used through simple function calls or more advanced configurations that offer greater control. We&#39;ll begin with the simpler usage, explaining its arguments and settings, and gradually move toward more complex configurations throughout this discussion.</p><h2 id="One-dimensional-data"><a class="docs-heading-anchor" href="#One-dimensional-data">One-dimensional data</a><a id="One-dimensional-data-1"></a><a class="docs-heading-anchor-permalink" href="#One-dimensional-data" title="Permalink"></a></h2><p>This section presents a run similar to the one shown on the <a href="../quickstart/">quick start</a> page, but with a more detailed explanation. For one-dimensional problems, such as the logistic map or the Bernoulli shift, you can use a vector of positions along the trajectory as input. To illustrate this, let&#39;s consider a uniform distribution:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3000)</code><code class="nohighlight hljs ansi" style="display:block;">3000-element Vector{Float64}:
- 0.19155921028725575
- 0.516701749088968
- 0.9909430907688274
- 0.812913399611502
- 0.7636829513245684
- 0.846626465496689
- 0.207541746280557
- 0.3000372820546511
- 0.9026326817742708
- 0.7827333343805285
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Distributions · RMA.jl</title><meta name="title" content="Distributions · RMA.jl"/><meta property="og:title" content="Distributions · RMA.jl"/><meta property="twitter:title" content="Distributions · RMA.jl"/><meta name="description" content="Documentation for RMA.jl."/><meta property="og:description" content="Documentation for RMA.jl."/><meta property="twitter:description" content="Documentation for RMA.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">RMA.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Welcome</a></li><li><span class="tocitem">Guide</span><ul><li><a class="tocitem" href="../quickstart/">Quick Start</a></li><li><a class="tocitem" href="../theory/">Theoretical Overview</a></li><li class="is-active"><a class="tocitem" href>Distributions</a><ul class="internal"><li><a class="tocitem" href="#One-dimensional-data"><span>One-dimensional data</span></a></li><li><a class="tocitem" href="#High-dimensionality-data"><span>High-dimensionality data</span></a></li><li><a class="tocitem" href="#Continuous-problems"><span>Continuous problems</span></a></li><li><a class="tocitem" href="#Spatial-data"><span>Spatial data</span></a></li></ul></li><li><a class="tocitem" href="../rqa/">RQA</a></li><li><a class="tocitem" href="../utils/">Utils</a></li><li><a class="tocitem" href="../performance/">Performance Tips</a></li></ul></li><li><span class="tocitem">Reference</span><ul><li><a class="tocitem" href="../api/">Public API</a></li><li><a class="tocitem" href="../motifs/">Motifs: shapes and sampling</a></li><li><a class="tocitem" href="../recurrence/">Recurrence functions</a></li></ul></li><li><a class="tocitem" href="../examples/">Examples</a></li><li><a class="tocitem" href="../bib/">Bibliography</a></li><li><a class="tocitem" href="../dev/">Developers and Researchers</a></li><li><a class="tocitem" href="../release_notes/">Release notes</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Guide</a></li><li class="is-active"><a href>Distributions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Distributions</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/DynamicsUFPR/RMA.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/DynamicsUFPR/RMA.jl/blob/main/docs/src/distributions.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Recurrence-Motifs-Probability-Distributions"><a class="docs-heading-anchor" href="#Recurrence-Motifs-Probability-Distributions">Recurrence Motifs Probability Distributions</a><a id="Recurrence-Motifs-Probability-Distributions-1"></a><a class="docs-heading-anchor-permalink" href="#Recurrence-Motifs-Probability-Distributions" title="Permalink"></a></h1><p><code>RMA.jl</code> aims to be a user-friendly library with powerful capabilities. It can be used through simple function calls or more advanced configurations that offer greater control. We will begin with the simpler usage, explaining its arguments and settings, and gradually move toward more complex configurations throughout this discussion.</p><h2 id="One-dimensional-data"><a class="docs-heading-anchor" href="#One-dimensional-data">One-dimensional data</a><a id="One-dimensional-data-1"></a><a class="docs-heading-anchor-permalink" href="#One-dimensional-data" title="Permalink"></a></h2><p>This section presents a run similar to the one shown on the <a href="../quickstart/">quick start</a> page, but with a more detailed explanation. For one-dimensional problems, such as the logistic map or the Bernoulli shift (Beta-X), you can use a vector of positions along the trajectory as input. To illustrate this, let&#39;s consider a uniform distribution:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3000)</code><code class="nohighlight hljs ansi" style="display:block;">3000-element Vector{Float64}:
+ 0.8856350180446543
+ 0.11204273645894691
+ 0.7812214541692771
+ 0.7412598008482699
+ 0.6879876753338635
+ 0.45914499862434854
+ 0.11727229389126048
+ 0.48241589051924505
+ 0.38744062650514854
+ 0.26326677300254897
  ⋮
- 0.1248561794540648
- 0.46761244520291867
- 0.30994091148304104
- 0.9388225354862351
- 0.6850724324916092
- 0.36816131496768
- 0.681776561337277
- 0.07313481595635396
- 0.7591130990911404</code></pre><p>Computing the recurrence motif distribution is straightforward once the <code>threshold</code> and <code>n</code> (motif size) parameters are defined. A good value for <code>threshold</code> can be estimated using the <code>find_parameters</code> function, which we recommend using in most cases.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3)</code><code class="nohighlight hljs ansi" style="display:block;">(0.24919441460794844, 5.727223143255997)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.017930574098798398
- 0.0032354250111259458
- 0.0035981308411214955
- 0.0038896306186025813
- 0.003121940364931019
- 0.0041455273698264355
- 0.00367601246105919
- 0.01214508233199822
- 0.0034979973297730306
- 0.0037828215398308857
+ 0.3674312524302269
+ 0.28332922295068785
+ 0.40573747535734006
+ 0.8411589275565305
+ 0.5545432585946534
+ 0.8443222265813495
+ 0.891327330316689
+ 0.09843637270990147
+ 0.6326008270353038</code></pre><p>Computing the recurrence motif distribution is straightforward once the <code>threshold</code> and <code>n</code> (motif size) parameters are defined. A good value for <code>threshold</code> can be estimated using the <code>find_parameters</code> function, which we recommend using in most cases.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3)</code><code class="nohighlight hljs ansi" style="display:block;">(0.2556390977443609, 5.722117727943777)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.0212572318647085
+ 0.0035469514908767247
+ 0.003704939919893191
+ 0.0038451268357810415
+ 0.003460169114374722
+ 0.003894080996884735
+ 0.0037961726746773474
+ 0.012745883400089008
+ 0.003622607921673342
+ 0.0038139741878059634
  ⋮
+ 0.001593235425011126
+ 0.010135736537605697
+ 0.0011993769470404984
+ 0.0014641744548286604
+ 0.001272808188696039
+ 0.0011904761904761906
+ 0.0014819759679572764
  0.0013662661326212728
- 0.009194481530930129
- 0.0010436137071651091
- 0.0012327547841566534
- 0.0011481975967957277
- 0.0009813084112149533
- 0.0012683578104138852
- 0.0012105028927458833
- 0.006713395638629284</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>We do not recommend using <code>find_parameters</code> inside a loop, as it needs to compute several distributions to find the <code>threshold</code> value that maximizes recurrence entropy, which can significantly reduce the library&#39;s performance. For this reason, we have not created an overload of the <code>distribution</code> function that automatically calculates the <code>threshold</code>. Instead, we suggest using an average <code>threshold</code> value computed from a few representative snippets of your dataset using the <code>find_parameters</code> function.</p></div></div><p>The <code>distribution</code> function includes several keyword arguments for configuration. Before moving on to the next section, we will discuss these arguments, as they apply to every call of the distribution function.</p><h3 id="Motif-constrained-shape"><a class="docs-heading-anchor" href="#Motif-constrained-shape">Motif constrained shape</a><a id="Motif-constrained-shape-1"></a><a class="docs-heading-anchor-permalink" href="#Motif-constrained-shape" title="Permalink"></a></h3><p>There are variations in motif constraint shapes proposed in the literature, such as the triangular motif. Supporting these shape generalizations is one of the goals of <code>RMA.jl</code>, and it is also a computational challenge. Adapting the conversion of motifs with a generic shape from a binary structure to a decimal value can be a very complex problem, and to support this in the library, we need to adapt the pipeline that converts a motif for each specific shape.</p><p>Currently, <code>RMA.jl</code> supports five shapes: square, triangle, diagonal, line, and pair. The way the library converts these motifs constrained shapes to decimal values is detailed on the <a href="../motifs/">motifs</a> page. You can change the shape using the <strong>kword</strong> <code>shape</code>, which can be set to <code>:square</code>, <code>:triangle</code>, <code>:diagonal</code>, <code>:line</code>, or <code>:pair</code>. By default, the library uses <code>:square</code> as the default shape.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; shape = :triangle)</code><code class="nohighlight hljs ansi" style="display:block;">64-element Vector{Float64}:
- 0.0379105473965287
- 0.03019804183355585
- 0.019058744993324432
- 0.014931019136626613
- 0.01668001780151313
- 0.013355585224744103
- 0.025024477080551846
- 0.01937917222963952
- 0.020097908322207387
- 0.013495772140631954
+ 0.008197596795727636</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>We do not recommend the use of <code>find_parameters</code> inside a loop, as it needs to compute several distributions to find the <code>threshold</code> value that maximizes recurrence entropy, which can significantly reduce the library&#39;s performance. For this reason, we have not created an overload of the <code>distribution</code> function that automatically calculates the <code>threshold</code>. Instead, we suggest using an average <code>threshold</code> value computed from a few representative snippets of your dataset using the <code>find_parameters</code> function.</p></div></div><p>The <code>distribution</code> function includes several keyword arguments for configuration. Before moving on to the next section, we will discuss these arguments, as they apply to every call of the distribution function.</p><h3 id="Motif-constrained-shape"><a class="docs-heading-anchor" href="#Motif-constrained-shape">Motif constrained shape</a><a id="Motif-constrained-shape-1"></a><a class="docs-heading-anchor-permalink" href="#Motif-constrained-shape" title="Permalink"></a></h3><p>There are variations in motif constraint shapes proposed in the literature, such as the triangular motif. Supporting these shape generalizations is one of the goals of <code>RMA.jl</code>, and it is also a computational challenge. Adapting the conversion of motifs with a generic shape from a binary structure to a decimal value can be a very complex problem, and to support this in the library, we need to adapt the pipeline that converts a motif for each specific shape.</p><p>Currently, <code>RMA.jl</code> supports five shapes: square, triangle, diagonal, line, and pair. The way the library converts these motifs constrained shapes to decimal values is detailed on the <a href="../motifs/">motifs</a> page. You can change the shape using the <strong>kword</strong> <code>shape</code>, which can be set to <code>:square</code>, <code>:triangle</code>, <code>:diagonal</code>, <code>:line</code>, or <code>:pair</code>. By default, the library uses <code>:square</code> as the default shape.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; shape = :triangle)</code><code class="nohighlight hljs ansi" style="display:block;">64-element Vector{Float64}:
+ 0.04016688918558078
+ 0.030498442367601245
+ 0.017156208277703606
+ 0.014307966177125056
+ 0.01639074321317312
+ 0.013115264797507789
+ 0.02474632843791722
+ 0.021372941700044504
+ 0.018340008900756564
+ 0.013453493546951491
  ⋮
- 0.005961281708945261
- 0.02230084557187361
- 0.015431686693368937
- 0.006441922563417891
- 0.00460836671117045
- 0.006384067645749889
- 0.0056697819314641745
- 0.015567423230974632
- 0.013464619492656876</code></pre><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>The shape <code>:pair</code> doesn&#39;t require a value of <code>n</code>, since it always uses <code>n=2</code>. However, it is still necessary to informe a value to this parameter, that will be interpreted as the separation between two points in a diagonal.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 6; shape = :pair)</code><code class="nohighlight hljs ansi" style="display:block;">4-element Vector{Float64}:
- 0.31258347250061874
- 0.24679320670410992
- 0.2460930967823929
- 0.19453022401287845</code></pre></div></div><h3 id="Motifs-sampling"><a class="docs-heading-anchor" href="#Motifs-sampling">Motifs sampling</a><a id="Motifs-sampling-1"></a><a class="docs-heading-anchor-permalink" href="#Motifs-sampling" title="Permalink"></a></h3><p>The sampling mode defines how <code>RMA.jl</code> selects motifs from a recurrence space. Currently, the library supports four sampling modes: full, random, columnwise and triangle up. You can learn more about them on the <a href="../motifs/">motifs</a> page, where we discuss how each mode works. The sampling mode can be configured using the keyword argument <code>sampling_mode</code>, which can be set to <code>:full</code>, <code>:random</code>, <code>:columnwise</code>, or <code>:triangleup</code>. By default, the library uses <code>:random</code> as the default sampling mode.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; sampling_mode = :full)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.0181283853456229
- 0.003174898453538739
- 0.0035567407402132887
- 0.0038324415520954373
- 0.003176011047614131
- 0.004128391576149721
- 0.0036326196561550263
- 0.011891294218382635
- 0.0035567407402132887
- 0.0038324415520954373
+ 0.0067289719626168224
+ 0.023072986203827327
+ 0.015625278148642636
+ 0.006884735202492212
+ 0.005164663996439697
+ 0.006875834445927904
+ 0.006544281263907432
+ 0.017485536270583
+ 0.015963506898086337</code></pre><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>The shape <code>:pair</code> doesn&#39;t require a value of <code>n</code>, since it always uses <code>n=2</code>. However, it is still necessary to informe a value to this parameter, that will be interpreted as the separation between two points in a diagonal.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 6; shape = :pair)</code><code class="nohighlight hljs ansi" style="display:block;">4-element Vector{Float64}:
+ 0.3081197143373147
+ 0.2471053576246207
+ 0.24636511401312372
+ 0.19840981402494084</code></pre><p>When workign with shape <code>:pair</code>, we recommend you to use the full structure of <code>distribution</code> function.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; structure = [3, 9]</code><code class="nohighlight hljs ansi" style="display:block;">2-element Vector{Int64}:
+ 3
+ 9</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, data, th, structure; shape = :pair)</code><code class="nohighlight hljs ansi" style="display:block;">4-element Vector{Float64}:
+ 0.30766709550257415
+ 0.24689577057799203
+ 0.24655017491599795
+ 0.1988869590034359</code></pre><p>Here, <code>structure</code> defines the position of the second element based on the random position of the first element.</p></div></div><h3 id="Motifs-sampling"><a class="docs-heading-anchor" href="#Motifs-sampling">Motifs sampling</a><a id="Motifs-sampling-1"></a><a class="docs-heading-anchor-permalink" href="#Motifs-sampling" title="Permalink"></a></h3><p>The sampling mode defines how <code>RMA.jl</code> selects motifs from a recurrence space. Currently, the library supports four sampling modes: full, random, columnwise and triangle up. You can learn more about them on the <a href="../motifs/">motifs</a> page, where we discuss how each mode works. The sampling mode can be configured using the keyword argument <code>sampling_mode</code>, which can be set to <code>:full</code>, <code>:random</code>, <code>:columnwise</code>, or <code>:triangleup</code>. By default, the library uses <code>:random</code> as the default sampling mode.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; sampling_mode = :full)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.02101222918903908
+ 0.003506674006820647
+ 0.003672228005238983
+ 0.003698930263048392
+ 0.003382063470376738
+ 0.003941920809114014
+ 0.0038924103727590686
+ 0.012903532308174318
+ 0.003672228005238983
+ 0.003698930263048392
  ⋮
- 0.0013486865381902367
- 0.00916755266241537
- 0.001007231416452418
- 0.0012041605677968101
- 0.0011919220329674976
- 0.001023475289953142
- 0.0013486865381902367
- 0.001140408927276846
- 0.00672151458766596</code></pre><div class="admonition is-compat"><header class="admonition-header">Compat</header><div class="admonition-body"><p>Not all sampling modes are compatible with certain motif constrained shapes, and the following table illustrates the compatibility between them.</p><table><tr><th style="text-align: right"></th><th style="text-align: center"><code>:full</code></th><th style="text-align: center"><code>:random</code></th><th style="text-align: center"><code>:columnwise</code></th><th style="text-align: center"><code>:triangleup</code></th></tr><tr><td style="text-align: right"><code>:square</code></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td></tr><tr><td style="text-align: right"><code>:triangle</code></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:diagonal</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:time</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:pair</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td></tr></table></div></div><h3 id="Run-mode"><a class="docs-heading-anchor" href="#Run-mode">Run mode</a><a id="Run-mode-1"></a><a class="docs-heading-anchor-permalink" href="#Run-mode" title="Permalink"></a></h3><p><code>RMA.jl</code> has two run modes that results in a different output type. The run mode <code>:vect</code> allocates all required memory in beginning of the process, and return the distribution as a vector. This is the default configuration of the library for <span>$n &lt; 6$</span>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 4; run_mode = :vect)</code><code class="nohighlight hljs ansi" style="display:block;">65536-element Vector{Float64}:
- 0.0024894232910264973
- 0.0001892674237363616
- 0.00016700066800267202
- 0.0001224671565352928
- 0.0002716544199510131
- 0.00022044088176352705
- 0.00015364061456245824
- 0.00028724114896459585
- 0.00023157425963037185
- 0.00015364061456245824
+ 0.001610591183537524
+ 0.009916662253376835
+ 0.0012141739144753384
+ 0.0014365814701462081
+ 0.0013816193228218413
+ 0.0012439914356958454
+ 0.001610591183537524
+ 0.0014018685349939763
+ 0.008344455565440336</code></pre><div class="admonition is-compat"><header class="admonition-header">Compat</header><div class="admonition-body"><p>Not all sampling modes are compatible with certain motif constrained shapes, and the following table illustrates the compatibility between them.</p><table><tr><th style="text-align: right"></th><th style="text-align: center"><code>:full</code></th><th style="text-align: center"><code>:random</code></th><th style="text-align: center"><code>:columnwise</code></th><th style="text-align: center"><code>:triangleup</code></th></tr><tr><td style="text-align: right"><code>:square</code></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td></tr><tr><td style="text-align: right"><code>:triangle</code></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:diagonal</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:time</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td><td style="text-align: center"></td></tr><tr><td style="text-align: right"><code>:pair</code></td><td style="text-align: center"></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"><span>$\checkmark$</span></td><td style="text-align: center"></td></tr></table></div></div><h3 id="Run-mode"><a class="docs-heading-anchor" href="#Run-mode">Run mode</a><a id="Run-mode-1"></a><a class="docs-heading-anchor-permalink" href="#Run-mode" title="Permalink"></a></h3><p><code>RMA.jl</code> has two run modes that results in a different output type. The run mode <code>:vect</code> allocates all required memory in beginning of the process, and return the distribution as a vector. This is the default configuration of the library for <span>$n &lt; 6$</span>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 4; run_mode = :vect)</code><code class="nohighlight hljs ansi" style="display:block;">65536-element Vector{Float64}:
+ 0.003124025829436651
+ 0.0002983745268314407
+ 0.00036740146960587844
+ 0.00020262747717657536
+ 0.00028056112224448897
+ 0.00022712090848363392
+ 0.00018481407258962368
+ 0.0003540414161656647
+ 0.00028278779781785795
+ 0.0002004008016032064
  ⋮
- 7.570696949454465e-5
- 4.898686261411712e-5
- 5.344021376085504e-5
- 7.348029392117568e-5
- 8.90670229347584e-5
- 3.562680917390336e-5
- 6.0120240480961926e-5
+ 6.902694277443777e-5
  5.789356490759296e-5
- 0.000501002004008016</code></pre><p>The run mode <code>:dict</code> uses dictionaries to allocate memory just when needed. The total allocation of dictionary mode can be greater than when using vectors, but the real memory allocation is smaller.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 4; run_mode = :dict)</code><code class="nohighlight hljs ansi" style="display:block;">Dict{Int64, Float64} with 38888 entries:
-  63746 =&gt; 1.33601e-5
-  11950 =&gt; 2.22668e-6
-  45120 =&gt; 1.11334e-5
-  37100 =&gt; 4.45335e-6
-  12427 =&gt; 4.45335e-6
-  60623 =&gt; 6.01202e-5
-  7685  =&gt; 2.44934e-5
+ 4.008016032064128e-5
+ 7.125361834780672e-5
+ 8.238699621465152e-5
+ 5.5666889334224006e-5
+ 9.352037408149633e-5
+ 7.793364506791361e-5
+ 0.000781563126252505</code></pre><p>The run mode <code>:dict</code> uses dictionaries to allocate memory just when needed. The total allocation of dictionary mode can be greater than when using vectors, but the real memory allocation is smaller.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 4; run_mode = :dict)</code><code class="nohighlight hljs ansi" style="display:block;">Dict{Int64, Float64} with 39017 entries:
+  49648 =&gt; 4.45335e-6
+  31794 =&gt; 6.68003e-6
+  63746 =&gt; 4.45335e-6
+  11950 =&gt; 8.9067e-6
+  45120 =&gt; 1.55867e-5
+  1703  =&gt; 6.68003e-6
+  37100 =&gt; 8.9067e-6
+  12427 =&gt; 2.22668e-6
+  7685  =&gt; 1.11334e-5
+  60623 =&gt; 4.23068e-5
   59930 =&gt; 2.22668e-6
-  3406  =&gt; 3.34001e-5
-  61392 =&gt; 2.22668e-6
-  18374 =&gt; 2.22668e-6
-  47756 =&gt; 1.33601e-5
-  28804 =&gt; 2.22668e-5
-  64460 =&gt; 4.45335e-6
-  28576 =&gt; 2.00401e-5
-  23970 =&gt; 1.11334e-5
-  62961 =&gt; 8.9067e-5
-  62178 =&gt; 8.9067e-6
-  1090  =&gt; 2.00401e-5
+  3406  =&gt; 3.78535e-5
+  64460 =&gt; 1.33601e-5
+  61392 =&gt; 8.9067e-6
+  47756 =&gt; 8.9067e-6
+  28804 =&gt; 1.11334e-5
+  28900 =&gt; 6.68003e-6
+  28576 =&gt; 1.55867e-5
+  63743 =&gt; 1.11334e-5
   ⋮     =&gt; ⋮</code></pre><div class="admonition is-compat"><header class="admonition-header">Compat</header><div class="admonition-body"><p>It is important to note that the shapes <code>:diagonal</code>, <code>:line</code>, and <code>:pair</code> are not ocmpatible with run mode <code>:dict</code>. Additionally, the sampling mode <code>:columnwise</code> returns a matrix in which each column represents a probability distribution for a specif time value.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 2; sampling_mode = :columnwise)</code><code class="nohighlight hljs ansi" style="display:block;">16×2999 Matrix{Float64}:
- 0.0666667   0.05        0.313333   …  0.02       0.4        0.0633333
- 0.0666667   0.12        0.0           0.0966667  0.0433333  0.0733333
- 0.1         0.0733333   0.0866667     0.06       0.0        0.13
- 0.0533333   0.02        0.16          0.0166667  0.156667   0.0
- 0.0433333   0.11        0.0           0.0766667  0.0566667  0.0633333
- 0.0833333   0.213333    0.0        …  0.153333   0.0166667  0.0866667
- 0.103333    0.14        0.0           0.116667   0.0        0.14
- 0.0466667   0.00333333  0.0           0.03       0.0366667  0.0
- 0.06        0.0366667   0.0966667     0.08       0.0        0.12
- 0.07        0.14        0.0           0.116667   0.0        0.12
- 0.116667    0.0466667   0.0266667  …  0.0933333  0.0        0.203333
- 0.0433333   0.00666667  0.0533333     0.0266667  0.0        0.0
- 0.0533333   0.00666667  0.136667      0.03       0.173333   0.0
- 0.0366667   0.03        0.0           0.0433333  0.03       0.0
- 0.05        0.0         0.0566667     0.03       0.0        0.0
- 0.00666667  0.00333333  0.07       …  0.01       0.0866667  0.0</code></pre></div></div><h3 id="Number-of-samples"><a class="docs-heading-anchor" href="#Number-of-samples">Number of samples</a><a id="Number-of-samples-1"></a><a class="docs-heading-anchor-permalink" href="#Number-of-samples" title="Permalink"></a></h3><p>With exception of the sampling mode <code>:full</code>, all sampling modes take motifs randomly in a recurrence space. The <strong>kword</strong> <code>num_samples</code> defines the number of samples that will be used by the library, it can be either an integer value that specifies the exact number, or a decimal value interpreted as the percentage of samples taken from the entire available population. By default, <code>RMA.jl</code> uses <span>$5\%$</span>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; num_samples = 0.1)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.017799287939474856
- 0.0032331998219848686
- 0.003552514463729417
- 0.0038862928348909658
- 0.0031297285269247885
- 0.004214508233199822
- 0.0036659991099243436
- 0.011969292389853137
- 0.0036014686248331106
- 0.0038095238095238095
+ 0.06       0.0233333  0.253333    …  0.193333    0.133333    0.1
+ 0.0933333  0.05       0.0            0.0133333   0.0966667   0.0366667
+ 0.0766667  0.06       0.0366667      0.0333333   0.0233333   0.0866667
+ 0.0        0.0        0.23           0.21        0.103333    0.0433333
+ 0.103333   0.0566667  0.0            0.02        0.09        0.0666667
+ 0.103333   0.153333   0.0         …  0.00666667  0.0733333   0.0466667
+ 0.133333   0.17       0.0            0.00333333  0.04        0.0666667
+ 0.0        0.0        0.0            0.0466667   0.1         0.02
+ 0.1        0.0966667  0.00666667     0.0166667   0.05        0.0966667
+ 0.163333   0.193333   0.0            0.01        0.0266667   0.0666667
+ 0.166667   0.196667   0.0         …  0.00333333  0.00333333  0.11
+ 0.0        0.0        0.02           0.02        0.0266667   0.0833333
+ 0.0        0.0        0.226667       0.176667    0.1         0.05
+ 0.0        0.0        0.0            0.02        0.0533333   0.0466667
+ 0.0        0.0        0.0233333      0.02        0.0266667   0.04
+ 0.0        0.0        0.203333    …  0.206667    0.0533333   0.04</code></pre></div></div><h3 id="Number-of-samples"><a class="docs-heading-anchor" href="#Number-of-samples">Number of samples</a><a id="Number-of-samples-1"></a><a class="docs-heading-anchor-permalink" href="#Number-of-samples" title="Permalink"></a></h3><p>With exception of the sampling mode <code>:full</code>, all sampling modes take motifs randomly in a recurrence space. The <strong>kword</strong> <code>num_samples</code> defines the number of samples that will be used by the library, it can be either an integer value that specifies the exact number, or a decimal value interpreted as the percentage of samples taken from the entire available population. By default, <code>RMA.jl</code> uses <span>$5\%$</span>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; num_samples = 0.1)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.021046951490876726
+ 0.0035002225189141077
+ 0.0036682242990654207
+ 0.0036615487316421897
+ 0.0035057854917668
+ 0.004025367156208277
+ 0.003876279483756119
+ 0.012979528259902092
+ 0.0036882510013351135
+ 0.003759457053849577
  ⋮
- 0.0014096573208722742
- 0.009147752558967511
- 0.0009902091677792613
- 0.0012194036493101913
- 0.0011726746773475746
- 0.0010124610591900312
- 0.0013173119715175789
- 0.001169336893635959
- 0.0067456608811749</code></pre><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; num_samples = 50000)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.01802
- 0.00312
- 0.00346
- 0.00392
- 0.00266
- 0.00458
- 0.00356
- 0.01252
- 0.00342
- 0.00346
+ 0.0016566533155318202
+ 0.009835336003560303
+ 0.0012883845126835782
+ 0.0013595905651980417
+ 0.0013495772140631954
+ 0.0012583444592790386
+ 0.001570983533600356
+ 0.0013807298620382733
+ 0.008464619492656875</code></pre><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3; num_samples = 50000)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.02106
+ 0.0034
+ 0.00348
+ 0.00304
+ 0.00372
+ 0.00446
+ 0.004
+ 0.01216
+ 0.00384
+ 0.0036
  ⋮
- 0.00128
- 0.0091
- 0.00118
+ 0.00144
+ 0.01144
+ 0.00144
+ 0.00108
  0.00138
- 0.0013
  0.00114
- 0.00142
- 0.00128
- 0.0064</code></pre><h3 id="Threads"><a class="docs-heading-anchor" href="#Threads">Threads</a><a id="Threads-1"></a><a class="docs-heading-anchor-permalink" href="#Threads" title="Permalink"></a></h3><p><code>RMA.jl</code> is highly compatible with CPU asyncronous jobs, that can increase significantly the computational performance of the library. The <strong>kword</strong> <code>threads</code> defines if the library will use threads or not, being <code>true</code> by default. The number of threads used is equal to the number of threads available to Julia, being it configured by the environment variable <code>JULIA_NUM_THREADS</code>, or by the running argument <code>--threads T</code> in Julia initiation: For example, using <code>julia --threads 8</code>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using BenchmarkTools</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; @benchmark distribution(data, th, 4; sampling_mode = :full, threads = false)</code><code class="nohighlight hljs ansi" style="display:block;">BenchmarkTools.Trial: 4 samples with 1 evaluation per sample.
- Range <span class="sgr90">(</span><span class="sgr36"><span class="sgr1">min</span></span> … <span class="sgr35">max</span><span class="sgr90">):  </span><span class="sgr36"><span class="sgr1">1.502 s</span></span> … <span class="sgr35">  1.529 s</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>min … max<span class="sgr90">): </span>0.00% … 0.00%
- Time  <span class="sgr90">(</span><span class="sgr34"><span class="sgr1">median</span></span><span class="sgr90">):     </span><span class="sgr34"><span class="sgr1">1.525 s              </span></span><span class="sgr90">┊</span> GC <span class="sgr90">(</span>median<span class="sgr90">):    </span>0.00%
- Time  <span class="sgr90">(</span><span class="sgr32"><span class="sgr1">mean</span></span> ± <span class="sgr32">σ</span><span class="sgr90">):   </span><span class="sgr32"><span class="sgr1">1.520 s</span></span> ± <span class="sgr32">12.210 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>mean ± σ<span class="sgr90">):  </span>0.00% ± 0.00%
+ 0.00164
+ 0.0015
+ 0.00836</code></pre><h3 id="Threads"><a class="docs-heading-anchor" href="#Threads">Threads</a><a id="Threads-1"></a><a class="docs-heading-anchor-permalink" href="#Threads" title="Permalink"></a></h3><p><code>RMA.jl</code> is highly compatible with CPU asynchronous jobs, that can increase significantly the computational performance of the library. The <strong>kword</strong> <code>threads</code> defines if the library will use threads or not, being <code>true</code> by default. The number of threads used is equal to the number of threads available to Julia, being it configured by the environment variable <code>JULIA_NUM_THREADS</code>, or by the running argument <code>--threads T</code> in Julia initiation: For example, using <code>julia --threads 8</code>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using BenchmarkTools</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; @benchmark distribution(data, th, 4; sampling_mode = :full, threads = false)</code><code class="nohighlight hljs ansi" style="display:block;">BenchmarkTools.Trial: 4 samples with 1 evaluation per sample.
+ Range <span class="sgr90">(</span><span class="sgr36"><span class="sgr1">min</span></span> … <span class="sgr35">max</span><span class="sgr90">):  </span><span class="sgr36"><span class="sgr1">1.521 s</span></span> … <span class="sgr35"> 1.536 s</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>min … max<span class="sgr90">): </span>0.00% … 0.00%
+ Time  <span class="sgr90">(</span><span class="sgr34"><span class="sgr1">median</span></span><span class="sgr90">):     </span><span class="sgr34"><span class="sgr1">1.526 s             </span></span><span class="sgr90">┊</span> GC <span class="sgr90">(</span>median<span class="sgr90">):    </span>0.00%
+ Time  <span class="sgr90">(</span><span class="sgr32"><span class="sgr1">mean</span></span> ± <span class="sgr32">σ</span><span class="sgr90">):   </span><span class="sgr32"><span class="sgr1">1.527 s</span></span> ± <span class="sgr32">7.529 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>mean ± σ<span class="sgr90">):  </span>0.00% ± 0.00%
 
-  █                                     <span class="sgr32"> </span>    █<span class="sgr34"> </span>       █   █ 
-  █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁<span class="sgr32">▁</span>▁▁▁▁█<span class="sgr34">▁</span>▁▁▁▁▁▁▁█▁▁▁█ ▁
-  1.5 s<span class="sgr90">          Histogram: frequency by time</span>        1.53 s <span class="sgr1">&lt;</span>
+  █ █<span class="sgr34"> </span>                    <span class="sgr32"> </span>             █                █ 
+  █▁█<span class="sgr34">▁</span>▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁<span class="sgr32">▁</span>▁▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█ ▁
+  1.52 s<span class="sgr90">        Histogram: frequency by time</span>        1.54 s <span class="sgr1">&lt;</span>
 
- Memory estimate<span class="sgr90">: </span><span class="sgr33">1.02 MiB</span>, allocs estimate<span class="sgr90">: </span><span class="sgr33">27</span>.</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; @benchmark distribution(data, th, 4; sampling_mode = :full, threads = true)</code><code class="nohighlight hljs ansi" style="display:block;">BenchmarkTools.Trial: 16 samples with 1 evaluation per sample.
- Range <span class="sgr90">(</span><span class="sgr36"><span class="sgr1">min</span></span> … <span class="sgr35">max</span><span class="sgr90">):  </span><span class="sgr36"><span class="sgr1">304.171 ms</span></span> … <span class="sgr35">354.200 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>min … max<span class="sgr90">): </span>0.00% … 0.00%
- Time  <span class="sgr90">(</span><span class="sgr34"><span class="sgr1">median</span></span><span class="sgr90">):     </span><span class="sgr34"><span class="sgr1">309.890 ms               </span></span><span class="sgr90">┊</span> GC <span class="sgr90">(</span>median<span class="sgr90">):    </span>0.00%
- Time  <span class="sgr90">(</span><span class="sgr32"><span class="sgr1">mean</span></span> ± <span class="sgr32">σ</span><span class="sgr90">):   </span><span class="sgr32"><span class="sgr1">318.649 ms</span></span> ± <span class="sgr32"> 17.999 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>mean ± σ<span class="sgr90">):  </span>0.04% ± 0.09%
+ Memory estimate<span class="sgr90">: </span><span class="sgr33">1.02 MiB</span>, allocs estimate<span class="sgr90">: </span><span class="sgr33">27</span>.</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; @benchmark distribution(data, th, 4; sampling_mode = :full, threads = true)</code><code class="nohighlight hljs ansi" style="display:block;">BenchmarkTools.Trial: 17 samples with 1 evaluation per sample.
+ Range <span class="sgr90">(</span><span class="sgr36"><span class="sgr1">min</span></span> … <span class="sgr35">max</span><span class="sgr90">):  </span><span class="sgr36"><span class="sgr1">288.110 ms</span></span> … <span class="sgr35">341.705 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>min … max<span class="sgr90">): </span>0.00% … 0.23%
+ Time  <span class="sgr90">(</span><span class="sgr34"><span class="sgr1">median</span></span><span class="sgr90">):     </span><span class="sgr34"><span class="sgr1">298.497 ms               </span></span><span class="sgr90">┊</span> GC <span class="sgr90">(</span>median<span class="sgr90">):    </span>0.00%
+ Time  <span class="sgr90">(</span><span class="sgr32"><span class="sgr1">mean</span></span> ± <span class="sgr32">σ</span><span class="sgr90">):   </span><span class="sgr32"><span class="sgr1">304.946 ms</span></span> ± <span class="sgr32"> 17.802 ms</span>  <span class="sgr90">┊</span> GC <span class="sgr90">(</span>mean ± σ<span class="sgr90">):  </span>0.03% ± 0.07%
 
-  ▁█ █▁▁▁<span class="sgr34">█</span>   ▁   ▁  <span class="sgr32"> </span>                          ▁     ▁    ▁   ▁ 
-  ██▁████<span class="sgr34">█</span>▁▁▁█▁▁▁█▁▁<span class="sgr32">▁</span>▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁█▁▁▁▁█▁▁▁█ ▁
-  304 ms<span class="sgr90">           Histogram: frequency by time</span>          354 ms <span class="sgr1">&lt;</span>
+  █▁▁█    ▁▁<span class="sgr34"> </span>▁   █   <span class="sgr32"> </span>▁   ▁            ▁               ▁▁     ▁ 
+  ████▁▁▁▁██<span class="sgr34">▁</span>█▁▁▁█▁▁▁<span class="sgr32">▁</span>█▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁██▁▁▁▁▁█ ▁
+  288 ms<span class="sgr90">           Histogram: frequency by time</span>          342 ms <span class="sgr1">&lt;</span>
 
  Memory estimate<span class="sgr90">: </span><span class="sgr33">5.03 MiB</span>, allocs estimate<span class="sgr90">: </span><span class="sgr33">145</span>.</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p><code>RMA.jl</code> allocates memory for each thread, so how many threads you use, more memory the library will allocate. It is done to increase the performance, and avoid the memory concurrency.</p></div></div><h3 id="Metrics"><a class="docs-heading-anchor" href="#Metrics">Metrics</a><a id="Metrics-1"></a><a class="docs-heading-anchor-permalink" href="#Metrics" title="Permalink"></a></h3><p><code>RMA.jl</code> uses the library <a href="https://github.com/JuliaStats/Distances.jl">Distances.jl</a> to simplify the configuration of metrics, and increase the computation performance. With it, modify the metric is a easy process that can be done with the <strong>kword</strong> <code>metric</code>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distances</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; my_metric = KLDivergence()</code><code class="nohighlight hljs ansi" style="display:block;">Distances.KLDivergence()</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 2; metric = my_metric)</code><code class="nohighlight hljs ansi" style="display:block;">16-element Vector{Float64}:
- 0.06303090949521903
- 0.01834111629975539
- 0.01743162108072048
- 0.08297976428730265
- 0.01929730931732266
- 0.05475650433622415
+ 0.06970869468534578
+ 0.017936402045808316
+ 0.017342672893039805
+ 0.07878140982877474
+ 0.018979319546364243
+ 0.05947520569268401
  0.0
- 0.06419613075383589
- 0.017667333778074272
+ 0.0608027573938181
+ 0.01804758728040916
  0.0
- 0.057384923282188124
- 0.0638803646875695
- 0.08208361129641983
- 0.06538803646875695
- 0.06403824772070268
- 0.3295241271959084</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>The default recurrence functions were configured to metrics with two arguments, like <code>euclidean(x, y)</code>, so if you need to use another type of metric, it is needed to define a new recurrence function, see <a href="../recurrence/">Recurrence functions</a> page to know more about it.</p></div></div><h3 id="Recurrence-functions"><a class="docs-heading-anchor" href="#Recurrence-functions">Recurrence functions</a><a id="Recurrence-functions-1"></a><a class="docs-heading-anchor-permalink" href="#Recurrence-functions" title="Permalink"></a></h3><p>A recurrence function defines if two points of a trajectory recurr or not, and we describe more about on the <a href="../recurrence/">Recurrence functions</a> page. Actually the library have two recurrence functions available</p><ol><li>Standard recurrence: <span>$R(\mathbf{x}, \mathbf{y})=\Theta(\varepsilon - \|\mathbf{x}-\mathbf{y}\|)$</span></li><li>Recurrence with corridor threshold: <span>$R(\mathbf{x}, \mathbf{y})=\Theta(\|\mathbf{x}-\mathbf{y}\| - \varepsilon_{min}) \cdot \Theta(\varepsilon_{max} - \|\mathbf{x}-\mathbf{y}\|)$</span></li></ol><p><code>RMA.jl</code> automatically change between them with the type of parameters, so if you use as parameter a <code>Float64</code>, the library will apply the standard recurrence, or, if you use a <code>Tuple</code>, the library will apply the recurrence with corridor threshold.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 2);</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, (0.0, th), 2);</code></pre><h2 id="High-dimensionality-data"><a class="docs-heading-anchor" href="#High-dimensionality-data">High-dimensionality data</a><a id="High-dimensionality-data-1"></a><a class="docs-heading-anchor-permalink" href="#High-dimensionality-data" title="Permalink"></a></h2><p>If you are working with a dynamical system or a data time serie with two or more dimensions, it is important to note that <code>RMA.jl</code> effectively not works with vectors, but matrices. In this situation, each row of the matrix will represent a coordinate, and each column a set of coordinates along a trajectory. For example, if we want a uniform distribution with three dimension and 3,000 points, we will have something like:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3, 3000)</code><code class="nohighlight hljs ansi" style="display:block;">3×3000 Matrix{Float64}:
- 0.494168  0.17775   0.42128   0.0466165  …  0.302772  0.117588  0.224523
- 0.669997  0.508102  0.98827   0.607634      0.723976  0.894654  0.203212
- 0.161067  0.785154  0.947661  0.887428      0.869292  0.367529  0.710087</code></pre><p>This format of data is effectvely what the library uses. In the case of previuous section when we are working with vectors <code>RMA.jl</code> converts it to a matrix <span>$1\times 3,000$</span>, but when we are working which data with a dimensionality different than one, it is necessary to use the proper format.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3)</code><code class="nohighlight hljs ansi" style="display:block;">(0.6552094522019334, 6.12707769265892)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.010549621717846017
- 0.004007565643079662
- 0.0038473520249221183
- 0.00340231419670672
- 0.0038384512683578105
+ 0.05983099844340672
+ 0.06112519457416055
+ 0.07691794529686458
+ 0.062426061818990436
+ 0.061543251056259726
+ 0.3370824994440738</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>The default recurrence functions were configured to metrics with two arguments, like <code>euclidean(x, y)</code>, so if you need to use another type of metric, it is needed to define a new recurrence function, see <a href="../recurrence/">Recurrence functions</a> page to know more about it.</p></div></div><h3 id="Recurrence-functions"><a class="docs-heading-anchor" href="#Recurrence-functions">Recurrence functions</a><a id="Recurrence-functions-1"></a><a class="docs-heading-anchor-permalink" href="#Recurrence-functions" title="Permalink"></a></h3><p>A recurrence function defines if two points of a trajectory recurr or not. Actually the library have two recurrence functions available</p><ol><li>Standard recurrence: <span>$R(\mathbf{x}, \mathbf{y})=\Theta(\varepsilon - \|\mathbf{x}-\mathbf{y}\|)$</span></li><li>Recurrence with corridor threshold: <span>$R(\mathbf{x}, \mathbf{y})=\Theta(\|\mathbf{x}-\mathbf{y}\| - \varepsilon_{min}) \cdot \Theta(\varepsilon_{max} - \|\mathbf{x}-\mathbf{y}\|)$</span></li></ol><p><code>RMA.jl</code> automatically change between them with the type of parameters, so if you use as parameter a <code>Float64</code>, the library will apply the standard recurrence, or, if you use a <code>Tuple</code>, the library will apply the recurrence with corridor threshold.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = (distribution(data, th, 2))&#39;</code><code class="nohighlight hljs ansi" style="display:block;">1×16 adjoint(::Vector{Float64}) with eltype Float64:
+ 0.124641  0.0541316  0.0540716  …  0.0270336  0.0261085  0.0704848</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = (distribution(data, (0.0, th), 2))&#39;</code><code class="nohighlight hljs ansi" style="display:block;">1×16 adjoint(::Vector{Float64}) with eltype Float64:
+ 0.12469  0.054523  0.0537959  0.082475  …  0.0267845  0.026024  0.0702557</code></pre><p>It is possible to write your own recurrece function, we talk more about it in the <a href="../recurrence/">Recurrence functions</a> page.</p><h2 id="High-dimensionality-data"><a class="docs-heading-anchor" href="#High-dimensionality-data">High-dimensionality data</a><a id="High-dimensionality-data-1"></a><a class="docs-heading-anchor-permalink" href="#High-dimensionality-data" title="Permalink"></a></h2><p>If you are working with a dynamical system or a data time serie with two or more dimensions, it is important to note that <code>RMA.jl</code> effectively not works with vectors, but matrices. In this situation, each row of the matrix will represent a coordinate, and each column a set of coordinates along a trajectory. For example, if we want a uniform distribution with three dimension and 3,000 points, we will have something like:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3, 3000)</code><code class="nohighlight hljs ansi" style="display:block;">3×3000 Matrix{Float64}:
+ 0.556689  0.915128  0.395287  0.223334   …  0.385447  0.128949  0.379864
+ 0.974777  0.179389  0.862927  0.148381      0.131565  0.218189  0.90447
+ 0.726285  0.694723  0.717705  0.0285204     0.526215  0.764227  0.197823</code></pre><p>This format of data is effectvely what the library uses. In the case of previous section, when we are working with vectors, <code>RMA.jl</code> converts it to a matrix <span>$1\times 3,000$</span> but when we are working which data with a dimensionality different than one, it is necessary to use the proper format.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3)</code><code class="nohighlight hljs ansi" style="display:block;">(0.6519871106337272, 6.125667878401873)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.009893190921228305
+ 0.003644859813084112
+ 0.003678237650200267
+ 0.0032265242545616375
+ 0.003575878949710725
+ 0.0034824210057854917
+ 0.003395638629283489
+ 0.005645304850912328
+ 0.003771695594125501
  0.0033778371161548733
- 0.003413440142412105
- 0.005594125500667557
- 0.003691588785046729
- 0.0031352914997774812
  ⋮
+ 0.003153093012906097
+ 0.005574098798397864
+ 0.0030195816644414774
+ 0.00289942145082332
+ 0.0029706275033377838
+ 0.0030507343124165556
  0.0032843791722296394
- 0.00539163328882955
- 0.0028704939919893192
- 0.0028482421005785494
- 0.003093012906097018
- 0.0028415665331553183
- 0.003188696039163329
- 0.003197596795727637
- 0.008960836671117045</code></pre><h2 id="Continuous-problems"><a class="docs-heading-anchor" href="#Continuous-problems">Continuous problems</a><a id="Continuous-problems-1"></a><a class="docs-heading-anchor-permalink" href="#Continuous-problems" title="Permalink"></a></h2><p>Work with continuous problems means numeric integrate some differential equations problem and take the numerical values as input to <code>RMA.jl</code>. Thinking in it, we make the library compatible with a powerful tool to solve these problems in Julia: the library <a href="https://docs.sciml.ai/DiffEqDocs/stable/">DifferentialEquations.jl</a>. The way to apply this kind of data in the library is similar with the other two cases discussed before, as we will demonstrate in this section. </p><div class="admonition is-info"><header class="admonition-header">Info</header><div class="admonition-body"><p>The code of Lorenz system used in these examples was get from Example 2 of <a href="https://docs.sciml.ai/DiffEqDocs/stable/getting_started/">DifferentialEquations.jl documentation</a></p></div></div><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; function lorenz!(du, u, p, t)
+ 0.003230974632843792
+ 0.00872051624388073</code></pre><h2 id="Continuous-problems"><a class="docs-heading-anchor" href="#Continuous-problems">Continuous problems</a><a id="Continuous-problems-1"></a><a class="docs-heading-anchor-permalink" href="#Continuous-problems" title="Permalink"></a></h2><p>Continuous problems means numerically integrate a differential equation problem and take the values as input to <code>RMA.jl</code>. Thinking in it, we make the library compatible with a powerful tool to solve these problems in Julia: the library <a href="https://docs.sciml.ai/DiffEqDocs/stable/">DifferentialEquations.jl</a>. The way to apply this kind of data in the library is similar with the other two cases discussed before, as we will demonstrate in this section. </p><div class="admonition is-info"><header class="admonition-header">Info</header><div class="admonition-body"><p>The code of Lorenz system used in these examples was get from Example 2 of <a href="https://docs.sciml.ai/DiffEqDocs/stable/getting_started/">DifferentialEquations.jl documentation</a></p></div></div><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; function lorenz!(du, u, p, t)
            du[1] = 10.0 * (u[2] - u[1])
            du[2] = u[1] * (28.0 - u[3]) - u[2]
            du[3] = u[1] * u[2] - (8 / 3) * u[3]
@@ -295,91 +303,91 @@ u: 13309-element Vector{Vector{Float64}}:
  [9.858747856008915, -2.613711553766342, 39.371604354846596]</code></pre><p>With the data computed, it is easy to apply to <code>RMA.jl</code>, with a simply memory access given by <code>DifferentialEquations.jl</code>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = sol[:, :]</code><code class="nohighlight hljs ansi" style="display:block;">3×13309 Matrix{Float64}:
  1.0  0.999643     0.996105    0.969359     …  16.1972   10.1916    9.85875
  0.0  0.000998805  0.0109654   0.0897706        8.52887  -2.31184  -2.61371
- 0.0  1.78143e-8   2.14696e-6  0.000143802     43.8558   39.7184   39.3716</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3; threshold_max = 30.0)</code><code class="nohighlight hljs ansi" style="display:block;">(17.27175080558539, 3.347479811422028)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.20719437006342578
- 0.010235252341025538
- 0.0004906361237396954
- 0.0053371361397779845
- 0.032019541413348285
- 8.12079587865656e-5
- 0.008395366877001681
- 0.017679503472628512
- 0.0004922173635491696
- 0.005337362031179339
+ 0.0  1.78143e-8   2.14696e-6  0.000143802     43.8558   39.7184   39.3716</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(data, 3; threshold_max = 30.0)</code><code class="nohighlight hljs ansi" style="display:block;">(17.65843179377014, 3.3528079695139383)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.19558773102478344
+ 0.010406139186149424
+ 0.0004640938840806649
+ 0.0053904465104974
+ 0.03069446245300894
+ 0.00010108640210566929
+ 0.008101821000942871
+ 0.017871624109479622
+ 0.00044929799729201387
+ 0.005376215352212132
  ⋮
- 0.0006322700323883091
- 0.012078639121770374
- 0.017315479479347428
- 0.0006026782588110071
- 0.027253006953389117
- 0.0009368845871134376
- 0.0006198460053138693
- 0.0020867847657031796
- 0.19509133467030923</code></pre><div class="admonition is-todo"><header class="admonition-header">Todo</header><div class="admonition-body"><p>It is necessary improve the function <code>find_parameters</code> to adjust the <code>threshold_max</code> based in the data distribution.</p></div></div><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Although it is possible to compute the distribution as demonstrated above, we strongly advise against doing so in this way.</p></div></div><p>We recommend you to apply a transient into your data and take a correct time resolution while do the process of discretization, it need to be done to maximize the information available to analysis. <code>RMA.jl</code> has a utilitary function to help with this process.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; prepared_data = prepare(sol, 0.2; transient = 10000, max_length = 1000)</code><code class="nohighlight hljs ansi" style="display:block;">3×1000 Matrix{Float64}:
+ 0.0007181087649026205
+ 0.012337284776320075
+ 0.0175446463060205
+ 0.0006156670143888305
+ 0.02743326829166917
+ 0.0010623672605652797
+ 0.0006964231903726892
+ 0.0024295749672570413
+ 0.20795980307691195</code></pre><div class="admonition is-todo"><header class="admonition-header">Todo</header><div class="admonition-body"><p>It is necessary improve the function <code>find_parameters</code> to adjust the <code>threshold_max</code> based in the data distribution.</p></div></div><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Although it is possible to compute the distribution as demonstrated above, we strongly advise against doing so in this way.</p></div></div><p>We recommend you to apply a transient into your data and take a correct time resolution while doing the process of discretization, it is needed to maximize the information available. <code>RMA.jl</code> has a utilitary function to help with this process.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; prepared_data = prepare(sol, 0.2; transient = 10000, max_length = 1000)</code><code class="nohighlight hljs ansi" style="display:block;">3×1000 Matrix{Float64}:
  -10.719   -6.7762   -3.09341  -12.7639  …  -2.68218   -7.09519  -10.68
  -15.3216  -1.71365  -4.16461  -17.1177     -2.00772  -11.6349    -3.69038
-  23.3945  30.9561   17.7139    27.2908     21.6974    16.2567    36.4084</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(prepared_data, 3; threshold_max = 30.0)</code><code class="nohighlight hljs ansi" style="display:block;">(16.305048335123523, 5.385589186872473)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
- 0.23847389124594018
- 0.009802105578930296
- 0.0005469960283773814
- 0.00521210524912885
- 0.03530648719444235
- 5.331037071941442e-5
- 0.009261999238294195
- 0.017000022137357334
- 0.0005416875804455753
- 0.005201488353265238
+  23.3945  30.9561   17.7139    27.2908     21.6974    16.2567    36.4084</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; th, s = find_parameters(prepared_data, 3; threshold_max = 30.0)</code><code class="nohighlight hljs ansi" style="display:block;">(16.047261009667025, 5.369604958487774)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(prepared_data, th, 3)</code><code class="nohighlight hljs ansi" style="display:block;">512-element Vector{Float64}:
+ 0.0029518072289156628
+ 0.008433734939759036
+ 0.005522088353413655
+ 0.009477911646586346
+ 0.004939759036144578
+ 0.00893574297188755
+ 0.005200803212851405
+ 0.0005421686746987952
+ 0.006164658634538153
+ 0.010080321285140562
  ⋮
- 0.00045268636831231565
- 0.01099605458078396
- 0.01688628581677587
- 0.0005353626212076787
- 0.02673176254476603
- 0.0006497766159932016
- 0.0004617220243664537
- 0.001359188561943714
- 0.16445763700426438</code></pre><h2 id="Spatial-data"><a class="docs-heading-anchor" href="#Spatial-data">Spatial data</a><a id="Spatial-data-1"></a><a class="docs-heading-anchor-permalink" href="#Spatial-data" title="Permalink"></a></h2><p><code>RMA.jl</code> is compatible with the generalised recurrence plot analysis for spatial data proposed by Marwan, Kurths and Saparin at 2006. It allow the library to calculate a probability distribution of motifs in a tensorial recurrence space, for example, to images the recurrence space have four dimensions.</p><div class="admonition is-todo"><header class="admonition-header">Todo</header><div class="admonition-body"><p>This is a open research field, so we just will explain how to use the library to estimate it, but we don&#39;t recommend you to apply it, intead you are a researcher working with it 😉.</p></div></div><p>The application of <code>RMA.jl</code> to spatial data is very similar to the others presented before, but the input format is more complex. Instead to matrices we need to use abstract arrays with dimension <span>$D$</span>, where the first dimension will be interpreted as a coordinate dimension (such as for high-dimensionaly data), and rest of the dimensions will be the spatial data dimensionality. To illustrate it, let an image with RGB. It can be represented as an abstract array with 3 dimensions, where the first dimension will have a length 3, being each element a color value (red, blue and green), and the others two dimensions are relative to each pixel that compose the image. We will demonstrate it using a uniform distribution, where each position can be interpreted as a pixel with three colors for a image 100x100.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3, 100, 100)</code><code class="nohighlight hljs ansi" style="display:block;">3×100×100 Array{Float64, 3}:
+ 0.0009638554216867469
+ 0.0031325301204819275
+ 0.0006024096385542169
+ 0.00026104417670682733
+ 0.0012650602409638553
+ 0.00012048192771084337
+ 0.0009236947791164659
+ 0.0008232931726907631
+ 0.01248995983935743</code></pre><h2 id="Spatial-data"><a class="docs-heading-anchor" href="#Spatial-data">Spatial data</a><a id="Spatial-data-1"></a><a class="docs-heading-anchor-permalink" href="#Spatial-data" title="Permalink"></a></h2><p><code>RMA.jl</code> is compatible with generalised recurrence plot analysis for spatial data proposed by Marwan, Kurths and Saparin at 2006. It allow the library to calculate a probability distribution of motifs in a tensorial recurrence space, for example, to images the recurrence space have four dimensions.</p><div class="admonition is-todo"><header class="admonition-header">Todo</header><div class="admonition-body"><p>This is a open research field, so we just will explain how to use the library to estimate it, but we don&#39;t recommend you to apply it for production 😉.</p></div></div><p>The application of <code>RMA.jl</code> to spatial data is very similar to the others presented before, but the input format is more complex. Instead to matrices we need to use abstract arrays with dimension <span>$D$</span>, where the first dimension will be interpreted as a coordinate dimension (such as for high-dimensionaly data), and rest of the dimensions will be the spatial data dimensionality. To illustrate it, let an image with RGB. It can be represented as an abstract array with 3 dimensions, where the first dimension will have a length 3, being each element a color value (red, blue and green), and the others two dimensions are relative to each pixel that compose the image. We will demonstrate it using a uniform distribution, where each position can be interpreted as a RGB pixel for an image 100x100.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Distributions</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; data = rand(Uniform(0, 1), 3, 100, 100)</code><code class="nohighlight hljs ansi" style="display:block;">3×100×100 Array{Float64, 3}:
 [:, :, 1] =
- 0.272534  0.384445  0.505535   0.140164  …  0.581267  0.196798   0.0377443
- 0.782767  0.677948  0.0582174  0.902555     0.723432  0.0447163  0.710128
- 0.880416  0.588953  0.551258   0.030515     0.960301  0.791229   0.302496
+ 0.81205   0.272417  0.281745  0.0286606  …  0.662397  0.738961  0.962232
+ 0.842409  0.899767  0.152571  0.104726      0.104575  0.566077  0.193171
+ 0.407367  0.75115   0.831194  0.244834      0.835105  0.590376  0.568461
 
 [:, :, 2] =
- 0.390539  0.943286   0.0668269  0.946546  …  0.750283  0.36443   0.350523
- 0.528311  0.567039   0.987815   0.714683     0.358983  0.302127  0.504114
- 0.476719  0.0642886  0.259347   0.479764     0.925962  0.471382  0.605413
+ 0.512662   0.615174  0.63027   0.75961   …  0.967658  0.201713   0.948802
+ 0.504013   0.52336   0.771031  0.203018     0.744472  0.0374628  0.774118
+ 0.0946762  0.737423  0.464011  0.990763     0.369664  0.176413   0.703802
 
 [:, :, 3] =
- 0.114348  0.0707449  0.469224  0.502543  …  0.364244    0.0469258  0.572953
- 0.434049  0.779572   0.936567  0.442603     0.00522173  0.751676   0.315183
- 0.186365  0.988821   0.395686  0.859298     0.261322    0.0859208  0.131697
+ 0.499057  0.453504  0.354426  0.306704  …  0.472613   0.567404   0.612509
+ 0.722142  0.433547  0.204369  0.752029     0.993894   0.121173   0.429115
+ 0.670758  0.528999  0.089278  0.37686      0.0385334  0.0183312  0.00305536
 
 ;;; …
 
 [:, :, 98] =
- 0.0391588  0.806594  0.892076  0.730086  …  0.999115  0.558264   0.478368
- 0.911535   0.630907  0.894914  0.832347     0.23131   0.0415344  0.208555
- 0.781505   0.385209  0.940292  0.450406     0.175285  0.592637   0.459443
+ 0.840073  0.6685     0.548603  0.314079   …  0.967624  0.904371   0.698634
+ 0.221516  0.0744671  0.87836   0.570691      0.743057  0.205534   0.709372
+ 0.697798  0.255367   0.660074  0.0682511     0.100749  0.0588536  0.795768
 
 [:, :, 99] =
- 0.992862  0.281664  0.88718   0.25214    …  0.840762  0.77432   0.0508906
- 0.500789  0.367956  0.814471  0.276143      0.179882  0.285153  0.96573
- 0.512581  0.909594  0.650975  0.0266898     0.320893  0.110496  0.936656
+ 0.840475  0.150989  0.800098  0.141785  …  0.0603079  0.154531   0.25464
+ 0.645984  0.072811  0.88408   0.185422     0.357238   0.38803    0.858119
+ 0.756796  0.220776  0.120011  0.62147      0.626143   0.0458807  0.00853377
 
 [:, :, 100] =
- 0.0609453  0.00514508  0.0875301   …  0.943126  0.195271  0.682572
- 0.862891   0.103642    0.00528533     0.128664  0.651173  0.0616889
- 0.55899    0.911703    0.68806        0.207314  0.145995  0.605498</code></pre><p>When we work with spatial data is necessarity to use the complete structure of <code>distribution</code> function, defining a vector structure where each value represents the length of a motif constrained side. For example, to a square tensorial motif constrained with side 2, we can use:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, data, 0.5, [2, 2, 2, 2])</code><code class="nohighlight hljs ansi" style="display:block;">65536-element Vector{Float64}:
- 0.8108407696888182
- 0.0041226488555022095
- 0.004344594397644796
- 0.00019321338002656685
- 0.00400209869705891
- 0.0005180117343815715
- 0.00020820407330449014
- 5.5798691645603356e-5
- 0.003631703650650221
- 0.0007578628268283441
+ 0.964486  0.144461  0.668028  0.204061  …  0.53084   0.169959  0.374197
+ 0.263371  0.671363  0.244929  0.844739     0.100187  0.281334  0.642486
+ 0.165831  0.473253  0.729957  0.923003     0.560442  0.179664  0.830043</code></pre><p>When we work with spatial data is necessarity to use the complete structure of <code>distribution</code> function, defining a vector structure where each value represents the length of a motif constrained side. For example, to a square tensorial motif constrained with side 2, we can use:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using RMA</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; dist = distribution(data, data, 0.5, [2, 2, 2, 2])</code><code class="nohighlight hljs ansi" style="display:block;">65536-element Vector{Float64}:
+ 0.7694822797513211
+ 0.0044566081890826115
+ 0.004515946349974391
+ 0.0002465136227925163
+ 0.0045875685511911355
+ 0.00026920786678270576
+ 0.00028003447859453924
+ 1.6448121791054722e-5
+ 0.004381862926766299
+ 0.0005471603046442
  ⋮
  0.0
  0.0
@@ -389,4 +397,4 @@ u: 13309-element Vector{Vector{Float64}}:
  0.0
  0.0
  0.0
- 0.0</code></pre><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>The <code>find_parameters</code> function is not compatible with spatial data.</p></div></div><div class="admonition is-compat"><header class="admonition-header">Compat</header><div class="admonition-body"><p>It is important to note that this functionality is only available to motif shapes <code>:square</code>, <code>:diagonal</code>, <code>:line</code> and <code>:pair</code>, for <code>:random</code> sampling mode.</p></div></div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../theory/">« Theoretical Overview</a><a class="docs-footer-nextpage" href="../rqa/">RQA »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.10.1 on <span class="colophon-date" title="Friday 11 April 2025 17:11">Friday 11 April 2025</span>. Using Julia version 1.11.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+ 0.0</code></pre><p>Since the recurrence space has four dimensions, in this examples, it is necessary for <code>structure</code> has the same number of elements, where each element will represent the motif&#39; side lenght for each dimension.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>The <code>find_parameters</code> function is not compatible with spatial data.</p></div></div><div class="admonition is-compat"><header class="admonition-header">Compat</header><div class="admonition-body"><p>It is important to note that this functionality is only available to motif shapes <code>:square</code>, <code>:diagonal</code>, <code>:line</code> and <code>:pair</code>, for <code>:random</code> sampling mode.</p></div></div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../theory/">« Theoretical Overview</a><a class="docs-footer-nextpage" href="../rqa/">RQA »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.10.1 on <span class="colophon-date" title="Thursday 24 April 2025 12:32">Thursday 24 April 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
