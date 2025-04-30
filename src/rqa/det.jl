@@ -22,7 +22,7 @@ function determinism(rr::Float64, probs::Vector{Float64})
 
         for a1 in 0:1, a2 in 0:1, a3 in 0:1, a4 in 0:1, a5 in 0:1, a6 in 0:1
             I_1 = 2 * a1 + 4 * a2 + 8 * a3 + 16 + 32 * a4 + 64 * a5 + 128 * a6
-            values[v_idx] = I_1
+            values[v_idx] = I_1 + 1
             v_idx += 1
         end
 
