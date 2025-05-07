@@ -279,11 +279,13 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
                     vect_square_columnwise_full(x, y, parameters, structure, space_size, func, [d_x, d_y], hv, metric))
 
             ##      iii. Return the distribution
+
+            res = Float64.(histogram)
             for i in 1:space_size[1]
-                histogram[:, i] ./= space_size[2] 
+                res[:, i] ./= space_size[2] 
             end
 
-            return histogram
+            return res
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
