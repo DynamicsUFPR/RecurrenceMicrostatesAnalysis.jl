@@ -38,6 +38,7 @@ module RMA
     include("rma/histograms/square/square_random.jl")
     include("rma/histograms/square/square_triangleup.jl")
     include("rma/histograms/square/square_columnwise.jl")
+    include("rma/histograms/square/square_columnwise_full.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: triangle
     include("rma/histograms/triangle/triangle_full.jl")
