@@ -271,6 +271,15 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
 
             ##      iii. Return the distribution
             return histogram ./ num_samples
+            ## -----------------------------------------------------------------------------------------------------------------
+        ##          * Mode: columnwise full
+        elseif (sampling_mode == :columnwise_full)
+            histogram = threads ? (     #   --- Run Mode: vector
+                    vect_square_columnwise_full_async(x, y, parameters, structure, space_size, func, [d_x, d_y], hv, metric)) : (
+                    vect_square_columnwise_full(x, y, parameters, structure, space_size, func, [d_x, d_y], hv, metric))
+
+            ##      iii. Return the distribution
+            return histogram ./ num_samples
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
@@ -289,6 +298,9 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
                 dist = Dict(k => v / total for (k, v) in histogram);
                 return dist
             ) : histogram ./ sum(histogram)
+        ## -----------------------------------------------------------------------------------------------------------------
+        else
+            throw(string("The sampling mode '", sampling_mode, "' is invalid."))
         end
         ## =================================================================================================================
         ##      * Shape: triangle
@@ -339,6 +351,9 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':triangle'.'"))
+        ## -----------------------------------------------------------------------------------------------------------------
+        else
+            throw(string("The sampling mode '", sampling_mode, "' is invalid."))
         end
         ## =================================================================================================================
         ##      * Shape: pair
@@ -371,6 +386,9 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':pair'.'"))
+        ## -----------------------------------------------------------------------------------------------------------------
+        else
+            throw(string("The sampling mode '", sampling_mode, "' is invalid."))
         end
         ## =================================================================================================================
         ##      * Shape: diagonal
@@ -398,6 +416,9 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':diagonal'.'"))
+        ## -----------------------------------------------------------------------------------------------------------------
+        else
+            throw(string("The sampling mode '", sampling_mode, "' is invalid."))
         end
         ## =================================================================================================================
         ##      * Shape: line
@@ -425,6 +446,9 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ##          * Mode: triangleup
         elseif (sampling_mode == :triangleup)
             throw(ArgumentError("The sampling mode ':triangleup' is not implemented to shape ':line'.'"))
+        ## -----------------------------------------------------------------------------------------------------------------
+        else
+            throw(string("The sampling mode '", sampling_mode, "' is invalid."))
         end
         ## =================================================================================================================
     else
