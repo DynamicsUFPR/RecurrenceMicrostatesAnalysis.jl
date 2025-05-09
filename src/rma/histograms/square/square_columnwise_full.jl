@@ -66,8 +66,8 @@ function vect_square_columnwise_full_async(x::Matrix{Float64}, y::Matrix{Float64
 
         ##
         ##      Get the samples and compute the histogram.
-        @inbounds for i in 1:length(segment)
-            idx[1] = i
+        @inbounds for i in eachindex(segment)
+            idx[1] = segment[i]
 
             for j in 1:space_size[2]
                 idx[2] = j
