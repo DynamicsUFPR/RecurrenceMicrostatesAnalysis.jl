@@ -2,7 +2,7 @@
 #       RMA Utils
 #
 #       TODO - Improve it. The current version is only for tests.
-function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0, threshold_max::Float64 = 1.0, large_prec = 20, small_prec = 50)
+function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0, threshold_max::Float64 = maximum(pairwise(Euclidean(), x, x)), large_prec = 20, small_prec = 50, num_samples::Float64 = 0.05)
     ##
     ##      Define a range of thresholds and alloc memory to store the entropy.
     threshold_range = range(threshold_min, threshold_max, large_prec)
@@ -12,7 +12,7 @@ function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0,
     ##
     ##      Compute the max entropy for a "large precision"
     for i in eachindex(threshold_range)
-        dist = distribution(x, threshold_range[i], n)
+        dist = distribution(x, threshold_range[i], n; num_samples = num_samples)
         s = rentropy(dist)
 
         if (s > s_max)
