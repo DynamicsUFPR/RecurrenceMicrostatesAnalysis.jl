@@ -2,7 +2,7 @@
 #       RMA Utils
 #
 #       TODO - Improve it. The current version is only for tests.
-function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0, threshold_max::Float64 = maximum(pairwise(Euclidean(), x, x)), large_prec = 20, small_prec = 50, num_samples = 0.05, shape = :random)
+function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0, threshold_max::Float64 = maximum(pairwise(Euclidean(), x, x)), large_prec = 20, small_prec = 50, num_samples = 0.05, shape = :square)
     ##
     ##      Define a range of thresholds and alloc memory to store the entropy.
     threshold_range = range(threshold_min, threshold_max, large_prec)
