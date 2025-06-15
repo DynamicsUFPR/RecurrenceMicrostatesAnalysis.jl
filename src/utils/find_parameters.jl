@@ -51,3 +51,56 @@ function find_parameters(x::AbstractArray, n::Int; threshold_min::Float64 = 0.0,
 
     return threshold_range[t_indeces[2]], s_max
 end
+
+
+"""
+***THIS IS MERELY A TEMPLATE THAT MAY OR MAY NOT BE USED***
+
+This function calculates the maximum microstate entropy for the RP of the input
+time series given the microstate size `k` and the input ratio `r` of the
+total number of microstates.
+
+Input:
+* `x`: time series with `N` data points.
+* `k` **(kwarg)**: number of columns of the microsatate (default to `k = 2`).
+* `r` **(kwarg)**: ratio of the total number of microstates to be sampled
+for the histogram (default to `r = 0.05`)
+
+Output:
+* `Smax`: maximum recurrence microstates entropy for the input time series.
+* `εopt`: the value of the vicinity parameter that maximizes the recurrence
+microstates entropy.
+"""
+# function find_parameters_test(
+#         x::VecOrMat{Float64};
+#         k::Int=2,
+#         r::Float64=0.05,
+#     )
+
+#     fraction_1::UInt8 = 5
+#     fraction_2::UInt8 = 1 * fraction_1
+    
+#     ε::Float64 = 1e-6
+#     εopt::Float64 = maximum(pairwise(Euclidean(), eachrow(x))) * (0.5 - ε)
+#     Δε::Float64 = (εopt - ε) / fraction_2
+
+#     Smax::Float64 = 0.0
+
+#     for _ ∈ 1:fraction_1
+#         for _ ∈ 1:fraction_2
+#             S = # CALCULATE THE ENTROPY
+
+#             if S > Smax
+#                 Smax = S
+#                 εopt = ε
+#             end
+
+#             ε += Δε
+#         end
+
+#         ε = εopt - Δε
+#         Δε *= 2 / fraction_2
+#     end
+
+#     return Smax, εopt
+# end
