@@ -1,4 +1,5 @@
-using RMA, Test
+import RecurrenceMicrostatesAnalysis as RMA
+using Test
 using Distances
 using Distributions
 using DifferentialEquations
@@ -68,8 +69,8 @@ motif_n = [2, 3, 4]
         @test sqrt(js_divergence(dist_1, dist_2)) < 0.1
 
         ##  Test using "prepare"
-        dist_1 = distribution(sol, 2.7, n)
-        dist_2 = distribution(sol, 2.7, n)
+        dist_1 = distribution(sol, 2.7, n; transient = 10000, K = 1000)
+        dist_2 = distribution(sol, 2.7, n; transient = 10000, K = 1000)
         @test length(dist_1) == length(dist_2) == 2^(n * n)
         @test sqrt(js_divergence(dist_1, dist_2)) < 0.1
     end
