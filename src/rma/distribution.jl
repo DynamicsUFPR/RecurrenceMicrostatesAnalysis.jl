@@ -1,56 +1,19 @@
-#
-#           RMA Core - Public function to compute the probability distribution of some datasets.
-#
-# """
-# ## Keywords arguments
-# - `shape::Symbol`: can be `:square`, `:triangle`, `:pair`, `:diagonal` and `:line`. The value `:square` refers to 
-# default square format of motifs, based on the work of [Corso2018](@cite) with a generalization for spatial data based 
-# on the work of [Marwan2006](@cite). On  the other hand, the value `:triangle` is only available for 2-dimensional 
-# recurrence spaces (i.e., time series) and is based on the work of [Hirata2021](@cite). `:pair`, `:diagonal` and 
-# `:line` are experimental shapes and there are not an work about them yet.
 
-# - `run_mode::Symbol`: can be `:default`, `:dict`, or `:vect`. `:dict` and `:vect` set the return format to vector and
-# dictionary respectively. The mode `:default` uses a vector for motifs with an hypervolume lesser than 28 and 
-# a dictionary otherwise.
-
-# - `sampling_mode::Symbol`: can be `:full`, `:random`, `:columnwise` or `:triangleup`. The sampling mode `:full` retrieves all 
-# available microstates in the recurrence space sequentially; it is not yet available for multi-threading. The `:random`
-# mode retrieves a number of samples based on the value of `num_samples` and creates a distribution for the entire 
-# recurrence space. Finally, `:columnwise` creates a distribution for each column of the recurrence space. It is only 
-# available for `:vect` run mode because it returns an array where each column is a probability distribution of motifs.
-
-# - `num_samples::Union{Int, Float64}`: the number of samples used to create the probability distribution. CIt can be a 
-# percentage of the total possible motifs or the desired number of samples.
-
-# - `metric::Metric`: a structure used to compute distances from the [Distances.jl](https://github.com/JuliaStats/Distances.jl) 
-# library.
-
-# - `func = (x, y, p, ix, dim, metric) -> recurrence(x, y, p, ix, dim, met)`: this is the recurrence function that returns true when 
-# there is a recurrence and false otherwise. This function takes 5 parameters:
-#     - x::AbstractArray : it is a reference to the parameter `data_x`.
-#     - y::AbstractArray : it is a reference to the parameter `data_y`.
-#     - p : it is a reference to the parameter `parameters`.
-#     - [ix] : it is a vector with `length(structure)` elements that indicates the elements used to compute the 
-# recurrence.
-#     - [dim] : it is a vector with two elements: the number of dimenions of `data_x` and `data_y`. It is used only for
-# high-dimensional problems.
-#     - metric::Metric : a metric from the [Distances.jl](https://github.com/JuliaStats/Distances.jl) library. It used
-#     the same value as the `metric` parameter of distribution function.
-
-# For reference, you can see the code [`src/rma/recurrence.jl`](src/rma/recurrence.jl).
-
-# - `threads::Bool`: defines whether the library will use threads in the computational process. If set to true, the 
-# library will use the number of available threads defined by `JULIA_NUM_THREADS`.
 """
 ### Based on Recurrence Plot
 
-        distribution([x], parameters, n::Int; kwords...)
+        distribution([x], [parameters], n::Int; kwargs...)
 
 Compute the distribution of recurrence microstates probabilities from the dataset `x`. The input `parameters`
 consists of the constant values used to calculate the recurrence between two points. `n` is an integer that
 represents the length of motifs side.
 
-This function can return a vector, an array or a dictionary based on the number of possible microstates and
+Input:
+* `[x]`: input dataset.
+* `[parameter]`: set of parameters used to compute the recurrence microstate distribution.
+* `n`: microstate size.
+
+Output: this function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
 function distribution(x::AbstractArray, parameters, n::Int;
@@ -63,12 +26,9 @@ function distribution(x::AbstractArray, parameters, n::Int;
     end
     
     dim = ndims(x) - 1
-    structure = ones(Int, 2 * dim) .* n
-
-    return distribution(x, x, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
+    return distribution(x, x, parameters, ones(Int, 2 * dim) .* n; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
 end
 """
----
 ### Based on Cross-Recurrence Plot
 
     distribution([x], [y], parameters, n::Int; kwords...)
@@ -77,7 +37,13 @@ Compute the distribution of recurrence microstates probabilities from the datase
 consists of the constant values used to calculate the recurrence between two points. `n` is an integer that
 represents the length of motifs side.
 
-This function can return a vector, an array or a dictionary based on the number of possible microstates and
+Input:
+* `[x]`: input dataset.
+* `[y]`: input dataset.
+* `[parameter]`: set of parameters used to compute the recurrence microstate distribution.
+* `n`: microstate size.
+
+Output: this function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
 function distribution(x::AbstractArray, y::AbstractArray, parameters, n::Int;
@@ -94,12 +60,10 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, n::Int;
 
     dim_x = ndims(x) - 1
     dim_y = ndims(y) - 1
-    structure = ones(Int, dim_x + dim_y) .* n
-
-    return distribution(x, y, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
+    return distribution(x, y, parameters, ones(Int, dim_x + dim_y) .* n; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
 end
+
 """
----
 ### Using DifferencialEquations.jl
 
     distribution([solution], parameters, n::Int, vicinity::Union{Int, Float64}; kwords...)
@@ -109,32 +73,37 @@ the library DifferencialEquations.jl. The input `parameters` consists of the con
 between two points. `n` is an integer that represents the length of motifs side. `vicinity` is the time separation used to
 discretize a continuous problem.
 
-It presents some new kwords:
-- `transient::Int`: defines an interval of time that will be ignored, and taked as a transient.
-- `max_length::Int`: defines the maximum size of the result time series.
+Input:
+* `[solution]`: solution returned by the library `DifferentialEquations.jl`.
+* `[parameter]`: set of parameters used to compute the recurrence microstate distribution.
+* `n`: microstate size.
+* `σ`: sampling parameter; it defines the time resolution of discretized data.
 
-This function can return a vector, an array or a dictionary based on the number of possible microstates and
+Specific **kwargs**:
+* `transient`: defines an interval of time that will be ignored, and taked as a transient.
+* `K`: defines the maximum size of the result time series.
+
+Output: this function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
-function distribution(solution, parameters, n::Int, vicinity::Union{Int, Float64} = 0.0;
+function distribution(solution, parameters, n::Int, σ::Union{Int, Float64} = 0.0;
     shape::Symbol = :square, run_mode::Symbol = :default, sampling_mode::Symbol = :random,
     num_samples::Union{Int, Float64} = 0.05, threads::Bool = Threads.nthreads() > 1, 
     metric = euclidean_metric, func = (x, y, p, ix, metric, dim) -> recurrence(x, y, p, ix, metric, dim),
-    transient::Int = 0, max_length::Int = 0)
+    transient::Int = 0, K::Int = 0)
     
     ##
     ##      Prepare the dataset.
-    data = prepare(solution, vicinity; transient = transient, max_length = max_length)
-
+    data = prepare(solution, σ; transient = transient, K = K)
 
     dim = ndims(data) - 1
     structure = ones(Int, 2 * dim) .* n
 
     return distribution(data, data, parameters, structure; shape = shape, run_mode = run_mode, sampling_mode = sampling_mode, num_samples = num_samples, threads = threads, metric = metric, func = func)
 end
+
 """
----
-### Main Version
+### Main
 
     distribution([x], [y], parameters, [structure]; kwords...)
 
@@ -142,7 +111,22 @@ Compute the distribution of recurrence microstates probabilities from the datase
 consists of the constant values used to calculate the recurrence between two points. Meanwhile, the input `structure`
 is a vector where each element represents a side of the motif.
 
-This function can return a vector, an array or a dictionary based on the number of possible microstates and
+Input:
+* `[x]`: input dataset.
+* `[y]`: input dataset.
+* `[parameter]`: set of parameters used to compute the recurrence microstate distribution.
+* `[structure]`: microstate structure.
+
+**kwargs**:
+* `shape`: microstate shape. Can be `:square`, `:triangle`, `:pair`, `:diagonal` or `:line`. (default `:square`)
+* `run_mode`: define the output format. It can be `:vect` for a `Vector{Float64}`, or `:dict` for a `Dict{Int, Float64}`. If you are you sampling_mode `:columnwise``
+* `sampling_mode`: define how the library will take motifs in a RP. Can be `:full`, `:random`, `:triangleup`, `:columnwise` or `:columnwise_full`. (default `:random`)
+* `num_samples`: number of samples used to compute the distribution. Can be an `Int` value or a `Float64`, which will be interpretad as a proportion of the total population of microstates in a RP. (This is not required for `:full` and `:columnwise_full` sampling modes)
+* `threads`: set if library will use asyncronous jobs or not.
+* `metric`: metric defined using the library `Distances.jl`.
+* `func`: recurrence function.
+
+Output: this function can return a vector, an array or a dictionary based on the number of possible microstates and
 the setting of `run_mode` or `sampling_mode`.
 """
 function distribution(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int};

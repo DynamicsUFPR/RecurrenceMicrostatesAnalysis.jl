@@ -1,11 +1,6 @@
 #
 #       RMA Core
 #
-"""
-    vect_line_random([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
-"""
 function vect_line_random(x::AbstractArray, y::AbstractArray, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
 
@@ -42,11 +37,6 @@ function vect_line_random(x::AbstractArray, y::AbstractArray, parameters,
     return hg
 end
 
-"""
-    vect_line_random_async([x], [y], parameters, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
-"""
 function vect_line_random_async(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric) where {F}
     ##

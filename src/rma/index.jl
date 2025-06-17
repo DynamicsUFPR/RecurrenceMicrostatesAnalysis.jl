@@ -3,18 +3,6 @@
 #
 #       We have a different function to each motif shape.
 #
-"""
-These functions compute and convert a motif to a decimal value that will be used as an index
-for store the motif in the system memory.
-
-It have three types:
-* Type-A: Using a generic structure, applied to square (or rectangle) motifs and time.
-* Type-B: For a 2D space, such as the triangle motif, proposed by [Hirata2021](@cite). It must not be applied to
-spatial data using the recurrence plot generalization, proposed by [Marwan2006](@cite).
-* Type-C: Using fixed structures, like diagonal, and line shapes.
-
-Each type have a specific method to get the fixed indeces.
-"""
 # -----------------------------------------------------------  TYPE A:  GENERIC STRUCTURE ------------------------
 function compute_index_square(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int}, func::F, 
     dim::AbstractVector{Int}, fixed::Vector{Int}, itr::Vector{Int}, power_vector::Vector{Int}, metric) where {F}

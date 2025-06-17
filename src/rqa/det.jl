@@ -1,14 +1,48 @@
-#
-#           RMA Analysis
-#
-#       TODO: Adapt for any `n` size, not just 3.
-"""
-    determinism(rr:Float64, [probs]; {mode})
 
-Compute the determinism of a problem, using a estimation proposed by [Felipe2025](@cite). We have two
-ways to do it, using a square motif (mode :square) or using a diagonal motif that contains (the default mode :diagonal)
 """
-function determinism(rr::Float64, probs::Vector{Float64})
+    determinism(rr::Float64, [probs])
+
+Estimate the determinism from a distribution. If the distribution has 512 elements, the function will consider square motifs, computing determinism using
+
+```math
+I^{(\\beta)} = \\frac{1}{RR}(2\\mathbf{M}_{1,2}^{(\\beta)} + 4\\mathbf{M}_{1,3}^{(\\beta)} + 8\\mathbf{M}_{2,1}^{(\\beta)} + 16 + 32\\mathbf{M}_{2,3}^{(\\beta)} + 64\\mathbf{M}_{3,1}^{(\\beta)} + 128\\mathbf{M}_{3,2}^{(\\beta)}),
+```
+
+where \$\\mathbf{M}\$ is the motif structure. It defines a class of motifs \$(C_L) \\ni I^{(\\beta)}\$ that we use to estimate DET:
+
+```math
+DET \\approx 1 - \\frac{1}{RR}\\sum_{I\\in (C_L)} \\mathbf{p}^{(3)}_I.
+```
+
+```julia
+dist = distribution(data, th, 3)
+rr = rrate(dist)
+det = determinism(rr, dist)
+```
+
+If the distribution has 8 elements, this function will consider line motifs, which makes the process simpler. In this case, we just need the motif with \$I = 2\$:
+
+```math
+DET \\approx 1 - \\frac{\\mathbf{p}^{(3)}_2}{RR}.
+```
+
+```julia
+dist = distribution(data, th, 3; shape = :line)
+rr = rrate(dist)
+det = determinism(rr, dist)
+```
+
+Input:
+* `rr`: recurrence rate.
+* `[probs]`: a `Vector{Float64}` returned by the function `distribution(...)`.
+
+Output: returns the determinism as a `Float64`.
+"""
+function determinism(
+        rr::Float64, 
+        probs::Vector{Float64}
+    )
+
     if (length(probs) != 512 && length(probs) != 8)
         throw(ArgumentError(string("Determinism must be computed using square motifs with n = 3. Actual value results in ", length(probs))))
     end
@@ -49,15 +83,27 @@ function determinism(rr::Float64, probs::Vector{Float64})
     return length(probs) != 512 ? __diagonal_mode() : __default_mode()
 end
 """
-    determinism([x], threshold::Float64; {mode}, {num_samples})
+    determinism([x], threshold::Float64; r::Float64)
 
-This function uses a recurrence rate from the probabilities used also to compute the determinism, so we have a error in the recurrence rate
-that can result in a error of ~ 5% for the determinism.
+Estimate the determinism from a data `[x]`` using a probability distribution and a RR computed from it. 
+
+Input:
+* `[x]`: input data.
+* `[parameter]`: set of parameters used to compute the recurrence microstate distribution.
+* `r` **(kwarg)**: ratio of the total number of microstates to be sampled for the histogram. (default `r = 0.05`)
+
+Output: returns a `Tuple{Float64, Float64}`.
+* `lam`: laminarity as `Float64`.
+* `rr`: recurrence rate as `Float64`.
 """
-function determinism(x::AbstractArray, threshold::Float64;  mode::Symbol = :diagonal, num_samples::Union{Int, Float64} = 0.09)
+function determinism(
+        x::AbstractArray, 
+        threshold::Float64; 
+        r::Float64 = 0.05
+    )
     ##
     ##      Compute the probabilities.
-    probs = distribution(x, (0.0, threshold), 3; shape = mode == :diagonal ? :diagonal : :square, num_samples = num_samples)
+    probs = distribution(x, (0.0, threshold), 3; shape = :diagonal, num_samples = r)
     ##
     ##      Compute the recurrence rate.
     rr = rrate(probs)

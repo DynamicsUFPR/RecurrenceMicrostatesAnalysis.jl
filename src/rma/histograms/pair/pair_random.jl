@@ -1,11 +1,6 @@
 #
 #       RMA Core
 #
-"""
-    vect_pair_random([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
-"""
 function vect_pair_random(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
@@ -42,11 +37,6 @@ function vect_pair_random(x::AbstractArray, y::AbstractArray, parameters, struct
     return hg
 end
 
-"""
-    vect_pair_random_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
-"""
 function vect_pair_random_async(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 

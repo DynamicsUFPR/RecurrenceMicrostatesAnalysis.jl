@@ -1,12 +1,6 @@
 #
 #       RMA Core
 #
-"""
-    vect_pair_columnwise([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on each column of a recurrence space. The result is a vector with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function vect_pair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
@@ -40,12 +34,6 @@ function vect_pair_columnwise(x::Matrix{Float64}, y::Matrix{Float64}, parameters
     return hg
 end
 
-"""
-    vect_pair_columnwise_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on each column of a recurrence space. The result is a vector with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function vect_pair_columnwise_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 

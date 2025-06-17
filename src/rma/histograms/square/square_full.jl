@@ -1,11 +1,6 @@
 #
 #       RMA Core - Get all microstates available, using the square shape.
 #
-"""
-    dict_square_full([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric::Metric)
-
-Get a histogram of all microstates available on a recurrence space. The result is a dict with a probability distribution.
-"""
 function dict_square_full(x::Union{AbstractVector, AbstractArray}, y::Union{AbstractVector, AbstractArray}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric) where {F}
     
@@ -49,12 +44,6 @@ function dict_square_full(x::Union{AbstractVector, AbstractArray}, y::Union{Abst
 end
 
 ##      TODO : adapt to the spatial generalization.
-"""
-    dict_square_full_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric)
-
-Get a histogram of all microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function dict_square_full_async(x::AbstractVector, y::AbstractVector, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric) where {F}
 
@@ -130,11 +119,6 @@ function dict_square_full_async(x::AbstractVector, y::AbstractVector, parameters
     return res
 end
 
-"""
-    vect_square_full([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric::Metric)
-
-Get a histogram of all microstates available on a recurrence space. The result is a vect with a probability distribution.
-"""
 function vect_square_full(x::AbstractArray, y::AbstractArray, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, total_microstates::Int, metric) where {F}
 
@@ -178,12 +162,6 @@ function vect_square_full(x::AbstractArray, y::AbstractArray, parameters, struct
 end
 
 ##      TODO : adapt to the spatial generalization.
-"""
-    vect_square_full_async([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric::Metric)
-
-Get a histogram of all microstates available on a recurrence space, using an async structure. The result is a vector with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function vect_square_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric) where {F}
 

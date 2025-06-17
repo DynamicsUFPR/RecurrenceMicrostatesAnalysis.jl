@@ -1,5 +1,5 @@
 #
-#           RMA.jl
+#           RecurrenceMicrostatesAnalysis.jl
 #       DynamicsUFPR - https://github.com/DynamicsUFPR
 #       
 #
@@ -12,13 +12,13 @@
 #       GitHub - Julia Version: https://github.com/DynamicsUFPR/RMA.jl
 #
 #       ----- BEGIN CODE
-module RMA
+module RecurrenceMicrostatesAnalysis
     #
-    #       Libraries needed for the code to work.
+    #       Libraries needed for work.
     using Distances
     using Statistics
 
-    #       Metrics
+    #       Basic metric
     const euclidean_metric = Euclidean()
 
     #
@@ -66,15 +66,16 @@ module RMA
     # ======================================================================================================= #
     #           * RMA Utils
     include("utils/prepare.jl")
-    include("utils/find_parameters.jl")     ## Test only
+    include("utils/find_parameters.jl")
     # ======================================================================================================= #
     #
-    #       Export some functions to the main scope.
+    #       Export some functions to the main scope (PublicAPI)
     # ======================================================================================================= #
     export rrate
     export prepare
     export rentropy
     export laminarity
+    export recurrence
     export determinism
     export distribution
     export find_parameters

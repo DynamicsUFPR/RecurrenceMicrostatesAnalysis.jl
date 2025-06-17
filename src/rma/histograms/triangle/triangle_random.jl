@@ -1,11 +1,7 @@
 #
 #       RMA Core
 #
-"""
-    dict_triangle_random([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
 
-Get a histogram of a random set of microstates available on a recurrence space. The result is a dict with a probability distribution.
-"""
 function dict_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
@@ -46,12 +42,6 @@ function dict_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters
     return hg
 end
 
-"""
-    dict_triangle_random_async([x], [y], parameters, len::Int, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function dict_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
@@ -133,11 +123,6 @@ function dict_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, para
     return res
 end
 
-"""
-    vect_triangle_random([x], [y], parameters, [structure], space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, samples::Int, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space. The result is a vector with a probability distribution.
-"""
 function vect_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 
@@ -178,12 +163,6 @@ function vect_triangle_random(x::Matrix{Float64}, y::Matrix{Float64}, parameters
     return hg
 end
 
-"""
-    vect_triangle_random_async([x], [y], parameters, len::Int, space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, metric::Metric)
-
-Get a histogram of a random set of microstates available on a recurrence space, using an async structure. The result is a dict with a probability distribution.
-It is only available for 2D recurrence plot !!
-"""
 function vect_triangle_random_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, len::Int,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, samples::Int, metric) where {F}
 

@@ -1,14 +1,25 @@
-#
-#       RMA Utils
-#
-"""
-    prepare([solution], vicinity::Union{Float64, Int}; transient::Int, max_length::Int)
 
-Prepare a problem solved by the library DifferencialEquations.jl to be used in RMA.jl.
-It can apply the vicinity parameter to discretize the "continuous" time serie, like proposed
-by [Thiago2023](@cite).
 """
-function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, max_length::Int = 0)
+    prepare([solution], σ::Union{Float64, Int}; transient::Int, K::Int)
+
+Prepare a problem solved by the library `DifferentialEquations.jl` to be used in `RecurrenceMicrostatesAnalysis.jl`. 
+This function applies the sampling parameter (σ) to discretize the continuous time series, as proposed by [Thiago2024](@cite).
+
+Input:
+*   `[solution]`: solution returned by the library `DifferentialEquations.jl`.
+*   `σ`: sampling parameter; it defines the time resolution of discretized data.
+*   `transient` **(kwarg)**: number of points, without application of sampling, that will be ignored.
+*   `K` **(kwarg)**: maximum length of the returned data series.
+
+Output:
+*   `data`: returns the prepared data in the format of a `Matrix{Float64}`. Each row represents a system component, and each column represents a time step.
+"""
+function prepare(
+        solution, σ::Union{Float64, Int}; 
+        transient::Int = 0, 
+        K::Int = 0
+    )
+
     time = solution.t
 
     if (transient >= length(time))
@@ -24,7 +35,7 @@ function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, ma
             continue
         end
 
-        if (time[new_pos[length(new_pos)]] + vicinity <= time[i])
+        if (time[new_pos[length(new_pos)]] + σ <= time[i])
             push!(new_pos, i)
         end
     end
@@ -32,9 +43,10 @@ function prepare(solution, vicinity::Union{Float64, Int}; transient::Int = 0, ma
     pos =  transient .+ new_pos
     data = (solution[:, :])[:, pos]
 
-    if (max_length == 0 || size(data, 2) < max_length)
+    if (K == 0 || size(data, 2) < K)
+        println("Warning: the result data series is shorter than the maximum length.")
         return data
     end
 
-    return (solution[:, :])[:, pos[1:max_length]]
+    return (solution[:, :])[:, pos[1:K]]
 end
