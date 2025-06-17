@@ -109,5 +109,5 @@ function determinism(
     rr = rrate(probs)
     ##
     ##      Return the determinism.
-    return determinism(rr, probs)
+    return determinism(rr, probs), rr
 end
