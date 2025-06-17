@@ -34,7 +34,7 @@ function find_parameters(
     Smax::Float64 = 0.0
 
     ##      Just to allocate memory.
-    dist::Vector{Float64} = distribution(x, 0.01, n; num_samples = 2)
+    dist::Vector{Float64} = distribution(x, 0.01, n; num_samples = 2, shape = shape)
 
     for _ ∈ 1:fraction
         for _ ∈ 1:fraction

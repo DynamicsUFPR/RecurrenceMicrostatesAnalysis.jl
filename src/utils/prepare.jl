@@ -43,8 +43,10 @@ function prepare(
     pos =  transient .+ new_pos
     data = (solution[:, :])[:, pos]
 
-    if (K == 0 || size(data, 2) < K)
+    if (size(data, 2) < K)
         println("Warning: the result data series is shorter than the maximum length.")
+        return data
+    elseif (K == 0)
         return data
     end
 
