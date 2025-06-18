@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/quickstart/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/theory/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/distributions/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/rqa/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/utils/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/performance/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/api/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/motifs/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/recurrence/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/examples/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/bib/</loc>
+  <lastmod>2025-06-18T21:16:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
