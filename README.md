@@ -33,7 +33,7 @@ add https://github.com/DynamicsUFPR/RMA.jl
 
 ## Library usage guide
 
-Access the library documentation [here](https://dynamicsufpr.github.io/RMA.jl/).
+Access the library documentation [here](https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/).
 
 ##  Citation
 There is no published article yet.
