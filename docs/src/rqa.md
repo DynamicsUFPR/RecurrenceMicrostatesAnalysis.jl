@@ -54,10 +54,7 @@ det = determinism(data, th)
 ```
 
 !!! info
-    When we estimate DET directly using this function overload, the library will automatically use a diagonal motif constrained shape. If you want to use a square shape, try:
-    ```@repl rqa
-    det = determinism(data, th; mode = :square)
-    ```
+    When we estimate DET directly using this function overload, the library will automatically use a diagonal motif constrained shape.
 
 ##  Laminarity
 The laminarity (LAM) can be computed with a method similar to determinism (DET). It is important to note that it can be done using two motif constrained shapes: `:square` or `:line`.
@@ -81,7 +78,4 @@ lam = laminarity(data, th)
 ```
 
 !!! info
-    When we estimate LAM directly using this function overload, the library will automatically use a line motif constrained shape. If you want to use a square shape, try:
-    ```@repl rqa
-    lam = laminarity(data, th; mode = :square)
-    ```
+    When we estimate LAM directly using this function overload, the library will automatically use a line motif constrained shape.

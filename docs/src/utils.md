@@ -27,9 +27,9 @@ data_prepared = prepare(sol, 0.2)
     It is possible to see the difference between the data solution and the prepareted data when we make a RP.
     ![RP without vicinity application and with vicinity](assets/figure_4.png)
 
-The `prepare` function can also apply a transient phase to the data, using the **kword** `transient`, and define the data length, using the **kword** `max_length`.
+The `prepare` function can also apply a transient phase to the data, using the **kword** `transient`, and define the data length, using the **kword** `K`.
 ```@repl utils
-data_prepared = prepare(sol, 0.2; transient = 6000, max_length = 1000)
+data_prepared = prepare(sol, 0.2; transient = 6000, K = 1000)
 ```
 
 ##  Finding threshold

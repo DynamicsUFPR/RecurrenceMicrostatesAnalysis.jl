@@ -10,15 +10,11 @@ With respect of memory consumition, `RecurrenceMicrostatesAnalysis.jl` has even 
 `RecurrenceMicrostatesAnalysis.jl` allocates memory for each thread, so when you increase the number of available threads, the library will allocate more memory to avoid concurrency. It is also necessary to allocate more memory when we increase the motif size `n`, that is based on the motif area $\sigma$ (our hypervolume for spatial generalization), so largest motifs needs more memory per thread.
 
 These measures were made using the library `BenchmarkTools.jl`.
-<!-- ```@repl performance
-using Distributions, RMA, BenchmarkTools
+```@repl performance
+using Distributions, RecurrenceMicrostatesAnalysis, BenchmarkTools
 data = rand(Uniform(0, 1), 10000);
 @benchmark distribution(data, 0.27, 3)
 @benchmark distribution(data, 0.27, 3; sampling_mode = :full)
 @benchmark distribution(data, 0.27, 4)
 @benchmark distribution(data, 0.27, 4; sampling_mode = :full)
-@benchmark distribution(data, 0.27, 5)
-@benchmark distribution(data, 0.27, 5; sampling_mode = :full)
-@benchmark distribution(data, 0.27, 5; run_mode = :dict)
-@benchmark distribution(data, 0.27, 5; sampling_mode = :full, run_mode = :dict)
-``` -->
+```

@@ -5,7 +5,7 @@ The following code is an example of how to use `RecurrenceMicrostatesAnalysis.jl
 ##  Install everything that we need
 using Pkg; Pkg.add("Distributions"); Pkg.add(url="https://github.com/DynamicsUFPR/RMA.jl")
 using Distributions                             #   For generate our uniform distribution
-using .RecurrenceMicrostatesAnalysis as RMA     #   !! Import RecurrenceMicrostatesAnalysis.jl
+import RecurrenceMicrostatesAnalysis as RMA     #   !! Import RecurrenceMicrostatesAnalysis.jl
 
 ##  Generate our data
 data = rand(Uniform(0, 1), 1000)

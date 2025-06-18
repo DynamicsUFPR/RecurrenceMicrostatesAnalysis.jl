@@ -118,5 +118,5 @@ end
 ```
 
 ### Evaluation
-We evaluate the trained model using a confusion matrix and obtain an accuracy of 86.1%:
+We evaluate the trained model using a confusion matrix and obtain an accuracy of 91%:
 ![Confusion Matrix](assets/figure_8.png)
