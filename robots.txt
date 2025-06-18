@@ -1,0 +1,3 @@
+Sitemap: https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/sitemap.xml
+User-agent: *
+Allow: /
