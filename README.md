@@ -1,4 +1,4 @@
-# RMA.jl
+# RecurrenceMicrostatesAnalysis.jl
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/DynamicsUFPR/RMA.jl)
 ![GitHub license](https://img.shields.io/github/license/DynamicsUFPR/RMA.jl)
@@ -30,7 +30,6 @@ Pkg.add(url="https://github.com/DynamicsUFPR/RMA.jl")
 ```julia
 add https://github.com/DynamicsUFPR/RMA.jl
 ```
-
 
 ## Library usage guide
 

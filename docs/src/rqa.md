@@ -1,7 +1,7 @@
 #   Recurrence Quantification Analysis
 The recurrence microstate analysis allows us to estimate values of typical RQA measures, such as determinism and laminarity, with a good precision, and defines some novel quantifiers. We will demonstate in this page how compute these quantifiers using a uniform distribution as input.
 ```@repl rqa
-using RMA, Distributions        # Generate our data =D
+using RecurrenceMicrostatesAnalysis, Distributions        # Generate our data =D
 data = rand(Uniform(0, 1), 3000);
 th, s = find_parameters(data, 3)
 dist = distribution(data, th, 3);
@@ -29,7 +29,7 @@ The recurrence rate (RR) can be computed using a similar method to the recurrenc
 rr = rrate(dist)
 ```
 
-Since the recurrence rate is an estimated measure, it has a small error, how you can check in the following graphic, that displays the relative error between the RR computed by `RMA.jl` and the standard approach.
+Since the recurrence rate is an estimated measure, it has a small error, how you can check in the following graphic, that displays the relative error between the RR computed by `RecurrenceMicrostatesAnalysis.jl` and the standard approach.
 ![Relative error of recurrence rate compared to the value computed using the standard method. Panel (f) provides an overview of the error distributions presented in panels (a)-(e).](assets/figure_1.png)
 
 ##  Determinism

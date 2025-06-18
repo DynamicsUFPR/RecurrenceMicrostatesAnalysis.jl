@@ -1,14 +1,21 @@
 ##
 ##      Library Documenter.jl to build the documentation page.
-using Documenter, RMA
+using Documenter
+using DocumenterCitations
+
+include("../src/RecurrenceMicrostatesAnalysis.jl")
+using .RecurrenceMicrostatesAnalysis
+
+bib = CitationBibliography("reference.bib")
 
 ##
 ##      Build docs.
 makedocs(
-    sitename = "RMA.jl",
+    sitename = "RecurrenceMicrostatesAnalysis.jl",
     format = Documenter.HTML(
         prettyurls = true
     ),
+    modules = [RecurrenceMicrostatesAnalysis],
     pages = [
         "Welcome" => "index.md",
         "Guide" => [
@@ -26,7 +33,8 @@ makedocs(
         ],
         "Examples" => "examples.md",
         "Bibliography" => "bib.md",
-        "Developers and Researchers" => "dev.md",
-        "Release notes" => "release_notes.md",
-    ]
+        # "Developers and Researchers" => "dev.md",
+        # "Release notes" => "release_notes.md",
+    ],
+    plugins = [bib]
 )
