@@ -22,13 +22,13 @@ The library uses the package Distances.jl, that is installed along with the libr
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/DynamicsUFPR/RMA.jl")
+Pkg.add(RecurrenceMicrostatesAnalysis)
 ```
 
-2. Using the Pkg REPL mode (press `]` in the Julia terminal):
+2. Using the Pkg REPL mode:
 
 ```julia
-add https://github.com/DynamicsUFPR/RMA.jl
+] add RecurrenceMicrostatesAnalysis
 ```
 
 ## Library usage guide
