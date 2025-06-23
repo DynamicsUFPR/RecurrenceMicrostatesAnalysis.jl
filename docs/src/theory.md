@@ -64,7 +64,7 @@ We will explain better how compute motifs without explictly construct a RP in [m
 
 $DET \approx 1 - \frac{\mathbf{d}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR},$
 
-$DET \approx 1 - \frac{\mathbf{v}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR}.$
+$LAM \approx 1 - \frac{\mathbf{v}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR}.$
 
 The vectors $\mathbf{d}$ and $\mathbf{v}$ are selecting the necessary terms from the resulting vector $\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}$. In practice, for DET, the probability of all 64 motifs of the form
 
