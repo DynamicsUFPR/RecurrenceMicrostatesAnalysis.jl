@@ -7,7 +7,7 @@ Download [Julia 1.8](https://julialang.org/) or later, preferably the current st
 You can add `RecurrenceMicrostatesAnalysis.jl` using Julia's package manager. In the Julia prompt, you can use the following code snippets:
 ```julia
 using Pkg
-Pkg.add(RecurrenceMicrostatesAnalysis)
+Pkg.add("RecurrenceMicrostatesAnalysis")
 ```
 or, in `Pkg REPL` mode write:
 ```julia
@@ -16,10 +16,6 @@ or, in `Pkg REPL` mode write:
 
 !!! todo "GitHub"
     `RecurrenceMicrostatesAnalysis.jl` is an open-source library available at GitHub repository [DynamicsUFPR/RMA.jl](https://github.com/DynamicsUFPR/RMA.jl). If you have found this library useful, please consider starring it on [GitHub](https://github.com/DynamicsUFPR/RMA.jl) 😉.
-
-We also recommend you to import the library as
-```julia
-import RecurrenceMicrostatesAnalysis as RMA
 ```
 
 ##  Learning RMA

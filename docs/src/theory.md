@@ -43,7 +43,7 @@ where the parameter $d_{min}$ sets the minimum length of the diagonal lines, bei
 
 LAM is analogous to DET, but it is defined for vertical/horizontal lines, which completely changes its interpretation. It is defined as
 
-$DET = \frac{\sum_{\ell = v_{min}}^K \ell H_V(\ell)}{\sum_{i,j = 1}^K \mathbf{R}_{ij}},$
+$LAM = \frac{\sum_{\ell = v_{min}}^K \ell H_V(\ell)}{\sum_{i,j = 1}^K \mathbf{R}_{ij}},$
 
 with
 
