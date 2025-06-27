@@ -79,6 +79,8 @@ module RecurrenceMicrostatesAnalysis
     export determinism
     export distribution
     export find_parameters
+
+    export jrp
     # ======================================================================================================= #
 end
 #       ----- END CODE
