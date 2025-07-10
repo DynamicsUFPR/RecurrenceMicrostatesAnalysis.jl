@@ -22,7 +22,7 @@ The library uses the package Distances.jl, that is installed along with the libr
 
 ```julia
 using Pkg
-Pkg.add(RecurrenceMicrostatesAnalysis)
+Pkg.add("RecurrenceMicrostatesAnalysis")
 ```
 
 2. Using the Pkg REPL mode:
