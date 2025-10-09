@@ -49,6 +49,7 @@ module RecurrenceMicrostatesAnalysis
     include("rma/histograms/pair/pair_columnwise.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: diagonal
+    include("rma/histograms/diagonal/diagonal_full.jl")
     include("rma/histograms/diagonal/diagonal_random.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: line
