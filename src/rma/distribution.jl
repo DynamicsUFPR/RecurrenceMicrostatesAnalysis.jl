@@ -388,7 +388,7 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: full
         if (sampling_mode == :full)
-            histogram = vect_diagonal_full_async(x, y, parameters, space_size, func, [d_x, d_y], hv, num_samples, metric)
+            histogram = vect_diagonal_full_async(x, y, parameters, space_size, func, [d_x, d_y], hv, metric)
             return histogram ./ sum(histogram)
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: random

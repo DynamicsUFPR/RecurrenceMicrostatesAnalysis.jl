@@ -1,7 +1,7 @@
 #
 #       RMA Core - Get all microstates available, using the square shape.
 #
-function vect_diagonal_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters, structure::AbstractVector{Int},
+function vect_diagonal_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parameters,
     space_size::AbstractVector{Int}, func::F, dim::AbstractVector{Int}, hv::Int, metric) where {F}
 
     ##
@@ -29,7 +29,7 @@ function vect_diagonal_full_async(x::Matrix{Float64}, y::Matrix{Float64}, parame
 
                 ##
                 ##      Compute the index and register the motif.
-                p = @fastmath compute_index_diagonal(x, y, parameters, structure, func, dim, idx, itr, p_vect, metric)
+                p = @fastmath compute_index_diagonal(x, y, parameters, func, dim, idx, itr, p_vect, metric)
                 hg[p] += 1
             end
         end
