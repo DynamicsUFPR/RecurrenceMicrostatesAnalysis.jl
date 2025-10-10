@@ -64,10 +64,14 @@ module RecurrenceMicrostatesAnalysis
     include("rqa/lam.jl")
     #       - Recurrence Entropy (RETR)
     include("rqa/entropy.jl")
+    #       - Disorder (Ξ)
+    include("rqa/disorder/standard.jl")     ##  Using square motifs, like proposed by Flauzino et al. (2025)
     # ======================================================================================================= #
     #           * RMA Utils
     include("utils/prepare.jl")
     include("utils/find_parameters.jl")
+    # ======================================================================================================= #
+    using .Disorder
     # ======================================================================================================= #
     #
     #       Export some functions to the main scope (PublicAPI)
@@ -75,6 +79,7 @@ module RecurrenceMicrostatesAnalysis
     export rrate
     export prepare
     export rentropy
+    export disorder
     export laminarity
     export recurrence
     export determinism
