@@ -365,7 +365,7 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; ε::Float6
     disorder_values::Vector{Float64} = zeros(Float64, ε_range_size)
     ε_values::LinRange{Float64} = range(ε_min, ε_max, ε_range_size)
     total_entropy::Float64 = 0.0
-    memory::Vector{Float64} = get_memory(n)
+    memory::Vector{Float64} = Disorder.get_memory(n)
     probs::Vector{Float64} = zeros(Float64, 2^(n * n))
 
     for i in eachindex(ε_values)
