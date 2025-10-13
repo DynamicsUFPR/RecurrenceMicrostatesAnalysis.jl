@@ -277,22 +277,6 @@ function get_memory(label::Vector{Vector{Int}})
     return zeros(Float64, maximum(length.(label)))
 end
 """
-    get_label_size(label::Vector{Vector{Int}})
-
-Return the number of classes for a `label`.
-"""
-function get_label_size(label::Vector{Vector{Int}})
-    return length(label)
-end
-"""
-    get_class_size(label::Vector{Vector{Int}}, class::Int)
-
-Return the number of elements inside a `class` for a given `label`.
-"""
-function get_class_size(label::Vector{Vector{Int}}, class::Int)
-    return length(label[class])
-end
-"""
     get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
 
 Get the probabilities associated to a specific motif' `class` for a given motif size `n`.
@@ -301,7 +285,7 @@ to store the probabilities from `probs` associated to the `class`.
 """
 function get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
     if (class < 1 || class > length(label))
-        throw(ErrorException("Invalid `class` value. The size $n has just $(get_label_size(n)) classes."))
+        throw(ErrorException("Invalid `class` value. The size $n has just $(length(label)) classes."))
     end
 
     cls = label[class]          ##  Define a class reference.
@@ -376,7 +360,7 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; source::Sy
 
         for c in 2:length(label) - 1
             get_norm_class_probs!(memory, probs, label, c)
-            total_entropy += rentropy(memory) / log(get_class_size(label, c))
+            total_entropy += rentropy(memory) / log(length(label[c]))
         end
 
         disorder_values[i] = total_entropy / A
