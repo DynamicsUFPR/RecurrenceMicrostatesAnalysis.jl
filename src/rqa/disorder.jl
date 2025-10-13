@@ -1,10 +1,11 @@
 ##
-##      Module responsible to compute disorder.
+##      Module responsible to compute disorder using diagonal motifs.
 ##  --------------------------------------------------------------------------------------------------------
 module Disorder
 ##  --------------------------------------------------------------------------------------------------------
-##      > Class' labels for each motif size.
-const labels::Vector{Vector{Vector{Int}}} = map(k -> map(c -> c .+ 1, k), [
+##      Precomputed labels.
+##      - Square motifs
+const labels_square::Vector{Vector{Vector{Int}}} = map(k -> map(c -> c .+ 1, k), [
     ##      k = 2
     [
         [0],
@@ -239,71 +240,71 @@ const labels::Vector{Vector{Vector{Int}}} = map(k -> map(c -> c .+ 1, k), [
         [65535]
     ]
 ])
+##      - Diagonal motifs
+const labels_diag::Vector{Vector{Vector{Int}}} = [
+    ## k = 2
+    [
+        [1],
+        [2, 3],
+        [4]
+    ],
+    ## k = 3
+    [
+        [1],
+        [2, 3, 5],
+        [4, 6, 7],
+        [8]
+    ],
+    ## k = 4
+    [
+        [1],
+        [2, 3, 5, 9],
+        [4, 6, 7, 10, 11, 13],
+        [8, 12, 14, 15],
+        [16]
+    ]
+]
 ##  --------------------------------------------------------------------------------------------------------
 export get_class_probs!
 export get_norm_class_probs!
 ##  --------------------------------------------------------------------------------------------------------
 """
-    get_memory(n::Int)
+    get_memory(label::Vector{Vector{Int}})
 
 Allocate the necessary memory to compute disorder. Return a `Vector{Float64}`.
 """
-function get_memory(n::Int)
-    if (n < 2 || n > 4)
-        throw(ErrorException("Invalid `n` value. Please, use n ∈ {2, 3, 4}."))
-    end
-
-    return zeros(Float64, maximum(length.(labels[n - 1])))
+function get_memory(label::Vector{Vector{Int}})
+    return zeros(Float64, maximum(length.(label)))
 end
 """
-    get_label_size(n::Int)
+    get_label_size(label::Vector{Vector{Int}})
 
-Return the number of classes for the motif size `n`.
+Return the number of classes for a `label`.
 """
-function get_label_size(n::Int)
-    if (n < 2 || n > 4)
-        throw(ErrorException("Invalid `n` value. Please, use n ∈ {2, 3, 4}."))
-    end
-
-    return length(labels[n - 1])
+function get_label_size(label::Vector{Vector{Int}})
+    return length(label)
 end
 """
-    get_class_size(n::Int, class::Int)
+    get_class_size(label::Vector{Vector{Int}}, class::Int)
 
-Return the number of elements inside a `class` for a given motif size `n`.
+Return the number of elements inside a `class` for a given `label`.
 """
-function get_class_size(n::Int, class::Int)
-    if (class < 1 || class > get_label_size(n))
-        throw(ErrorException("Invalid `class` value. The size $n has just $(get_label_size(n)) classes."))
-    end
-
-    return length(labels[n - 1][class])
+function get_class_size(label::Vector{Vector{Int}}, class::Int)
+    return length(label[class])
 end
 """
-    get_class_elements(n::Int, class::Int)
-
-Get the motifs which belongs to a specific `class` for motifs with a size `n`.
-"""
-function get_class_elements(n::Int, class::Int)
-    if (class < 1 || class > get_label_size(n))
-        throw(ErrorException("Invalid `class` value. The size $n has just $(get_label_size(n)) classes."))
-    end
-
-    return labels[n - 1][class]
-end
-"""
-    get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, n::Int, class::Int)
+    get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
 
 Get the probabilities associated to a specific motif' `class` for a given motif size `n`.
 `memory` is a block of memory allocate by the function `get_memory(n)` that will be modified
 to store the probabilities from `probs` associated to the `class`.
 """
-function get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, n::Int, class::Int)
-    if (class < 1 || class > get_label_size(n))
+function get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
+    if (class < 1 || class > length(label))
         throw(ErrorException("Invalid `class` value. The size $n has just $(get_label_size(n)) classes."))
     end
 
-    cls = labels[n - 1][class]          ##  Define a class reference.
+    cls = label[class]          ##  Define a class reference.
     
     if (length(memory) < length(cls))
         throw(ErrorException("Invalid memory allocation."))
@@ -315,14 +316,14 @@ function get_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, n::In
     end
 end
 """
-    get_norm_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, n::Int, class::Int)
+    get_norm_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
 
 Get the normalized probabilities associated to a specific motif' `class` for a given motif size `n`.
 `memory` is a block of memory allocate by the function `get_memory(n)` that will be modified
 to store the probabilities from `probs` associated to the `class`.
 """
-function get_norm_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, n::Int, class::Int)
-    get_class_probs!(memory, probs, n, class)
+function get_norm_class_probs!(memory::Vector{Float64}, probs::Vector{Float64}, label::Vector{Vector{Int}}, class::Int)
+    get_class_probs!(memory, probs, label, class)
     norm_factor::Float64 = sum(memory)
 
     for i in eachindex(memory)
@@ -349,42 +350,37 @@ Input:
 
 Output: return the disorder value as a `Float64`.
 """
-function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; ε::Float64 = find_parameters(x, n)[1], ε_min::Float64 = 0.8 * ε, ε_max::Float64 = 1.2 * ε, ε_range_size::Int = 10, mode::Symbol = :square)
-    if (mode == :square)
-        A::Int = 1
-        if (n == 2) A = 4
-        elseif (n == 3) A = 23
-            if (ndims(x) > 1) A = 24
-            end
-        elseif (n == 4) A = 145
-            if (ndims(x) > 1) A = 190
-            end
-        else
-            throw(ErrorException("Labels not implemented to `n` different than 2, 3, or 4."))
-        end
-
-        disorder_values::Vector{Float64} = zeros(Float64, ε_range_size)
-        ε_values::LinRange{Float64} = range(ε_min, ε_max, ε_range_size)
-        total_entropy::Float64 = 0.0
-        memory::Vector{Float64} = Disorder.get_memory(n)
-        probs::Vector{Float64} = zeros(Float64, 2^(n * n))
-
-        for i in eachindex(ε_values)
-            probs .= distribution(x, ε_values[i], n; sampling_mode = :full)
-            total_entropy = 0.0
-
-            for c in 2:Disorder.get_label_size(n) - 1
-                get_norm_class_probs!(memory, probs, n, c)
-                total_entropy += rentropy(memory) / log(Disorder.get_class_size(n, c))
-            end
-
-            disorder_values[i] = total_entropy / A
-        end
-
-        return maximum(disorder_values)
-    elseif mode == :diagonal
-        diagDisorder(x, n; ε_min = ε_min, ε_max = ε_max, ε_range_size = ε_range_size)
-    else
-        throw(ErrorException("Invalid mode. Please, use `:square` or `:diagonal`."))
+function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; source::Symbom = :diagonal, ε::Float64 = find_parameters(x, n)[1], ε_min::Float64 = 0.8 * ε, ε_max::Float64 = 1.2 * ε, ε_range_size::Int = 10)
+    if (ndims(x) == 1)
+        x = Matrix(x')
     end
+
+    label::Vector{Vector{Int}} = source == :square ? Disorder.labels_square[n] : Disorder.labels_diag[n]
+    A::Int = source == :diagonal ? length(label) - 2 : (
+        n == 2 ? A = 4 : (
+            n == 3 ? (size(x, 1) > 1 ? 24 : 23) : (
+                n == 4 ? (size(x, 1) > 1 ? 190 : 145) : throw(ErrorException("Labels not implemented to `n` different than 2, 3, or 4 when using `source = :square`."))
+            )
+        )
+    )
+
+    disorder_values::Vector{Float64} = zeros(Float64, ε_range_size)
+    ε_values::LinRange{Float64} = range(ε_min, ε_max, ε_range_size)
+    total_entropy::Float64 = 0.0
+    memory::Vector{Float64} = DiagDisorder.get_memory(label)
+    probs::Vector{Float64} = zeros(Float64, 2^(n * n))
+
+    for i in eachindex(ε_values)
+        probs .= distribution(x, ε_values[i], n; sampling_mode = :full)
+        total_entropy = 0.0
+
+        for c in 2:length(label) - 1
+            get_norm_class_probs!(memory, probs, label, c)
+            total_entropy += rentropy(memory) / log(get_class_size(label, c))
+        end
+
+        disorder_values[i] = total_entropy / A
+    end
+
+    return maximum(disorder_values)
 end

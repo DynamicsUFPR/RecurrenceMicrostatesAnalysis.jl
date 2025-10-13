@@ -13,7 +13,7 @@ bib = CitationBibliography("reference.bib")
 makedocs(
     sitename = "RecurrenceMicrostatesAnalysis.jl",
     format = Documenter.HTML(
-        prettyurls = true
+        prettyurls = false
     ),
     modules = [RecurrenceMicrostatesAnalysis],
     pages = [

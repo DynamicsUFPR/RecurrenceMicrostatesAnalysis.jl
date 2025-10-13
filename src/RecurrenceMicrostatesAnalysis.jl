@@ -65,7 +65,7 @@ module RecurrenceMicrostatesAnalysis
     #       - Recurrence Entropy (RETR)
     include("rqa/entropy.jl")
     #       - Disorder (Ξ)
-    include("rqa/disorder/standard.jl")     ##  Using square motifs, like proposed by Flauzino et al. (2025)
+    include("rqa/disorder.jl")
     # ======================================================================================================= #
     #           * RMA Utils
     include("utils/prepare.jl")
