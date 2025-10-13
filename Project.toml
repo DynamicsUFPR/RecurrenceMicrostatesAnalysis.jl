@@ -1,7 +1,7 @@
 name = "RecurrenceMicrostatesAnalysis"
 uuid = "cb83a08b-85c6-4e94-91aa-4e946c7d4f0c"
 repo = "https://github.com/DynamicsUFPR/RecurrenceMicrostatesAnalysis.jl"
-version = "0.2.28"
+version = "0.2.29"
 
 [deps]
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
