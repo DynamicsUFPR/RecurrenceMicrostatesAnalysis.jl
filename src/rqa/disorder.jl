@@ -339,7 +339,7 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; source::Sy
         x = Matrix(x')
     end
 
-    label::Vector{Vector{Int}} = source == :square ? Disorder.labels_square[n] : Disorder.labels_diag[n]
+    label::Vector{Vector{Int}} = source == :square ? Disorder.labels_square[n - 1] : Disorder.labels_diag[n - 1]
     A::Int = source == :diagonal ? length(label) - 2 : (
         n == 2 ? A = 4 : (
             n == 3 ? (size(x, 1) > 1 ? 24 : 23) : (
