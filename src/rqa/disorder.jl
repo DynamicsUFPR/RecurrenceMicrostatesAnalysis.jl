@@ -334,7 +334,7 @@ Input:
 
 Output: return the disorder value as a `Float64`.
 """
-function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; source::Symbol = :diagonal, ε::Float64 = find_parameters(x, n)[1], ε_min::Float64 = 0.8 * ε, ε_max::Float64 = 1.2 * ε, ε_range_size::Int = 10)
+function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; source::Symbol = :square, ε::Float64 = find_parameters(x, n)[1], ε_min::Float64 = 0.8 * ε, ε_max::Float64 = 1.2 * ε, ε_range_size::Int = 10)
     if (ndims(x) == 1)
         x = Matrix(x')
     end
