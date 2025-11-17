@@ -157,13 +157,11 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     function func_task(segment)
         ##
         ##      Alloc memory to the partial histogram, and the indeces.
-        hg = zeros(Int, 2^hv)
+        hg = zeros(Int, 2^hv + 16)
         idx = zeros(Int, length(space_size))
         itr = zeros(Int, length(space_size))
 
         @inbounds for _ in segment
-            ##
-            ##      NEW / TODO: I change the random implementation here; it's important to check if this change increase the performance.
             @inbounds @simd for s in eachindex(space_size)
                 idx[s] = rand(1:space_size[s])
             end
@@ -205,7 +203,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     ##      Get the results
     res = zeros(Int, 2^hv)
     for r in result
-        res .+= r
+        res .+= r[1:2^hv]
     end
 
     ##

@@ -16,7 +16,6 @@ module RecurrenceMicrostatesAnalysis
     #
     #       Libraries needed for work.
     using Distances
-    using Random
     using Statistics
 
     #       Basic metric
