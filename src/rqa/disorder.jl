@@ -328,7 +328,7 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; ε::Float6
     ε_values::LinRange{Float64} = range(ε_min, ε_max, ε_range_size)
     total_entropy::Float64 = 0.0
     memory::Vector{Float64} = Disorder.get_memory(label)
-    probs::Vector{Float64} = zeros(Float64, source == :square ? 2^(n * n) : 2^n)
+    probs::Vector{Float64} = zeros(Float64, 2^(n * n))
 
     for i in eachindex(ε_values)
         probs .= distribution(x, ε_values[i], n; sampling_mode = :full)
