@@ -331,7 +331,7 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; ε::Float6
     probs::Vector{Float64} = zeros(Float64, source == :square ? 2^(n * n) : 2^n)
 
     for i in eachindex(ε_values)
-        probs .= distribution(x, ε_values[i], n; sampling_mode = :full, shape = source)
+        probs .= distribution(x, ε_values[i], n; sampling_mode = :full)
         total_entropy = 0.0
 
         for c in 2:length(label) - 1
