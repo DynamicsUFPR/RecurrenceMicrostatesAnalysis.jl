@@ -34,6 +34,7 @@ entropy = rentropy(dist)        #   Recurrence entropy
 rr = rrate(dist)                #   Recurrence rate
 det = determinism(rr, dist)     #   Determinism
 lam = laminarity(rr, dist)      #   Laminarity
+Ξ = disorder(data, n)           #   Disorder
 ```
 
 It is also possible to skip computing the recurrence distribution by using an alternative overload of the `determinism` and `laminarity` functions.

@@ -13,7 +13,7 @@ bib = CitationBibliography("reference.bib")
 makedocs(
     sitename = "RecurrenceMicrostatesAnalysis.jl",
     format = Documenter.HTML(
-        prettyurls = false
+        prettyurls = true
     ),
     modules = [RecurrenceMicrostatesAnalysis],
     pages = [
@@ -37,4 +37,14 @@ makedocs(
         # "Release notes" => "release_notes.md",
     ],
     plugins = [bib]
+)
+
+deploydocs(
+    repo = "github.com/DynamicsUFPR/RecurrenceMicrostatesAnalysis.jl.git",
+    branch = "docs",
+    versions = [
+        "dev" => "dev",
+        "stable" => "main",
+        "v0.2.24" => "v0.2.24",
+    ]
 )
