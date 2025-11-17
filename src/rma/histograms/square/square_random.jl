@@ -157,7 +157,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     function func_task(segment)
         ##
         ##      Alloc memory to the partial histogram, and the indeces.
-        hg = zeros(Int, 2^hv + 16)
+        hg = zeros(Int, 2^hv)
         idx = zeros(Int, length(space_size))
         itr = zeros(Int, length(space_size))
 
@@ -201,12 +201,11 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
 
     ##
     ##      Get the results
-    res = zeros(Int, 2^hv)
-    for r in result
-        res .+= r[1:2^hv]
+    for r in 2:Threads.nthreads()
+        result[1] += result[r]
     end
 
     ##
     ##      Return the histogram.
-    return res
+    return result[1]
 end
