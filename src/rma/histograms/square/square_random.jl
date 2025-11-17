@@ -153,12 +153,8 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     end
 
     ##
-    ##      Random structure per task.
-    rngs = [Random.Xoshiro() for _ in 1:Threads.nthreads()]
-
-    ##
     ##      Define a task to compute the histograms.
-    function func_task(segment, rng)
+    function func_task(segment)
         ##
         ##      Alloc memory to the partial histogram, and the indeces.
         hg = zeros(Int, 2^hv)
@@ -169,7 +165,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
             ##
             ##      NEW / TODO: I change the random implementation here; it's important to check if this change increase the performance.
             @inbounds @simd for s in eachindex(space_size)
-                idx[s] = rand(rng, 1:space_size[s])
+                idx[s] = rand(1:space_size[s])
             end
 
             p = @fastmath compute_index_square(x, y, parameters, structure, func, dim, idx, itr, p_vect, metric)
@@ -195,7 +191,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
         incrementor = int_sampling_value + (rest_sampling_value > 0 ? 1 : 0)
         segment = start_value:start_value + incrementor - 1
 
-        push!(tasks, Threads.@spawn func_task(segment, rngs[i]))
+        push!(tasks, Threads.@spawn func_task(segment))
 
         start_value += incrementor
         rest_sampling_value -= 1
