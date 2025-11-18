@@ -36,4 +36,18 @@ Pkg.add("RecurrenceMicrostatesAnalysis")
 Access the library documentation [here](https://dynamicsufpr.github.io/RecurrenceMicrostatesAnalysis.jl/).
 
 ##  Citation
-There is no published article yet.
+```bibtex
+@article{10.1063/5.0293708,
+    author = {Vinicius Ferreira, Gabriel and Lopes da Cruz, Felipe Eduardo and Marghoti, Gabriel and de Lima Prado, Thiago and Roberto Lopes, Sergio and Marwan, Norbert and Kurths, Jürgen},
+    title = {RecurrenceMicrostatesAnalysis.jl: A Julia library for analyzing dynamical systems with recurrence microstates},
+    journal = {Chaos: An Interdisciplinary Journal of Nonlinear Science},
+    volume = {35},
+    number = {11},
+    pages = {113123},
+    year = {2025},
+    month = {11},
+    issn = {1054-1500},
+    doi = {10.1063/5.0293708},
+    url = {https://doi.org/10.1063/5.0293708}
+}
+```
