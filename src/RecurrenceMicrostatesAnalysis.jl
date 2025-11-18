@@ -49,6 +49,7 @@ module RecurrenceMicrostatesAnalysis
     include("rma/histograms/pair/pair_columnwise.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: diagonal
+    include("rma/histograms/diagonal/diagonal_full.jl")
     include("rma/histograms/diagonal/diagonal_random.jl")
     # ------------------------------------------------------------------------------------------------------- #
     #       - Shape: line
@@ -63,10 +64,14 @@ module RecurrenceMicrostatesAnalysis
     include("rqa/lam.jl")
     #       - Recurrence Entropy (RETR)
     include("rqa/entropy.jl")
+    #       - Disorder (Ξ)
+    include("rqa/disorder.jl")
     # ======================================================================================================= #
     #           * RMA Utils
     include("utils/prepare.jl")
     include("utils/find_parameters.jl")
+    # ======================================================================================================= #
+    using .Disorder
     # ======================================================================================================= #
     #
     #       Export some functions to the main scope (PublicAPI)
@@ -74,11 +79,14 @@ module RecurrenceMicrostatesAnalysis
     export rrate
     export prepare
     export rentropy
+    export disorder
     export laminarity
     export recurrence
     export determinism
     export distribution
     export find_parameters
+
+    export jrp
     # ======================================================================================================= #
 end
 #       ----- END CODE

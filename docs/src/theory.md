@@ -43,7 +43,7 @@ where the parameter $d_{min}$ sets the minimum length of the diagonal lines, bei
 
 LAM is analogous to DET, but it is defined for vertical/horizontal lines, which completely changes its interpretation. It is defined as
 
-$DET = \frac{\sum_{\ell = v_{min}}^K \ell H_V(\ell)}{\sum_{i,j = 1}^K \mathbf{R}_{ij}},$
+$LAM = \frac{\sum_{\ell = v_{min}}^K \ell H_V(\ell)}{\sum_{i,j = 1}^K \mathbf{R}_{ij}},$
 
 with
 
@@ -64,7 +64,7 @@ We will explain better how compute motifs without explictly construct a RP in [m
 
 $DET \approx 1 - \frac{\mathbf{d}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR},$
 
-$DET \approx 1 - \frac{\mathbf{v}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR}.$
+$LAM \approx 1 - \frac{\mathbf{v}^{(1)}\cdot\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}}{RR}.$
 
 The vectors $\mathbf{d}$ and $\mathbf{v}$ are selecting the necessary terms from the resulting vector $\mathcal{R}^{(3)}\cdot \mathbf{p}^{(3)}$. In practice, for DET, the probability of all 64 motifs of the form
 

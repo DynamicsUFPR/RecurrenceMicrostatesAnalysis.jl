@@ -38,3 +38,13 @@ makedocs(
     ],
     plugins = [bib]
 )
+
+deploydocs(
+    repo = "github.com/DynamicsUFPR/RecurrenceMicrostatesAnalysis.jl.git",
+    branch = "docs",
+    versions = [
+        "dev" => "dev",
+        "stable" => "main",
+        "v0.2.24" => "v0.2.24",
+    ]
+)

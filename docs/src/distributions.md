@@ -170,14 +170,14 @@ dist = distribution(data, th, 3)
 
 We recommend you to apply a transient into your data and take a correct time resolution while doing the process of discretization, it is needed to maximize the information available. `RecurrenceMicrostatesAnalysis.jl` has a utilitary function to help with this process.
 ```@repl continuous
-prepared_data = prepare(sol, 0.2; transient = 10000, max_length = 1000)
+prepared_data = prepare(sol, 0.2; transient = 10000, K = 1000)
 th, s = find_parameters(prepared_data, 3)
 dist = distribution(prepared_data, th, 3)
 ```
 
 If you have the threshold parameter, it is also possible to simplify the call using:
 ```@repl continuous
-dist = distribution(sol, th, 3, 0.2; transient = 10000, max_length = 1000)
+dist = distribution(sol, th, 3, 0.2; transient = 10000, K = 1000)
 ```
 
 ##  Spatial data

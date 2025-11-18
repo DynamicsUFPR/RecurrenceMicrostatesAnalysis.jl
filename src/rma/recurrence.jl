@@ -55,6 +55,12 @@ end
     return (distance > thresholds[1] && distance <= thresholds[2])
 end
 
+# ----------------------------------      JRP      ----------------------------------------------
+@inline function jrp(x::Matrix{Float64}, y::Matrix{Float64}, thresholds::Float64, idx::AbstractVector{Int}, metric, _::AbstractVector{Int})
+    return @inbounds (evaluate(metric, view(x, :, idx[1]), view(x, :, idx[2])) <= thresholds[1]) && (evaluate(metric, view(y, :, idx[1]), view(y, :, idx[2])) <= thresholds[2])
+end
+
+
 #######################
 #   jensen-shannon
 #       sqrt dela.

@@ -54,10 +54,7 @@ det = determinism(data, th)
 ```
 
 !!! info
-    When we estimate DET directly using this function overload, the library will automatically use a diagonal motif constrained shape. If you want to use a square shape, try:
-    ```@repl rqa
-    det = determinism(data, th; mode = :square)
-    ```
+    When we estimate DET directly using this function overload, the library will automatically use a diagonal motif constrained shape.
 
 ##  Laminarity
 The laminarity (LAM) can be computed with a method similar to determinism (DET). It is important to note that it can be done using two motif constrained shapes: `:square` or `:line`.
@@ -81,7 +78,24 @@ lam = laminarity(data, th)
 ```
 
 !!! info
-    When we estimate LAM directly using this function overload, the library will automatically use a line motif constrained shape. If you want to use a square shape, try:
+    When we estimate LAM directly using this function overload, the library will automatically use a line motif constrained shape.
+
+##  Disorder
+Disorder is a very powerful quantifier introduced by Flauzino et al.[Flauzino2025](@cite) in 2025. The computation of this quantifier is very simple using `RecurrenceMicrostatesAnalysis.jl`:
+
+```@repl rqa
+microstate_size = 3
+Ξ = disorder(data, microstate_size)
+```
+
+!!! info
+    Read more about disorder [here](https://doi.org/10.1103/1y98-x33s).
+
+!!! warning
+    The microstate size can only be $2$, $3$, or $4$.
+
+!!! warning
+    The function `disorder` tries to maximize the disorder for a range of $\varepsilon$. To compute it faster, we recommend defining a base value of $\varepsilon$ and a range around it. For example:
     ```@repl rqa
-    lam = laminarity(data, th; mode = :square)
+    Ξ = disorder(data, microstate_size; ε_min = 0.9 * th, ε_max = 1.1 * th, ε_range_size = 6)
     ```

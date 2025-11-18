@@ -388,7 +388,8 @@ function distribution(x::AbstractArray, y::AbstractArray, parameters, structure:
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: full
         if (sampling_mode == :full)
-            throw(ArgumentError("The sampling mode ':full' is not implemented to shape ':diagonal'.'"))
+            histogram = vect_diagonal_full_async(x, y, parameters, space_size, func, [d_x, d_y], hv, metric)
+            return histogram ./ sum(histogram)
         ## -----------------------------------------------------------------------------------------------------------------
         ##          * Mode: random
         elseif (sampling_mode == :random)

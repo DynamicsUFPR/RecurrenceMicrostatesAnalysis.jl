@@ -3,9 +3,9 @@ The following code is an example of how to use `RecurrenceMicrostatesAnalysis.jl
 
 ```julia
 ##  Install everything that we need
-using Pkg; Pkg.add("Distributions"); Pkg.add(url="https://github.com/DynamicsUFPR/RMA.jl")
+using Pkg; Pkg.add("Distributions"); Pkg.add("RecurrenceMicrostatesAnalysis")
 using Distributions                             #   For generate our uniform distribution
-using .RecurrenceMicrostatesAnalysis as RMA     #   !! Import RecurrenceMicrostatesAnalysis.jl
+using RecurrenceMicrostatesAnalysis             #   !! Import RecurrenceMicrostatesAnalysis.jl
 
 ##  Generate our data
 data = rand(Uniform(0, 1), 1000)
@@ -34,6 +34,7 @@ entropy = rentropy(dist)        #   Recurrence entropy
 rr = rrate(dist)                #   Recurrence rate
 det = determinism(rr, dist)     #   Determinism
 lam = laminarity(rr, dist)      #   Laminarity
+Ξ = disorder(data, n)           #   Disorder
 ```
 
 It is also possible to skip computing the recurrence distribution by using an alternative overload of the `determinism` and `laminarity` functions.

@@ -162,7 +162,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
         itr = zeros(Int, length(space_size))
 
         @inbounds for _ in segment
-            for s in eachindex(space_size)
+            @inbounds @simd for s in eachindex(space_size)
                 idx[s] = rand(1:space_size[s])
             end
 
@@ -185,7 +185,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     tasks = []
     start_value = 1
 
-    for _ in 1:Threads.nthreads()
+    for i in 1:Threads.nthreads()
         incrementor = int_sampling_value + (rest_sampling_value > 0 ? 1 : 0)
         segment = start_value:start_value + incrementor - 1
 
@@ -201,12 +201,11 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
 
     ##
     ##      Get the results
-    res = zeros(Int, 2^hv)
-    for r in result
-        res .+= r
+    for r in 2:Threads.nthreads()
+        result[1] += result[r]
     end
 
     ##
     ##      Return the histogram.
-    return res
+    return result[1]
 end
