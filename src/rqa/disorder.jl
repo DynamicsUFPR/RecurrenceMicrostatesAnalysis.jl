@@ -344,3 +344,28 @@ function disorder(x::Union{Vector{Float64}, Matrix{Float64}}, n::Int; ε::Float6
 
     return maximum(disorder_values)
 end
+
+
+#  New version of disorder, meant to be optimized with v2_find_parameters()
+function v2_disorder(dist; shape::Symbol = :square)
+    n::Int = shape == :square ? round(Int, abs(sqrt(log2(length(dist))))) : 
+        round(Int, log2(length(dist)))
+
+    label::Vector{Vector{Int}} = shape == :square ? Disorder.labels_square[n - 1] : Disorder.labels_diag[n - 1]
+    A::Int = shape == :diagonal ? length(label) - 2 : (
+        n == 2 ? 4 : (
+            n == 3 ? 23 : (
+                n == 4 ? 145 : throw(ErrorException("..."))
+            )
+        )
+    )
+    total_entropy::Float64 = 0.0
+    memory::Vector{Float64} = Disorder.get_memory(label)
+
+    for c in 2:length(label) - 1
+        Disorder.get_norm_class_probs!(memory, dist, label, c)
+        total_entropy += rentropy(memory) / log(length(label[c]))
+    end
+
+    return total_entropy / A 
+end
