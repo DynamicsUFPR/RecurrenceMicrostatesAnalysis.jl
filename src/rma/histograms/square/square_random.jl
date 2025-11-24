@@ -202,7 +202,7 @@ function vect_square_random_async(x::AbstractArray, y::AbstractArray, parameters
     ##
     ##      Get the results
     for r in 2:Threads.nthreads()
-        result[1] += result[r]
+        result[1] .+= result[r]
     end
 
     ##
